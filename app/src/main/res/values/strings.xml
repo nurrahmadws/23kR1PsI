@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PADM</string>
+    <string-array name="level">
+        <item>Admin</item>
+        <item>Mahasiswa</item>
+    </string-array>
 </resources>

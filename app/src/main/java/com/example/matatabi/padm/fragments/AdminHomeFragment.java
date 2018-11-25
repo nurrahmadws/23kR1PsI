@@ -1,5 +1,6 @@
 package com.example.matatabi.padm.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.matatabi.padm.R;
+import com.example.matatabi.padm.activities.DataUserActivity;
+import com.example.matatabi.padm.activities.SubMenuDataDaerahActivity;
 
 public class AdminHomeFragment extends Fragment {
     private Button btn_data_user, btn_data_daerah, btn_data_mahasiswa, btn_ttg_aplikasi, btn_sebaran_mhs;
@@ -23,5 +26,27 @@ public class AdminHomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        btn_data_user = view.findViewById(R.id.btn_data_user);
+        btn_data_daerah = view.findViewById(R.id.btn_data_daerah);
+        btn_data_mahasiswa = view.findViewById(R.id.btn_data_mahasiswa);
+        btn_sebaran_mhs = view.findViewById(R.id.btn_data_sebaran_mhs);
+        btn_ttg_aplikasi = view.findViewById(R.id.btn_ttg_aplikasi);
+
+        btn_data_user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(getActivity(), DataUserActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
+        btn_data_daerah.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SubMenuDataDaerahActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
     }
 }

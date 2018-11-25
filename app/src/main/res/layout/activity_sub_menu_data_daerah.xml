@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
     android:background="@color/colorHomeBg"
-    android:padding="10dp">
+    tools:context=".activities.SubMenuDataDaerahActivity">
 
     <LinearLayout
         android:clipToPadding="false"
@@ -19,20 +22,20 @@
             android:layout_height="wrap_content"
             android:padding="15dp">
             <Button
-                android:id="@+id/btn_data_user"
+                android:id="@+id/btn_kabupaten_kota"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="10dp"
-                android:drawableTop="@drawable/c"
+                android:drawableLeft="@drawable/ic_r"
                 android:background="@drawable/circlebg_green"
                 android:padding="15dp"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/btn_data_user"
+                android:layout_below="@id/btn_kabupaten_kota"
                 android:textColor="@color/colorHomeGreen"
-                android:text="Data User"
+                android:text="Kabupaten/Kota"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:layout_centerHorizontal="true"/>
@@ -42,19 +45,19 @@
             android:layout_height="wrap_content"
             android:padding="10dp">
             <Button
-                android:id="@+id/btn_data_daerah"
+                android:id="@+id/btn_kecamatan"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="10dp"
-                android:drawableTop="@drawable/ic_public_black_24dp"
+                android:drawableLeft="@drawable/ic_w"
                 android:background="@drawable/circlebg_yellow"
                 android:padding="15dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/btn_data_daerah"
+                android:layout_below="@id/btn_kecamatan"
                 android:textColor="@color/colorHomeYellow"
-                android:text="Data Daerah"
+                android:text="Kecamatan"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:layout_centerHorizontal="true"/>
@@ -72,20 +75,20 @@
             android:layout_height="wrap_content"
             android:padding="15dp">
             <Button
-                android:id="@+id/btn_data_mahasiswa"
+                android:id="@+id/btn_kelurahan_desa"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="10dp"
-                android:drawableTop="@drawable/ic_local_library_black_24dp"
+                android:drawableTop="@drawable/ic_f"
                 android:background="@drawable/circlebg_purple"
                 android:padding="15dp"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/btn_data_mahasiswa"
+                android:layout_below="@id/btn_kelurahan_desa"
                 android:textColor="@color/colorHomeDeepPurple"
-                android:text="Data Mahasiswa"
+                android:text="Kelurahan/Desa"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:layout_centerHorizontal="true"/>
@@ -95,51 +98,20 @@
             android:layout_height="wrap_content"
             android:padding="10dp">
             <Button
-                android:id="@+id/btn_data_sebaran_mhs"
+                android:id="@+id/btn_Lat_lng"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="10dp"
-                android:drawableTop="@drawable/ic_insert_chart_black_24dp"
+                android:drawableTop="@drawable/ic_e"
                 android:background="@drawable/circlebg_pink"
                 android:padding="15dp"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/btn_data_sebaran_mhs"
+                android:layout_below="@id/btn_Lat_lng"
                 android:textColor="@color/colorHomeAccent"
-                android:text="Data P.A.D.M"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:layout_centerHorizontal="true"/>
-        </RelativeLayout>
-
-    </LinearLayout>
-    <LinearLayout
-        android:clipToPadding="false"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/btn_ttg_aplikasi"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="10dp"
-                android:drawableTop="@drawable/ic_error_outline_black_24dp"
-                android:background="@drawable/circlebg_sea"
-                android:padding="15dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/btn_ttg_aplikasi"
-                android:textColor="@color/colorHomeSea"
-                android:text="Tentang Aplikasi"
+                android:text="Lat &amp; Lng"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:layout_centerHorizontal="true"/>

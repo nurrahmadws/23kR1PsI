@@ -31,7 +31,17 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.AdminActivity" />
-        <activity android:name=".activities.MahasiswaActivity"></activity>
+        <activity android:name=".activities.MahasiswaActivity" />
+        <activity android:name=".activities.DataUserActivity" />
+        <activity android:name=".activities.AddUserActivity" />
+        <activity android:name=".activities.EditUserActivity" />
+        <activity android:name=".activities.SubMenuDataDaerahActivity" />
+        <activity android:name=".activities.DataKabupatenActivity" />
+        <activity android:name=".activities.AddKabupatenActivity" />
+        <activity android:name=".activities.EditKabupatenActivity" />
+        <activity android:name=".activities.DataKecamatanActivity" />
+        <activity android:name=".activities.EditKecamatanActivity" />
+        <activity android:name=".activities.AddKecamatanActivity"></activity>
     </application>
 
 </manifest>
