@@ -35,5 +35,17 @@ public class SubMenuDataDaerahActivity extends AppCompatActivity {
                 startActivity(new Intent(SubMenuDataDaerahActivity.this, DataKecamatanActivity.class));
             }
         });
+        btn_kelurahan_desa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SubMenuDataDaerahActivity.this, DataKelurahanActivity.class));
+            }
+        });
+        btn_Lat_lng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SubMenuDataDaerahActivity.this, DataLatLngActivity.class));
+            }
+        });
     }
 }

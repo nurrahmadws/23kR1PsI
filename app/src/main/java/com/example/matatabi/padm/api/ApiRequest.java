@@ -2,6 +2,8 @@ package com.example.matatabi.padm.api;
 
 import com.example.matatabi.padm.model.KabupatenResponse;
 import com.example.matatabi.padm.model.KecamatanResponse;
+import com.example.matatabi.padm.model.KelurahanResponse;
+import com.example.matatabi.padm.model.LatlngResponse;
 import com.example.matatabi.padm.model.LoginResponse;
 import com.example.matatabi.padm.model.UsersResponse;
 import com.example.matatabi.padm.model.Value;
@@ -77,4 +79,55 @@ public interface ApiRequest {
 //    SPINNER
     @GET("spinner/spinKabupaten.php")
     Call<KabupatenResponse> spinKab();
+
+    @GET("spinner/spinKecamatan.php")
+    Call<KecamatanResponse> spinKec(@Query("nm_kabupaten") String nm_kabupaten);
+
+    @GET("spinner/spinKelurahan.php")
+    Call<KelurahanResponse> spinKel(@Query("nm_kecamatan") String nm_kecamatan);
+
+//    Kelurahan
+    @GET("kelurahan/read.php")
+    Call<KelurahanResponse> readKel(@Query("nm_kecamatan") String nm_kecamatan);
+
+    @FormUrlEncoded
+    @POST("kelurahan/create.php")
+    Call<Value> addKel(@Field("nm_kabupaten") String nm_kabupaten,
+                       @Field("nm_kecamatan") String nm_kecamatan,
+                       @Field("nm_kelurahan") String nm_kelurahan);
+
+    @FormUrlEncoded
+    @POST("kelurahan/edit.php")
+    Call<Value> editKel(@Field("id_kelurahan") String id_kelurahan,
+                        @Field("nm_kabupaten") String nm_kabupaten,
+                        @Field("nm_kecamatan") String nm_kecamatan,
+                        @Field("nm_kelurahan") String nm_kelurahan);
+
+    @FormUrlEncoded
+    @POST("kelurahan/delete.php")
+    Call<Value> deleteKel(@Field("id_kelurahan") String id_kelurahan);
+//    Latitude Longtitude
+    @GET("latlng/read.php")
+    Call<LatlngResponse> readLatlng(@Query("nm_kelurahan") String nm_kelurahan);
+
+    @FormUrlEncoded
+    @POST("latlng/create.php")
+    Call<Value> addLatlng(@Field("nm_kabupaten") String nm_kabupaten,
+                          @Field("nm_kecamatan") String nm_kecamatan,
+                          @Field("nm_kelurahan") String nm_kelurahan,
+                          @Field("nm_lat") String nm_lat,
+                          @Field("nm_lng") String nm_lng);
+
+    @FormUrlEncoded
+    @POST("latlng/edit.php")
+    Call<Value> editLatlng(@Field("id_latlng") String id_latlng,
+                           @Field("nm_kabupaten") String nm_kabupaten,
+                           @Field("nm_kecamatan") String nm_kecamatan,
+                           @Field("nm_kelurahan") String nm_kelurahan,
+                           @Field("nm_lat") String nm_lat,
+                           @Field("nm_lng") String nm_lng);
+
+    @FormUrlEncoded
+    @POST("latlng/delete.php")
+    Call<Value> deleteLatlng(@Field("id_latlng") String id_latlng);
 }

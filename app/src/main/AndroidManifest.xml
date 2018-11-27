@@ -41,7 +41,13 @@
         <activity android:name=".activities.EditKabupatenActivity" />
         <activity android:name=".activities.DataKecamatanActivity" />
         <activity android:name=".activities.EditKecamatanActivity" />
-        <activity android:name=".activities.AddKecamatanActivity"></activity>
+        <activity android:name=".activities.AddKecamatanActivity" />
+        <activity android:name=".activities.DataKelurahanActivity" />
+        <activity android:name=".activities.AddKelurahanActivity" />
+        <activity android:name=".activities.EditKelurahanActivity" />
+        <activity android:name=".activities.DataLatLngActivity" />
+        <activity android:name=".activities.EditLatLngActivity" />
+        <activity android:name=".activities.AddLatlngActivity"></activity>
     </application>
 
 </manifest>

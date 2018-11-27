@@ -127,7 +127,7 @@ public class EditKecamatanActivity extends AppCompatActivity {
                         }).setNegativeButton("Batal", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(EditKecamatanActivity.this, DataKecamatanActivity.class));
+//                        startActivity(new Intent(EditKecamatanActivity.this, DataKecamatanActivity.class));
                     }
                 });
                 AlertDialog dialog = al.create();

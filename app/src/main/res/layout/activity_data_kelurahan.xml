@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="#E0E0E0"
+    tools:context=".activities.DataKecamatanActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pilih Kabupaten"
+            android:layout_marginLeft="5dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+        <Spinner
+            android:id="@+id/spinKabforKel"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_height="wrap_content">
+        </Spinner>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pilih Kecamatan"
+            android:layout_marginLeft="5dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+        <Spinner
+            android:id="@+id/spinKecforKel"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_height="wrap_content">
+        </Spinner>
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_kelurahans"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="70dp">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_kel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/ic_add_circle_black_24dp"
+        android:clickable="true"
+        android:focusable="true" />
+
+</RelativeLayout>
