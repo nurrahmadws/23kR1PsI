@@ -4,4 +4,5 @@
         <item>Admin</item>
         <item>Mahasiswa</item>
     </string-array>
+    <string name="title_activity_detail_lat_lng">Map</string>
 </resources>

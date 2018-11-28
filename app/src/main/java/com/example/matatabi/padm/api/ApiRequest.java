@@ -42,6 +42,10 @@ public interface ApiRequest {
     @FormUrlEncoded
     @POST("users/delete.php")
     Call<Value> deleteUser(@Field("id_user") String id_user);
+
+    @FormUrlEncoded
+    @POST("users/search.php")
+    Call<UsersResponse> searchUs(@Field("searchUs") String searchUs);
 //    Kabupaten
     @GET("kabupaten/read.php")
     Call<KabupatenResponse> readKabkot();
@@ -58,6 +62,10 @@ public interface ApiRequest {
     @FormUrlEncoded
     @POST("kabupaten/delete.php")
     Call<Value> deleteKabkot(@Field("id_kabupaten") String id_kabupaten);
+
+    @FormUrlEncoded
+    @POST("kabupaten/search.php")
+    Call<KabupatenResponse> searchKab(@Field("searchKab") String searchKab);
 //    Kecamatan
     @GET("kecamatan/read.php")
     Call<KecamatanResponse> readKec(@Query("nm_kabupaten") String nm_kabupaten);
@@ -130,4 +138,7 @@ public interface ApiRequest {
     @FormUrlEncoded
     @POST("latlng/delete.php")
     Call<Value> deleteLatlng(@Field("id_latlng") String id_latlng);
+
+    @GET("latlng/detailLatlng.php")
+    Call<LatlngResponse> detailLatlng(@Query("id_latlng") String id_latlng);
 }

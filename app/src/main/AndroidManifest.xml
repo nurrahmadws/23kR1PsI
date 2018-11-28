@@ -47,7 +47,10 @@
         <activity android:name=".activities.EditKelurahanActivity" />
         <activity android:name=".activities.DataLatLngActivity" />
         <activity android:name=".activities.EditLatLngActivity" />
-        <activity android:name=".activities.AddLatlngActivity"></activity>
+        <activity android:name=".activities.AddLatlngActivity" />
+        <activity
+            android:name=".activities.DetailLatLngActivity"
+            android:label="@string/title_activity_detail_lat_lng"></activity>
     </application>
 
 </manifest>

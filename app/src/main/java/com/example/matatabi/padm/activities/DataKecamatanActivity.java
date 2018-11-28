@@ -26,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DataKecamatanActivity extends AppCompatActivity {
+public class DataKecamatanActivity extends AppCompatActivity{
 
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
