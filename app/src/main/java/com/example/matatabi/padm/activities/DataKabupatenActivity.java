@@ -36,6 +36,8 @@ public class DataKabupatenActivity extends AppCompatActivity implements SearchVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_kabupaten);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         recyclerView = findViewById(R.id.rv_kabupatens);
         recyclerView.setLayoutManager(new LinearLayoutManager(DataKabupatenActivity.this));
 
@@ -109,5 +111,17 @@ public class DataKabupatenActivity extends AppCompatActivity implements SearchVi
             }
         });
         return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(this, SubMenuDataDaerahActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

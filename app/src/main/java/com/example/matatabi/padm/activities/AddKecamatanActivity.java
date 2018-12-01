@@ -3,6 +3,7 @@ package com.example.matatabi.padm.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -33,6 +34,8 @@ public class AddKecamatanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_kecamatan);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         edtTexKecamatanAdd = findViewById(R.id.edtTexKecamatanAdd);
         spinKabAdd = findViewById(R.id.spinKabAdd);
@@ -97,5 +100,17 @@ public class AddKecamatanActivity extends AppCompatActivity {
                 startActivity(new Intent(AddKecamatanActivity.this, DataKecamatanActivity.class));
             }
         });
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(this, DataKecamatanActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

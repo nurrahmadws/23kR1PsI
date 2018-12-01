@@ -13,6 +13,7 @@ import android.widget.Button;
 import com.example.matatabi.padm.R;
 import com.example.matatabi.padm.activities.DataUserActivity;
 import com.example.matatabi.padm.activities.SubMenuDataDaerahActivity;
+import com.example.matatabi.padm.activities.TentangAplikasiActivity;
 
 public class AdminHomeFragment extends Fragment {
     private Button btn_data_user, btn_data_daerah, btn_data_mahasiswa, btn_ttg_aplikasi, btn_sebaran_mhs;
@@ -45,6 +46,14 @@ public class AdminHomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SubMenuDataDaerahActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
+        btn_ttg_aplikasi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), TentangAplikasiActivity.class);
                 getActivity().startActivity(intent);
             }
         });

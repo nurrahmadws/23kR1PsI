@@ -3,6 +3,7 @@ package com.example.matatabi.padm.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,6 +35,8 @@ public class AddKelurahanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_kelurahan);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         edtTexKelurahanAdd = findViewById(R.id.edtTexKelurahanAdd);
         spinKabAddKel = findViewById(R.id.spinKabAddKel);
@@ -135,6 +138,18 @@ public class AddKelurahanActivity extends AppCompatActivity {
 
                 }
             });
+        }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(this, DataKelurahanActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

@@ -33,7 +33,13 @@
         <activity android:name=".activities.AdminActivity" />
         <activity android:name=".activities.MahasiswaActivity" />
         <activity android:name=".activities.DataUserActivity" />
-        <activity android:name=".activities.AddUserActivity" />
+        <activity
+            android:name=".activities.AddUserActivity"
+            android:parentActivityName=".activities.DataUserActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.DataUserActivity" />
+        </activity>
         <activity android:name=".activities.EditUserActivity" />
         <activity android:name=".activities.SubMenuDataDaerahActivity" />
         <activity android:name=".activities.DataKabupatenActivity" />
@@ -50,7 +56,8 @@
         <activity android:name=".activities.AddLatlngActivity" />
         <activity
             android:name=".activities.DetailLatLngActivity"
-            android:label="@string/title_activity_detail_lat_lng"></activity>
+            android:label="@string/title_activity_detail_lat_lng" />
+        <activity android:name=".activities.TentangAplikasiActivity"></activity>
     </application>
 
 </manifest>

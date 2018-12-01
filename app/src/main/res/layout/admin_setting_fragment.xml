@@ -17,6 +17,13 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
         <EditText
+            android:id="@+id/editTextId_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="5dp"
+            android:visibility="gone" />
+
+        <EditText
             android:id="@+id/editTextUsernamee"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,7 +32,7 @@
             android:hint="username"/>
 
         <EditText
-            android:id="@+id/editTextCurrentPassword"
+            android:id="@+id/editTextPasswsordd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/admin_lock_set"
@@ -43,7 +50,7 @@
 
 
         <Button
-            android:id="@+id/buttonChangePassword"
+            android:id="@+id/buttonChange"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

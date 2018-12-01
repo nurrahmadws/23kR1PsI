@@ -17,4 +17,6 @@
     <color name="colorHomeGreen">#00bfa5</color>
     <color name="colorHomeAccent">#FF4081</color>
     <color name="colorHomeSea">#1DBBB9</color>
+    <color name="startblue">#09c6df</color>
+    <color name="endblue">#0bcce6</color>
 </resources>

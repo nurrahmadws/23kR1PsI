@@ -39,6 +39,14 @@ public interface ApiRequest {
                          @Field("username") String username,
                          @Field("password") String password,
                          @Field("level") String level);
+
+    @FormUrlEncoded
+    @POST("users/edit.php")
+    Call<Value> editUserLog(@Field("id_user") int id_user,
+                         @Field("username") String username,
+                         @Field("password") String password,
+                         @Field("level") String level);
+
     @FormUrlEncoded
     @POST("users/delete.php")
     Call<Value> deleteUser(@Field("id_user") String id_user);

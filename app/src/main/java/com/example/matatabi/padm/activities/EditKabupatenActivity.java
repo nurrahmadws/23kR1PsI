@@ -6,6 +6,7 @@ import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,7 +29,9 @@ public class EditKabupatenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_kabupaten);
-        
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         edtIdKabkotaEdit = findViewById(R.id.edtIdKabkotaEdit);
         edtTextKabkotaEdit = findViewById(R.id.edtTextKabkotaEdit);
         
@@ -144,6 +147,18 @@ public class EditKabupatenActivity extends AppCompatActivity {
                 startActivity(new Intent(EditKabupatenActivity.this, DataKabupatenActivity.class));
             }
         });
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(this, DataKabupatenActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
  

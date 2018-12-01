@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +29,8 @@ public class EditUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         editTextidUser = findViewById(R.id.editTextidUser);
         editTextUsername = findViewById(R.id.editTextUsernaame);
         editTextPassword = findViewById(R.id.editTextPasswordd);
@@ -45,9 +48,9 @@ public class EditUserActivity extends AppCompatActivity {
 
         String level = intent.getStringExtra("level");
         if (level.equals("Admin")){
-            spinLevelL.setClickable(true);
+            spinLevelL.setSelected(true);
         }else if (level.equals("Mahasiswa")){
-            spinLevelL.setClickable(true);
+            spinLevelL.setSelected(true);
         }
 
         btn_Ubah_user = findViewById(R.id.btn_ubah_user);
@@ -162,5 +165,17 @@ public class EditUserActivity extends AppCompatActivity {
                 startActivity(new Intent(EditUserActivity.this, DataUserActivity.class));
             }
         });
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(this, DataUserActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
