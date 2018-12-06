@@ -3,16 +3,13 @@ package com.example.matatabi.padm.model;
 import com.google.gson.annotations.SerializedName;
 
 public class LoginResponse {
-    @SerializedName("value")
+
     private Boolean value;
 
-    @SerializedName("message")
     private String message;
 
-    @SerializedName("username")
     private Users user;
 
-    @SerializedName("level")
     private String level;
 
     public LoginResponse(Boolean value, String message, Users user, String level) {

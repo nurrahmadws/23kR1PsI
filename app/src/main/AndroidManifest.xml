@@ -57,7 +57,11 @@
         <activity
             android:name=".activities.DetailLatLngActivity"
             android:label="@string/title_activity_detail_lat_lng" />
-        <activity android:name=".activities.TentangAplikasiActivity"></activity>
+        <activity android:name=".activities.TentangAplikasiActivity" />
+        <activity
+            android:name=".activities.OnBoardingScreenMhs"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.AddMahasiswaActivity"></activity>
     </application>
 
 </manifest>

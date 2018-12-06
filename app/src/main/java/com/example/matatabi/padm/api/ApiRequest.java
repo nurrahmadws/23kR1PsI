@@ -5,6 +5,7 @@ import com.example.matatabi.padm.model.KecamatanResponse;
 import com.example.matatabi.padm.model.KelurahanResponse;
 import com.example.matatabi.padm.model.LatlngResponse;
 import com.example.matatabi.padm.model.LoginResponse;
+import com.example.matatabi.padm.model.MahasiswaResponse;
 import com.example.matatabi.padm.model.UsersResponse;
 import com.example.matatabi.padm.model.Value;
 
@@ -41,15 +42,19 @@ public interface ApiRequest {
                          @Field("level") String level);
 
     @FormUrlEncoded
-    @POST("users/edit.php")
-    Call<Value> editUserLog(@Field("id_user") int id_user,
-                         @Field("username") String username,
-                         @Field("password") String password,
-                         @Field("level") String level);
+    @POST("users/editLog.php")
+    Call<Value> editUserLog(
+                            @Field("username") String username,
+                            @Field("password") String password,
+                            @Field("level") String level);
 
     @FormUrlEncoded
     @POST("users/delete.php")
     Call<Value> deleteUser(@Field("id_user") String id_user);
+
+    @FormUrlEncoded
+    @POST("users/deleteLog.php")
+    Call<Value> deleteUserLog(@Field("username") String username);
 
     @FormUrlEncoded
     @POST("users/search.php")
@@ -102,6 +107,9 @@ public interface ApiRequest {
     @GET("spinner/spinKelurahan.php")
     Call<KelurahanResponse> spinKel(@Query("nm_kecamatan") String nm_kecamatan);
 
+    @GET("spinner/spinLatLng.php")
+    Call<LatlngResponse> spinLatlng(@Query("nm_kelurahan") String nm_kelurahan);
+
 //    Kelurahan
     @GET("kelurahan/read.php")
     Call<KelurahanResponse> readKel(@Query("nm_kecamatan") String nm_kecamatan);
@@ -149,4 +157,24 @@ public interface ApiRequest {
 
     @GET("latlng/detailLatlng.php")
     Call<LatlngResponse> detailLatlng(@Query("id_latlng") String id_latlng);
+//    MAHASISWA
+    @FormUrlEncoded
+    @POST("mahasiswa/create.php")
+    Call<Value> insertMhs(@Field("nim") String nim,
+                          @Field("username") String username,
+                          @Field("nama") String nama,
+                          @Field("no_hp") String no_hp,
+                          @Field("jk") String jk,
+                          @Field("fakultas") String fakultas,
+                          @Field("prodi") String prodi,
+                          @Field("angkatan") String angkatan,
+                          @Field("provinsi") String provinsi,
+                          @Field("nm_kabupaten") String nm_kabupaten,
+                          @Field("nm_kecamatan") String nm_kecamatan,
+                          @Field("nm_kelurahan") String nm_kelurahan,
+                          @Field("nm_lat") String nm_lat,
+                          @Field("nm_lng") String nm_lng);
+
+    @GET("mahasiswa/read.php")
+    Call<MahasiswaResponse> readMhs(@Query("username") String username);
 }

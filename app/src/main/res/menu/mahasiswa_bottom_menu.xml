@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_biodataku"
+        android:title="Biodataku"
+        android:icon="@drawable/d"
+        />
+
+    <item
+        android:id="@+id/menu_data_mhs"
+        android:title="Data Mhs"
+        android:icon="@drawable/dd"
+        />
+
+    <item
+        android:id="@+id/menu_tentang_app"
+        android:title="Tentang Aplikasi"
+        android:icon="@drawable/t"
+        />
+
+</menu>

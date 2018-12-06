@@ -1,12 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.MahasiswaActivity">
-    <TextView
+
+    <RelativeLayout
+        android:id="@+id/container_mhs"
+        android:layout_marginBottom="55dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </RelativeLayout>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_nav_mhs"
+        app:menu="@menu/mahasiswa_bottom_menu"
+        android:background="@color/colorPrimaryBackground"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Mahasiswa"/>
-</android.support.constraint.ConstraintLayout>
+        app:itemIconTint="#ffffff"
+        app:itemTextColor="@color/colorFormBackground"
+        >
+
+    </android.support.design.widget.BottomNavigationView>
+
+</RelativeLayout>

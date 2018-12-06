@@ -1,7 +1,10 @@
 package com.example.matatabi.padm.fragments;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,9 +19,7 @@ import android.widget.Toast;
 import com.example.matatabi.padm.R;
 import com.example.matatabi.padm.activities.MainActivity;
 import com.example.matatabi.padm.api.RetrofitClient;
-import com.example.matatabi.padm.model.Users;
 import com.example.matatabi.padm.model.Value;
-import com.example.matatabi.padm.storage.SharedPreference;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,6 +27,10 @@ import retrofit2.Response;
 
 public class AdminSettingFragment extends Fragment implements View.OnClickListener{
     private EditText editTextUsernamee, editTextPasswordd, editTextLevell, editTextId_user;
+    SharedPreferences sharedPreferences;
+    public static final String mypreference = "mypref";
+    public static final String USERNAME = "username";
+    public static final String PASSWORD = "password";
 
     @Nullable
     @Override
@@ -33,6 +38,7 @@ public class AdminSettingFragment extends Fragment implements View.OnClickListen
         return inflater.inflate(R.layout.admin_setting_fragment, container, false);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -42,15 +48,13 @@ public class AdminSettingFragment extends Fragment implements View.OnClickListen
         editTextPasswordd = view.findViewById(R.id.editTextPasswsordd);
         editTextLevell = view.findViewById(R.id.editTextLevell);
 
-        Intent intent = getActivity().getIntent();
-        editTextId_user.setText(intent.getStringExtra("id_user"));
-        editTextId_user.setKeyListener(editTextId_user.getKeyListener());
-        editTextId_user.setKeyListener(null);
-
-        String username = intent.getStringExtra("username");
-        String password = intent.getStringExtra("password");
-        editTextUsernamee.setText(username);
-        editTextPasswordd.setText(password);
+        sharedPreferences = this.getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+        if (sharedPreferences.contains(USERNAME)){
+            editTextUsernamee.setText(sharedPreferences.getString(USERNAME, ""));
+        }
+        if (sharedPreferences.contains(PASSWORD)){
+            editTextPasswordd.setText(sharedPreferences.getString(PASSWORD, ""));
+        }
 
         editTextLevell.setKeyListener(editTextLevell.getKeyListener());
         editTextLevell.setKeyListener(null);
@@ -67,7 +71,6 @@ public class AdminSettingFragment extends Fragment implements View.OnClickListen
                 .setPositiveButton("Ubah", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String id_user = editTextId_user.getText().toString();
                         String username = editTextUsernamee.getText().toString();
                         String password = editTextPasswordd.getText().toString();
                         String level = editTextLevell.getText().toString();
@@ -87,8 +90,7 @@ public class AdminSettingFragment extends Fragment implements View.OnClickListen
                             editTextPasswordd.requestFocus();
                             return;
                         }
-
-                        Call<Value> call = RetrofitClient.getmInstance().getApi().editUser(id_user, username, password, level);
+                        Call<Value> call = RetrofitClient.getmInstance().getApi().editUserLog(username, password, level);
                         call.enqueue(new Callback<Value>() {
                             @Override
                             public void onResponse(Call<Value> call, Response<Value> response) {
@@ -135,8 +137,8 @@ public class AdminSettingFragment extends Fragment implements View.OnClickListen
                 .setPositiveButton("Hapus", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String id_user = editTextId_user.getText().toString();
-                        Call<Value> valueCall = RetrofitClient.getmInstance().getApi().deleteUser(id_user);
+                        String username = editTextUsernamee.getText().toString();
+                        Call<Value> valueCall = RetrofitClient.getmInstance().getApi().deleteUserLog(username);
                         valueCall.enqueue(new Callback<Value>() {
                             @Override
                             public void onResponse(Call<Value> call, Response<Value> response) {
