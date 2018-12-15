@@ -1,5 +1,6 @@
 package com.example.matatabi.padm.activities;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -24,6 +25,7 @@ public class EditUserActivity extends AppCompatActivity {
     private EditText editTextidUser, editTextUsername, editTextPassword;
     private Spinner spinLevelL;
     private Button btn_Ubah_user, btn_hapus_user, btn_batal_user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +49,9 @@ public class EditUserActivity extends AppCompatActivity {
         editTextPassword.setText(password);
 
         String level = intent.getStringExtra("level");
-        if (level.equals("Admin")){
+        if (level.equals("Admin")) {
             spinLevelL.setSelected(true);
-        }else if (level.equals("Mahasiswa")){
+        } else if (level.equals("Mahasiswa")) {
             spinLevelL.setSelected(true);
         }
 
@@ -63,22 +65,26 @@ public class EditUserActivity extends AppCompatActivity {
                         .setPositiveButton("Ubah", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                final ProgressDialog progressDialog = new ProgressDialog(EditUserActivity.this);
+                                progressDialog.setMessage("Sedang Mengubah Data...");
+                                progressDialog.show();
+
                                 String id_user = editTextidUser.getText().toString();
                                 String username = editTextUsername.getText().toString();
                                 String password = editTextPassword.getText().toString();
                                 String level = spinLevelL.getSelectedItem().toString();
 
-                                if (username.isEmpty()){
+                                if (username.isEmpty()) {
                                     editTextUsername.setError("Username Harus Diisi");
                                     editTextUsername.requestFocus();
                                     return;
                                 }
-                                if (password.isEmpty()){
+                                if (password.isEmpty()) {
                                     editTextPassword.setError("Password Harus Diisi");
                                     editTextPassword.requestFocus();
                                     return;
                                 }
-                                if (password.length() < 6){
+                                if (password.length() < 6) {
                                     editTextPassword.setError("Password Harus Lebih 6 Karakter");
                                     editTextPassword.requestFocus();
                                     return;
@@ -88,19 +94,22 @@ public class EditUserActivity extends AppCompatActivity {
                                 call.enqueue(new Callback<Value>() {
                                     @Override
                                     public void onResponse(Call<Value> call, Response<Value> response) {
+                                        progressDialog.dismiss();
                                         String value = response.body().getValue();
                                         String message = response.body().getMessage();
-                                        if (value.equals("1")){
+                                        if (value.equals("1")) {
                                             Toast.makeText(EditUserActivity.this, message, Toast.LENGTH_SHORT).show();
                                             finish();
-                                            startActivity(new Intent(EditUserActivity.this, DataUserActivity.class));
-                                        }else {
+                                            Intent intent = new Intent(EditUserActivity.this, DataUserActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        } else {
                                             Toast.makeText(EditUserActivity.this, message, Toast.LENGTH_SHORT).show();
                                         }
                                     }
 
                                     @Override
                                     public void onFailure(Call<Value> call, Throwable t) {
+                                        progressDialog.dismiss();
                                         t.printStackTrace();
                                         Toast.makeText(EditUserActivity.this, "Gagal Merespon", Toast.LENGTH_SHORT).show();
                                     }
@@ -125,24 +134,31 @@ public class EditUserActivity extends AppCompatActivity {
                         .setPositiveButton("Hapus", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                final ProgressDialog progressDialog = new ProgressDialog(EditUserActivity.this);
+                                progressDialog.setMessage("Sedang Menghapus...");
+                                progressDialog.show();
+
                                 String id_user = editTextidUser.getText().toString();
                                 Call<Value> call = RetrofitClient.getmInstance().getApi().deleteUser(id_user);
                                 call.enqueue(new Callback<Value>() {
                                     @Override
                                     public void onResponse(Call<Value> call, Response<Value> response) {
+                                        progressDialog.dismiss();
                                         String value = response.body().getValue();
                                         String message = response.body().getMessage();
-                                        if (value.equals("1")){
+                                        if (value.equals("1")) {
                                             Toast.makeText(EditUserActivity.this, message, Toast.LENGTH_SHORT).show();
                                             finish();
-                                            startActivity(new Intent(EditUserActivity.this, DataUserActivity.class));
-                                        }else {
+                                            Intent intent = new Intent(EditUserActivity.this, DataUserActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        } else {
                                             Toast.makeText(EditUserActivity.this, message, Toast.LENGTH_SHORT).show();
                                         }
                                     }
 
                                     @Override
                                     public void onFailure(Call<Value> call, Throwable t) {
+                                        progressDialog.dismiss();
                                         t.printStackTrace();
                                         Toast.makeText(EditUserActivity.this, "Gagal Merespon", Toast.LENGTH_SHORT).show();
                                     }
@@ -166,6 +182,7 @@ public class EditUserActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

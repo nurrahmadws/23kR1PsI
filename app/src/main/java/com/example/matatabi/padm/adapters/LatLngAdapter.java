@@ -72,6 +72,7 @@ public class LatLngAdapter extends RecyclerView.Adapter<LatLngAdapter.LatLngView
                     String nm_kelurahan = txtKelurahanLat.getText().toString();
                     String nm_lat = txtLat.getText().toString();
                     String nm_lng = txtLng.getText().toString();
+
                     Intent intentt = new Intent(mcc, DetailLatLngActivity.class);
                     intentt.putExtra("id_latlng", id_latlng);
                     intentt.putExtra("nm_kabupaten", nm_kabupaten);

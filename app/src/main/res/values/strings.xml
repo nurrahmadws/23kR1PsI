@@ -13,4 +13,6 @@
         <item>2018</item>
     </string-array>
     <string name="title_activity_detail_lat_lng">Map</string>
+    <string name="title_activity_show_map_mhs">Map</string>
+    <string name="title_activity_show_maps_all_mhs">Map</string>
 </resources>

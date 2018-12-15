@@ -6,6 +6,7 @@ import com.example.matatabi.padm.model.KelurahanResponse;
 import com.example.matatabi.padm.model.LatlngResponse;
 import com.example.matatabi.padm.model.LoginResponse;
 import com.example.matatabi.padm.model.MahasiswaResponse;
+import com.example.matatabi.padm.model.PadmResponse;
 import com.example.matatabi.padm.model.UsersResponse;
 import com.example.matatabi.padm.model.Value;
 
@@ -177,4 +178,37 @@ public interface ApiRequest {
 
     @GET("mahasiswa/read.php")
     Call<MahasiswaResponse> readMhs(@Query("username") String username);
+
+    @GET("mahasiswa/readAll.php")
+    Call<MahasiswaResponse> readAllMhs();
+
+    @GET("mahasiswa/readDetail.php")
+    Call<MahasiswaResponse> readDetailMhs(@Query("nim") String nim);
+
+    @GET("mahasiswa/showMap.php")
+    Call<MahasiswaResponse> showMapMhs(@Query("nim") String nim);
+
+    @FormUrlEncoded
+    @POST("mahasiswa/edit.php")
+    Call<Value> editMhs(@Field("nim") String nim,
+                          @Field("username") String username,
+                          @Field("nama") String nama,
+                          @Field("no_hp") String no_hp,
+                          @Field("jk") String jk,
+                          @Field("fakultas") String fakultas,
+                          @Field("prodi") String prodi,
+                          @Field("angkatan") String angkatan,
+                          @Field("provinsi") String provinsi,
+                          @Field("nm_kabupaten") String nm_kabupaten,
+                          @Field("nm_kecamatan") String nm_kecamatan,
+                          @Field("nm_kelurahan") String nm_kelurahan,
+                          @Field("nm_lat") String nm_lat,
+                          @Field("nm_lng") String nm_lng);
+
+    @FormUrlEncoded
+    @POST("mahasiswa/delete.php")
+    Call<Value> deleteMahasiswa(@Field("nim") String nim);
+//    DATA PADM
+    @GET("data_padm/total.php")
+    Call<PadmResponse> showPadm();
 }

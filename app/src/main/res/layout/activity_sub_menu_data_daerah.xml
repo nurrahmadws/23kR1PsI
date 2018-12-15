@@ -111,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btn_Lat_lng"
                 android:textColor="@color/colorHomeAccent"
-                android:text="Lat &amp; Lng"
+                android:text="Geolokasi"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:layout_centerHorizontal="true"/>

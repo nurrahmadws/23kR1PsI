@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.matatabi.padm.R;
+import com.example.matatabi.padm.activities.AdminAllDataMhsActivity;
+import com.example.matatabi.padm.activities.DataPadmActivity;
 import com.example.matatabi.padm.activities.DataUserActivity;
 import com.example.matatabi.padm.activities.SubMenuDataDaerahActivity;
 import com.example.matatabi.padm.activities.TentangAplikasiActivity;
@@ -55,6 +57,21 @@ public class AdminHomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), TentangAplikasiActivity.class);
                 getActivity().startActivity(intent);
+            }
+        });
+
+        btn_data_mahasiswa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AdminAllDataMhsActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
+        btn_sebaran_mhs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().startActivity(new Intent(getActivity(), DataPadmActivity.class));
             }
         });
     }

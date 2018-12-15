@@ -1,8 +1,12 @@
 package com.example.matatabi.padm.activities;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +23,7 @@ import com.example.matatabi.padm.api.RetrofitClient;
 import com.example.matatabi.padm.model.Users;
 import com.example.matatabi.padm.model.UsersResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -29,9 +34,11 @@ public class DataUserActivity extends AppCompatActivity implements SearchView.On
 
     private RecyclerView recyclerView;
     private UsersAdapter usersAdapter;
-    private List<Users> usersList;
+    private List<Users> usersList = new ArrayList<>();
     private FloatingActionButton fab;
+    private SwipeRefreshLayout swipe_refresh_users;
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +46,18 @@ public class DataUserActivity extends AppCompatActivity implements SearchView.On
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        swipe_refresh_users = findViewById(R.id.swipe_refresh_users);
+        swipe_refresh_users.setColorSchemeColors(R.color.bgmhsEnd,R.color.colorBackgroundAdduser);
+
         recyclerView = findViewById(R.id.rv_users);
         recyclerView.setLayoutManager(new LinearLayoutManager(DataUserActivity.this));
+
+        swipe_refresh_users.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData();
+            }
+        });
 
         fab = findViewById( R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -53,24 +70,36 @@ public class DataUserActivity extends AppCompatActivity implements SearchView.On
     }
 
     @Override
-    protected void onPostResume() {
-        super.onPostResume();
+    protected void onResume() {
+        super.onResume();
         loadData();
     }
 
     private void loadData(){
+        swipe_refresh_users.setRefreshing(false);
+        final ProgressDialog progressDialog = new ProgressDialog(DataUserActivity.this);
+        progressDialog.setMessage("Memuat Data...");
+        progressDialog.show();
+
         Call<UsersResponse> call = RetrofitClient.getmInstance().getApi().readUsers();
         call.enqueue(new Callback<UsersResponse>() {
             @Override
             public void onResponse(Call<UsersResponse> call, Response<UsersResponse> response) {
-                usersList = response.body().getUsersList();
-                usersAdapter = new UsersAdapter(DataUserActivity.this, usersList);
-                recyclerView.setAdapter(usersAdapter);
+                progressDialog.dismiss();
+                recyclerView.setVisibility(View.VISIBLE);
+
+                String value = response.body().getValue();
+                if (value.equals("1")){
+                    usersList = response.body().getUsersList();
+                    usersAdapter = new UsersAdapter(DataUserActivity.this, usersList);
+                    recyclerView.setAdapter(usersAdapter);
+                    usersAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
             public void onFailure(Call<UsersResponse> call, Throwable t) {
-
+                progressDialog.dismiss();
             }
         });
     }

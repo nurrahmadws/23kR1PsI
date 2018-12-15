@@ -1,8 +1,10 @@
 package com.example.matatabi.padm.activities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -154,6 +156,13 @@ public class AddMahasiswaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 simpanMahasiswa();
+            }
+        });
+        btn_batal_mhs = findViewById(R.id.btn_batal_mhs);
+        btn_batal_mhs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
     }

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="6dp"
+    card_view:cardElevation="5dp"
+    card_view:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="NIM"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+                <TextView
+                    android:id="@+id/txtNimReadAllMhs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Nama"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+                <TextView
+                    android:id="@+id/txtNamaReadAllMhs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/txtUsernameReadAllMhs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+            <TextView
+                android:id="@+id/txtnoHpReadAllMhs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+            <TextView
+                android:id="@+id/txtjkReadAllMhs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+            <TextView
+                android:id="@+id/txtFakultasReadAllMhs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+            <TextView
+                android:id="@+id/txtProdiReadAllMhs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+            <TextView
+                android:id="@+id/txtAngkatanReadAllMhs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+            <TextView
+                android:id="@+id/txtProvinsiReadAllMhs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+            <TextView
+                android:id="@+id/txtKabupatenReadAllMhs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+            <TextView
+                android:id="@+id/txtKecamatanReadAllMhs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+            <TextView
+                android:id="@+id/txtKelurahanReadAllMhs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+            <TextView
+                android:id="@+id/txtLatReadAllMhs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+            <TextView
+                android:id="@+id/txtLngReadAllMhs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

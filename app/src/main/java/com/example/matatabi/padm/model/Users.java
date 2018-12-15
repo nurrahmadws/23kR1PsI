@@ -1,6 +1,6 @@
 package com.example.matatabi.padm.model;
 
-public class Users {
+public class Users{
     private int id_user;
     private String username;
     private String level;
@@ -28,4 +28,5 @@ public class Users {
     public String getPassword() {
         return password;
     }
+
 }

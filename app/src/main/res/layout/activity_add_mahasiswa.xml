@@ -116,10 +116,10 @@
 
             <TextView
                 android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:text="Angkatan : "/>
+                android:text="Angkatan "/>
 
             <Spinner
                 android:id="@+id/spinAngkatan"
@@ -152,7 +152,7 @@
 
             <TextView
                 android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:text="Kabupaten  : "/>
@@ -171,7 +171,7 @@
 
             <TextView
                 android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:text="Kecamatan : "
@@ -191,7 +191,7 @@
 
             <TextView
                 android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:text="Kelurahan : "/>
@@ -210,7 +210,7 @@
 
             <TextView
                 android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:text="Latitude : "/>
@@ -229,7 +229,7 @@
 
             <TextView
                 android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:text="Longtitude : "/>

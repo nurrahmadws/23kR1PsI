@@ -8,7 +8,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/iconn"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -23,45 +23,106 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAxYZcD5r4mLS_0Y2MO1JQF9gqa9BMO2V0" />
 
-        <activity android:name=".activities.MainActivity">
+        <activity
+            android:name=".activities.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.AdminActivity" />
-        <activity android:name=".activities.MahasiswaActivity" />
-        <activity android:name=".activities.DataUserActivity" />
+        <activity
+            android:name=".activities.AdminActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MahasiswaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.DataUserActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.AddUserActivity"
-            android:parentActivityName=".activities.DataUserActivity">
+            android:parentActivityName=".activities.DataUserActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.DataUserActivity" />
         </activity>
-        <activity android:name=".activities.EditUserActivity" />
-        <activity android:name=".activities.SubMenuDataDaerahActivity" />
-        <activity android:name=".activities.DataKabupatenActivity" />
-        <activity android:name=".activities.AddKabupatenActivity" />
-        <activity android:name=".activities.EditKabupatenActivity" />
-        <activity android:name=".activities.DataKecamatanActivity" />
-        <activity android:name=".activities.EditKecamatanActivity" />
-        <activity android:name=".activities.AddKecamatanActivity" />
-        <activity android:name=".activities.DataKelurahanActivity" />
-        <activity android:name=".activities.AddKelurahanActivity" />
-        <activity android:name=".activities.EditKelurahanActivity" />
-        <activity android:name=".activities.DataLatLngActivity" />
-        <activity android:name=".activities.EditLatLngActivity" />
-        <activity android:name=".activities.AddLatlngActivity" />
+        <activity
+            android:name=".activities.EditUserActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.SubMenuDataDaerahActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.DataKabupatenActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.AddKabupatenActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.EditKabupatenActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.DataKecamatanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.EditKecamatanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.AddKecamatanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.DataKelurahanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.AddKelurahanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.EditKelurahanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.DataLatLngActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.EditLatLngActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.AddLatlngActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.DetailLatLngActivity"
-            android:label="@string/title_activity_detail_lat_lng" />
-        <activity android:name=".activities.TentangAplikasiActivity" />
+            android:label="@string/title_activity_detail_lat_lng"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.TentangAplikasiActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.OnBoardingScreenMhs"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.AddMahasiswaActivity"></activity>
+        <activity
+            android:name=".activities.AddMahasiswaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.DetailMhsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.ShowMapMhsActivity"
+            android:label="@string/title_activity_show_map_mhs"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.EditMhsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.ShowMapsAllMhsActivity"
+            android:label="@string/title_activity_show_maps_all_mhs"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.AdminAllDataMhsActivity" />
+        <activity android:name=".activities.AddSaranDaerahActivity" />
+        <activity android:name=".activities.DataPadmActivity"></activity>
     </application>
 
 </manifest>

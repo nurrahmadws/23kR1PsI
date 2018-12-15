@@ -1,5 +1,6 @@
 package com.example.matatabi.padm.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,27 +37,33 @@ public class MainActivity extends AppCompatActivity {
         edtTextUsernameLogin = findViewById(R.id.edtTextUsernameLogin);
         edtTextPasswordLogin = findViewById(R.id.edtTextPasswordLogin);
         sharedPreferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
-        if (sharedPreferences.contains(USERNAME)){
-            edtTextUsernameLogin.setText(sharedPreferences.getString(USERNAME, ""));
-        }
-        if (sharedPreferences.contains(PASSWORD)){
-            edtTextPasswordLogin.setText(sharedPreferences.getString(PASSWORD, ""));
-        }
+//        if (sharedPreferences.contains(USERNAME)){
+//            edtTextUsernameLogin.setText(sharedPreferences.getString(USERNAME, ""));
+//        }
+//        if (sharedPreferences.contains(PASSWORD)){
+//            edtTextPasswordLogin.setText(sharedPreferences.getString(PASSWORD, ""));
+//        }
 
         btnLogin = findViewById(R.id.btn_login);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+                progressDialog.setMessage("Tunggu Sebentar...");
+                progressDialog.show();
+
                 final String username = edtTextUsernameLogin.getText().toString();
                 final String password = edtTextPasswordLogin.getText().toString();
 
                 if (username.isEmpty()){
+                    progressDialog.dismiss();
                     edtTextUsernameLogin.setError("Username Harus di Isi");
                     edtTextUsernameLogin.requestFocus();
                     return;
                 }
                 if (password.isEmpty()){
+                    progressDialog.dismiss();
                     edtTextPasswordLogin.setError("Password Harus di Isi");
                     edtTextPasswordLogin.requestFocus();
                     return;
@@ -67,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                         if (response.isSuccessful()){
+                            progressDialog.dismiss();
                             Boolean value = response.body().getValue();
                             String messagee = response.body().getMessage();
                             if (value){
@@ -104,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, messagee, Toast.LENGTH_LONG).show();
                             }
                         }else {
+                            progressDialog.dismiss();
                             Toast.makeText(MainActivity.this, "Gagal Merespon", Toast.LENGTH_SHORT).show();
                         }
                     }
