@@ -155,7 +155,7 @@
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:text="Kabupaten  : "/>
+                android:text="Kabupaten   "/>
 
             <Spinner
                 android:id="@+id/spinKabupatenM"
@@ -174,7 +174,7 @@
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:text="Kecamatan : "
+                android:text="Kecamatan  "
                 />
 
             <Spinner
@@ -194,7 +194,7 @@
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:text="Kelurahan : "/>
+                android:text="Kelurahan  "/>
 
             <Spinner
                 android:id="@+id/spinKelurahanM"
@@ -213,7 +213,7 @@
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:text="Latitude : "/>
+                android:text="Latitude  "/>
 
             <Spinner
                 android:id="@+id/spinLatM"
@@ -232,7 +232,7 @@
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:text="Longtitude : "/>
+                android:text="Longtitude  "/>
 
             <Spinner
                 android:id="@+id/spinLngM"

@@ -5,6 +5,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -14,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:targetApi="m">
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
@@ -120,9 +126,16 @@
             android:name=".activities.ShowMapsAllMhsActivity"
             android:label="@string/title_activity_show_maps_all_mhs"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.AdminAllDataMhsActivity" />
-        <activity android:name=".activities.AddSaranDaerahActivity" />
-        <activity android:name=".activities.DataPadmActivity"></activity>
+        <activity
+            android:name=".activities.AdminAllDataMhsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.DataPadmActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.RegistrasiActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.GrafikPadmActivity"></activity>
     </application>
 
 </manifest>

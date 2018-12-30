@@ -4,11 +4,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.matatabi.padm.R;
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText edtTextUsernameLogin, edtTextPasswordLogin;
     private Button btnLogin;
+    private TextView txtRegister;
 
     SharedPreferences sharedPreferences;
     public static final String mypreference = "mypref";
@@ -37,12 +40,14 @@ public class MainActivity extends AppCompatActivity {
         edtTextUsernameLogin = findViewById(R.id.edtTextUsernameLogin);
         edtTextPasswordLogin = findViewById(R.id.edtTextPasswordLogin);
         sharedPreferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
-//        if (sharedPreferences.contains(USERNAME)){
-//            edtTextUsernameLogin.setText(sharedPreferences.getString(USERNAME, ""));
-//        }
-//        if (sharedPreferences.contains(PASSWORD)){
-//            edtTextPasswordLogin.setText(sharedPreferences.getString(PASSWORD, ""));
-//        }
+
+        txtRegister = findViewById(R.id.txtRegister);
+        txtRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, RegistrasiActivity.class));
+            }
+        });
 
         btnLogin = findViewById(R.id.btn_login);
 

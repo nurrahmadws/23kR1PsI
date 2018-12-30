@@ -208,6 +208,10 @@ public interface ApiRequest {
     @FormUrlEncoded
     @POST("mahasiswa/delete.php")
     Call<Value> deleteMahasiswa(@Field("nim") String nim);
+
+    @FormUrlEncoded
+    @POST("mahasiswa/search.php")
+    Call<MahasiswaResponse> searchMhs(@Field("searchMhs") String searchMhs);
 //    DATA PADM
     @GET("data_padm/total.php")
     Call<PadmResponse> showPadm();

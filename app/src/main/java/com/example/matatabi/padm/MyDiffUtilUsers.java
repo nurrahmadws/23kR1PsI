@@ -10,51 +10,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyDiffUtilUsers extends DiffUtil.Callback {
-    private List<Users> newusers;
-    private List<Users> oldusers;
+    private List<Users> newListUser;
+    private List<Users> oldListUser;
 
-    public MyDiffUtilUsers(List<Users> newusers, List<Users> oldusers) {
-        this.newusers = newusers;
-        this.oldusers = oldusers;
+    public MyDiffUtilUsers(List<Users> newListUser, List<Users> oldListUser) {
+        this.newListUser = newListUser;
+        this.oldListUser = oldListUser;
     }
 
     @Override
     public int getOldListSize() {
-        return oldusers.size();
+        return oldListUser != null ? oldListUser.size() : 0;
     }
 
     @Override
     public int getNewListSize() {
-        return newusers.size();
+        return newListUser != null ? newListUser.size() : 0;
     }
 
     @Override
-    public boolean areItemsTheSame(int oldItem, int newItem) {
-        return oldItem == newItem;
+    public boolean areItemsTheSame(int i, int i1) {
+        return true;
     }
 
     @Override
-    public boolean areContentsTheSame(int oldItem, int newItem) {
-        return oldusers.get(oldItem) == newusers.get(newItem);
+    public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+        return false;
     }
 
     @Nullable
     @Override
     public Object getChangePayload(int oldItemPosition, int newItemPosition) {
-        Users newUsers = newusers.get(newItemPosition);
-        Users oldUsers = oldusers.get(oldItemPosition);
+        Users newUser = newListUser.get(newItemPosition);
+        Users oldUser = oldListUser.get(oldItemPosition);
 
         Bundle diff = new Bundle();
-        if (!newUsers.getUsername().equals(oldUsers.getUsername())){
-            diff.putString("username", newUsers.getUsername());
+        if (!newUser.getUsername().equals(oldUser.getUsername())){
+            diff.putString("username", newUser.getUsername());
         }
-        if (!newUsers.getPassword().equals(oldUsers.getPassword())){
-            diff.putString("password", newUsers.getPassword());
+        if (!newUser.getPassword().equals(oldUser.getPassword())){
+            diff.putString("password", newUser.getPassword());
         }
-        if (!newUsers.getLevel().equals(oldUsers.getLevel())){
-            diff.putString("level", newUsers.getLevel());
+        if (!newUser.getLevel().equals(oldUser.getLevel())){
+            diff.putString("level", newUser.getLevel());
         }
-        if (diff.size() == 0){
+        if (diff.size()==0){
             return null;
         }
         return diff;

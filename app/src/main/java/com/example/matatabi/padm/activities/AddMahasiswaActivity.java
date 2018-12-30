@@ -81,6 +81,9 @@ public class AddMahasiswaActivity extends AppCompatActivity {
             edtNim.setText(sharedPreferences.getString(USERNAME, ""));
         }
 
+        edtNim.setKeyListener(edtNim.getKeyListener());
+        edtNim.setKeyListener(null);
+
         edtUsername.setKeyListener(edtUsername.getKeyListener());
         edtUsername.setKeyListener(null);
 

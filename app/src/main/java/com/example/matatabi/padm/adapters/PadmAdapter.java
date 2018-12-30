@@ -1,6 +1,7 @@
 package com.example.matatabi.padm.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.matatabi.padm.R;
+import com.example.matatabi.padm.activities.GrafikPadmActivity;
 import com.example.matatabi.padm.model.Padm;
 import java.util.List;
 
