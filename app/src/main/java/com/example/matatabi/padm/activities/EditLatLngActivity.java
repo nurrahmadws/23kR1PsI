@@ -1,5 +1,6 @@
 package com.example.matatabi.padm.activities;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -114,6 +115,10 @@ public class EditLatLngActivity extends AppCompatActivity {
                         .setPositiveButton("Ubah", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                final ProgressDialog progressDialog = new ProgressDialog(EditLatLngActivity.this);
+                                progressDialog.setMessage("Mengubah Data...");
+                                progressDialog.show();
+
                                 String id_latlng = edtTexIdLatEd.getText().toString();
                                 String nm_kabupaten = spinKabEdLat.getSelectedItem().toString();
                                 String nm_kecamatan = spinKecEdLat.getSelectedItem().toString();
@@ -135,6 +140,7 @@ public class EditLatLngActivity extends AppCompatActivity {
                                 call.enqueue(new Callback<Value>() {
                                     @Override
                                     public void onResponse(Call<Value> call, Response<Value> response) {
+                                        progressDialog.dismiss();
                                         String value = response.body().getValue();
                                         String message = response.body().getMessage();
                                         if (value.equals("1")){
@@ -148,7 +154,7 @@ public class EditLatLngActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onFailure(Call<Value> call, Throwable t) {
-
+                                        progressDialog.dismiss();
                                     }
                                 });
                             }
@@ -171,11 +177,15 @@ public class EditLatLngActivity extends AppCompatActivity {
                         .setPositiveButton("Hapus", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                final ProgressDialog progressDialog = new ProgressDialog(EditLatLngActivity.this);
+                                progressDialog.setMessage("Menghapus Data...");
+                                progressDialog.show();
                                 String id_latlng = edtTexIdLatEd.getText().toString();
                                 Call<Value> valueCall = RetrofitClient.getmInstance().getApi().deleteLatlng(id_latlng);
                                 valueCall.enqueue(new Callback<Value>() {
                                     @Override
                                     public void onResponse(Call<Value> call, Response<Value> response) {
+                                        progressDialog.dismiss();
                                         String value = response.body().getValue();
                                         String message = response.body().getMessage();
                                         if (value.equals("1")){
@@ -189,7 +199,7 @@ public class EditLatLngActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onFailure(Call<Value> call, Throwable t) {
-
+                                        progressDialog.dismiss();
                                     }
                                 });
                             }

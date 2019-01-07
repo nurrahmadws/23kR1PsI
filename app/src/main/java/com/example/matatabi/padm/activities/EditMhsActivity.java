@@ -1,5 +1,6 @@
 package com.example.matatabi.padm.activities;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -42,7 +43,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class EditMhsActivity extends AppCompatActivity {
-    private EditText edtNimEditMhs, edtUsernameEditMhs, edtNamaEditMhs, edtHpEditMhs, edtFakultasEditMhs, edtProdiEditMhs, edtProvinsiEditMhs;
+    private EditText edtNimEditMhs, edtUsernameEditMhs, edtNamaEditMhs, edtFakultasEditMhs, edtProdiEditMhs, edtProvinsiEditMhs;
     private RadioGroup radioJkEditMhs;
     private RadioButton radioBtnLakiEditMhs, radioBtnPerempuanEditMhs, radioSexButtonEditMhs;
     private Spinner spinAngkatanEditMhs, spinKabupatenMEditMhs, spinKecamatanMEditMhs, spinKelurahanMEditMhs, spinLatEditMhs, spinLngEditMhs;
@@ -56,7 +57,6 @@ public class EditMhsActivity extends AppCompatActivity {
         edtNimEditMhs = findViewById(R.id.edtNimEditMhs);
         edtUsernameEditMhs = findViewById(R.id.edtUsernameEditMhs);
         edtNamaEditMhs = findViewById(R.id.edtNamaEditMhs);
-        edtHpEditMhs = findViewById(R.id.edtHpEditMhs);
         edtFakultasEditMhs = findViewById(R.id.edtFakultasEditMhs);
         edtProdiEditMhs = findViewById(R.id.edtProdiEditMhs);
         edtProvinsiEditMhs = findViewById(R.id.edtProvinsiEditMhs);
@@ -82,8 +82,6 @@ public class EditMhsActivity extends AppCompatActivity {
         edtUsernameEditMhs.setText(username);;
         String nama = intent.getStringExtra("nama");
         edtNamaEditMhs.setText(nama);
-        String no_hp = intent.getStringExtra("no_hp");
-        edtHpEditMhs.setText(no_hp);
         String jk = intent.getStringExtra("jk");
         if (jk.equals("Perempuan")){
             radioBtnPerempuanEditMhs.setChecked(true);
@@ -270,15 +268,18 @@ public class EditMhsActivity extends AppCompatActivity {
                 .setPositiveButton("Ubah", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        final ProgressDialog progressDialog = new ProgressDialog(EditMhsActivity.this);
+                        progressDialog.setMessage("Mengubah Data...");
+                        progressDialog.show();
+
                         String nim = edtNimEditMhs.getText().toString();
                         String username = edtUsernameEditMhs.getText().toString();
                         String nama = edtNamaEditMhs.getText().toString();
-                        String no_hp = edtHpEditMhs.getText().toString();
                         int selectedId = radioJkEditMhs.getCheckedRadioButtonId();
                         radioSexButtonEditMhs = findViewById(selectedId);
                         String jk = radioSexButtonEditMhs.getText().toString();
                         String fakultas = edtFakultasEditMhs.getText().toString();
-                        String prodi = edtProdiEditMhs.getText().toString();
+                        final String prodi = edtProdiEditMhs.getText().toString();
                         String angkatan = spinAngkatanEditMhs.getSelectedItem().toString();
                         String provinsi = edtProvinsiEditMhs.getText().toString();
                         String nm_kabupaten = spinKabupatenMEditMhs.getSelectedItem().toString();
@@ -292,16 +293,12 @@ public class EditMhsActivity extends AppCompatActivity {
                             edtNamaEditMhs.requestFocus();
                             return;
                         }
-                        if (no_hp.isEmpty()){
-                            edtHpEditMhs.setError("No Handphone Harus Diisi");
-                            edtHpEditMhs.requestFocus();
-                            return;
-                        }
-                        Call<Value> call = RetrofitClient.getmInstance().getApi().editMhs(nim, username, nama, no_hp, jk, fakultas, prodi,
+                        Call<Value> call = RetrofitClient.getmInstance().getApi().editMhs(nim, username, nama, jk, fakultas, prodi,
                                 angkatan, provinsi, nm_kabupaten, nm_kecamatan, nm_kelurahan, nm_lat, nm_lng);
                         call.enqueue(new Callback<Value>() {
                             @Override
                             public void onResponse(Call<Value> call, Response<Value> response) {
+                                progressDialog.dismiss();
                                 String value = response.body().getValue();
                                 String message = response.body().getMessage();
                                 if (value.equals("1")){
@@ -314,7 +311,7 @@ public class EditMhsActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Call<Value> call, Throwable t) {
-
+                                progressDialog.dismiss();
                             }
                         });
                     }

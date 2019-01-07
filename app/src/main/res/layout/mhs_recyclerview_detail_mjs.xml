@@ -78,23 +78,6 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="No. Handphone"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
-
-                <TextView
-                    android:id="@+id/txtHpReadDetailMhs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
                     android:text="Jenis Kelamin"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 

@@ -1,5 +1,6 @@
 package com.example.matatabi.padm.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -47,6 +48,7 @@ public class DataLatLngActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView = findViewById(R.id.rv_latlng);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(DataLatLngActivity.this));
 
         spinKabforLat = findViewById(R.id.spinKabforLat);
@@ -166,12 +168,17 @@ public class DataLatLngActivity extends AppCompatActivity {
         }
     }
     private void listLatlng(String kelurahanName){
+        final ProgressDialog progressDialog = new ProgressDialog(DataLatLngActivity.this);
+        progressDialog.setMessage("Memuat Data...");
+        progressDialog.show();
+
         String nm_kelurahan = spinKelforLat.getSelectedItem().toString();
         if (kelurahanName.equals(nm_kelurahan)){
             Call<LatlngResponse> latlngResponseCall = RetrofitClient.getmInstance().getApi().readLatlng(nm_kelurahan);
             latlngResponseCall.enqueue(new Callback<LatlngResponse>() {
                 @Override
                 public void onResponse(Call<LatlngResponse> call, Response<LatlngResponse> response) {
+                    progressDialog.dismiss();
                     latlngList = response.body().getLatlngList();
                     latLngAdapter = new LatLngAdapter(DataLatLngActivity.this, latlngList);
                     recyclerView.setAdapter(latLngAdapter);
@@ -179,7 +186,7 @@ public class DataLatLngActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<LatlngResponse> call, Throwable t) {
-
+                    progressDialog.dismiss();
                 }
             });
         }

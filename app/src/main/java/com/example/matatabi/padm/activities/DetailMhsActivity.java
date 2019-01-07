@@ -1,5 +1,6 @@
 package com.example.matatabi.padm.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -46,16 +47,22 @@ public class DetailMhsActivity extends AppCompatActivity {
         editNimm.setKeyListener(null);
 
         recyclerView = findViewById(R.id.rv_detail_mhs);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(DetailMhsActivity.this));
 
         materialDesignFAM = findViewById(R.id.FabdetailMhs);
         floatingActionButton1 = findViewById(R.id.fab_tampil_peta_mhs);
+
+        final ProgressDialog progressDialog = new ProgressDialog(DetailMhsActivity.this);
+        progressDialog.setMessage("Memuat Data...");
+        progressDialog.show();
 
         final String nim = editNimm.getText().toString();
         Call<MahasiswaResponse> call = RetrofitClient.getmInstance().getApi().readDetailMhs(nim);
         call.enqueue(new Callback<MahasiswaResponse>() {
             @Override
             public void onResponse(Call<MahasiswaResponse> call, Response<MahasiswaResponse> response) {
+                progressDialog.dismiss();
                 mahasiswaList = response.body().getMahasiswaList();
                 detailMhsAdapter = new DetailMhsAdapter(DetailMhsActivity.this, mahasiswaList);
                 recyclerView.setAdapter(detailMhsAdapter);

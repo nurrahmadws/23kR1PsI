@@ -1,5 +1,6 @@
 package com.example.matatabi.padm.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -63,6 +64,10 @@ public class AddKecamatanActivity extends AppCompatActivity {
         btn_simpan_kec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final ProgressDialog progressDialog = new ProgressDialog(AddKecamatanActivity.this);
+                progressDialog.setMessage("Menambahkan Data...");
+                progressDialog.show();
+
                 String nm_kabupaten = spinKabAdd.getSelectedItem().toString();
                 String nm_kecamatan = edtTexKecamatanAdd.getText().toString();
 
@@ -75,6 +80,7 @@ public class AddKecamatanActivity extends AppCompatActivity {
                 call.enqueue(new Callback<Value>() {
                     @Override
                     public void onResponse(Call<Value> call, Response<Value> response) {
+                        progressDialog.dismiss();
                         String value = response.body().getValue();
                         String message = response.body().getMessage();
                         if (value.equals("1")){
@@ -88,6 +94,7 @@ public class AddKecamatanActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<Value> call, Throwable t) {
+                        progressDialog.dismiss();
                         t.printStackTrace();
                         Toast.makeText(AddKecamatanActivity.this, "Gagal Merespon", Toast.LENGTH_SHORT).show();
                     }

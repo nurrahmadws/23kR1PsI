@@ -1,5 +1,6 @@
 package com.example.matatabi.padm.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +45,7 @@ public class DataKelurahanActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView = findViewById(R.id.rv_kelurahans);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(DataKelurahanActivity.this));
         spinKabforKel = findViewById(R.id.spinKabforKel);
         spinKecforKel = findViewById(R.id.spinKecforKel);
@@ -123,12 +125,17 @@ public class DataKelurahanActivity extends AppCompatActivity {
         }
     }
     private void listKelurahan(String kecamatanName){
+        final ProgressDialog progressDialog = new ProgressDialog(DataKelurahanActivity.this);
+        progressDialog.setMessage("Memuat Data...");
+        progressDialog.show();
+
         String nm_kecamatan = spinKecforKel.getSelectedItem().toString();
         if (kecamatanName.equals(nm_kecamatan)){
             Call<KelurahanResponse> kelurahanResponseCall = RetrofitClient.getmInstance().getApi().readKel(nm_kecamatan);
             kelurahanResponseCall.enqueue(new Callback<KelurahanResponse>() {
                 @Override
                 public void onResponse(Call<KelurahanResponse> call, Response<KelurahanResponse> response) {
+                    progressDialog.dismiss();
                     kelurahanList = response.body().getKelurahanList();
                     kelurahanAdapter = new KelurahanAdapter(DataKelurahanActivity.this, kelurahanList);
                     recyclerView.setAdapter(kelurahanAdapter);
@@ -136,7 +143,7 @@ public class DataKelurahanActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<KelurahanResponse> call, Throwable t) {
-
+                    progressDialog.dismiss();
                 }
             });
         }

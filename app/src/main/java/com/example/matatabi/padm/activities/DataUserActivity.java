@@ -3,7 +3,6 @@ package com.example.matatabi.padm.activities;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,7 +11,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,10 +45,12 @@ public class DataUserActivity extends AppCompatActivity implements SearchView.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         swipe_refresh_users = findViewById(R.id.swipe_refresh_users);
-        swipe_refresh_users.setColorSchemeColors(R.color.bgmhsEnd,R.color.colorBackgroundAdduser);
+        swipe_refresh_users.setColorSchemeColors(R.color.bgmhsEnd,R.color.colorBackgroundAdduser,R.color.colorHomeAccent,R.color.colorHomeYellow);
 
         recyclerView = findViewById(R.id.rv_users);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(DataUserActivity.this));
+        usersList = new ArrayList<>();
 
         swipe_refresh_users.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -58,7 +58,6 @@ public class DataUserActivity extends AppCompatActivity implements SearchView.On
                 loadData();
             }
         });
-
         fab = findViewById( R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

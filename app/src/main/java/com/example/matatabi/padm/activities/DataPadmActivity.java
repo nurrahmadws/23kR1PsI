@@ -1,5 +1,6 @@
 package com.example.matatabi.padm.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -38,15 +39,21 @@ public class DataPadmActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView = findViewById(R.id.rv_padm);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(DataPadmActivity.this));
 
         materialDesignFAM = findViewById(R.id.data_padm);
         floatingActionButton = findViewById(R.id.fab_show_chart);
 
+        final ProgressDialog progressDialog = new ProgressDialog(DataPadmActivity.this);
+        progressDialog.setMessage("Memuat Data...");
+        progressDialog.show();
+
         Call<PadmResponse> call = RetrofitClient.getmInstance().getApi().showPadm();
         call.enqueue(new Callback<PadmResponse>() {
             @Override
             public void onResponse(@NonNull Call<PadmResponse> call, @NonNull Response<PadmResponse> response) {
+                progressDialog.dismiss();
                 padmList = response.body().getPadmList();
                 padmAdapter = new PadmAdapter(DataPadmActivity.this, padmList);
                 recyclerView.setAdapter(padmAdapter);
@@ -55,7 +62,7 @@ public class DataPadmActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<PadmResponse> call, Throwable t) {
-
+                progressDialog.dismiss();
             }
         });
 

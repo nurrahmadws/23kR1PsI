@@ -53,7 +53,6 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
         mahasiswaViewHolder.txtNim.setText(mahasiswa.getNim());
         mahasiswaViewHolder.txtNama.setText(mahasiswa.getNama());
         mahasiswaViewHolder.txtUsernameMhs.setText(mahasiswa.getUsername());
-        mahasiswaViewHolder.txtno_hp.setText(mahasiswa.getNo_hp());
         mahasiswaViewHolder.txtJk.setText(mahasiswa.getJk());
         mahasiswaViewHolder.txtFakultas.setText(mahasiswa.getFakultas());
         mahasiswaViewHolder.txtProdi.setText(mahasiswa.getProdi());
@@ -72,7 +71,7 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
     }
 
     class MahasiswaViewHolder extends RecyclerView.ViewHolder {
-        TextView txtNim, txtUsernameMhs, txtNama, txtno_hp, txtJk, txtFakultas, txtProdi, txtAngkatan, txtProvinsi, txtKabupaten, txtKecamatan, txtKelurahan, txtLat, txtLNg;
+        TextView txtNim, txtUsernameMhs, txtNama, txtJk, txtFakultas, txtProdi, txtAngkatan, txtProvinsi, txtKabupaten, txtKecamatan, txtKelurahan, txtLat, txtLNg;
         FloatingActionMenu materialDesignFAM;
         FloatingActionButton floatingActionButton2, floatingActionButton3, floatingActionButton4;
         static final String mypreference = "mypref";
@@ -83,7 +82,6 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
             txtNim = itemView.findViewById(R.id.txtNim);
             txtUsernameMhs = itemView.findViewById(R.id.txtUsernameMhs);
             txtNama = itemView.findViewById(R.id.txtNama);
-            txtno_hp = itemView.findViewById(R.id.txtHp);
             txtJk = itemView.findViewById(R.id.txtjk);
             txtFakultas = itemView.findViewById(R.id.txtFakultas);
             txtProdi = itemView.findViewById(R.id.txtProdi);
@@ -116,7 +114,6 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
                     String nim = txtNim.getText().toString();
                     String username = txtUsernameMhs.getText().toString();
                     String nama = txtNama.getText().toString();
-                    String no_hp = txtno_hp.getText().toString();
                     String jk = txtJk.getText().toString();
                     String fakultas = txtFakultas.getText().toString();
                     String prodi = txtProdi.getText().toString();
@@ -132,7 +129,6 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
                     intent.putExtra("nim", nim);
                     intent.putExtra("username", username);
                     intent.putExtra("nama", nama);
-                    intent.putExtra("no_hp", no_hp);
                     intent.putExtra("jk", jk);
                     intent.putExtra("fakultas", fakultas);
                     intent.putExtra("prodi", prodi);

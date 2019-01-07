@@ -4,7 +4,6 @@ public class Mahasiswa {
     private String nim;
     private String username;
     private String nama;
-    private String no_hp;
     private String jk;
     private String fakultas;
     private String prodi;
@@ -16,11 +15,10 @@ public class Mahasiswa {
     private String nm_lat;
     private String nm_lng;
 
-    public Mahasiswa(String nim, String username, String nama, String no_hp, String jk, String fakultas, String prodi, String angkatan, String provinsi, String nm_kabupaten, String nm_kecamatan, String nm_kelurahan, String nm_lat, String nm_lng) {
+    public Mahasiswa(String nim, String username, String nama, String jk, String fakultas, String prodi, String angkatan, String provinsi, String nm_kabupaten, String nm_kecamatan, String nm_kelurahan, String nm_lat, String nm_lng) {
         this.nim = nim;
         this.username = username;
         this.nama = nama;
-        this.no_hp = no_hp;
         this.jk = jk;
         this.fakultas = fakultas;
         this.prodi = prodi;
@@ -43,10 +41,6 @@ public class Mahasiswa {
 
     public String getNama() {
         return nama;
-    }
-
-    public String getNo_hp() {
-        return no_hp;
     }
 
     public String getJk() {

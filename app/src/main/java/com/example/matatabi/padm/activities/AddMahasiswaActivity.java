@@ -1,5 +1,6 @@
 package com.example.matatabi.padm.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -40,7 +41,7 @@ import retrofit2.Response;
 
 public class AddMahasiswaActivity extends AppCompatActivity {
 
-    private EditText edtNim, edtUsername,edtNama, edtHp, edtFakultas, edtProdi, edtProvinsi;
+    private EditText edtNim, edtUsername,edtNama, edtFakultas, edtProdi, edtProvinsi;
     private RadioGroup radioJk;
     private RadioButton radioSexButton;
     private Spinner spinAngkatan, spinKabupatenM, spinKecamatanM, spinKelurahanM, spinLat, spinLng;
@@ -59,7 +60,6 @@ public class AddMahasiswaActivity extends AppCompatActivity {
         edtNim = findViewById(R.id.edtNim);
         edtUsername = findViewById(R.id.edtUsername);
         edtNama = findViewById(R.id.edtNama);
-        edtHp = findViewById(R.id.edtHp);
         edtFakultas = findViewById(R.id.edtFakultas);
         edtProdi = findViewById(R.id.edtProdi);
         edtProvinsi = findViewById(R.id.edtProvinsi);
@@ -256,17 +256,20 @@ public class AddMahasiswaActivity extends AppCompatActivity {
     }
 
     private void simpanMahasiswa(){
+        final ProgressDialog progressDialog = new ProgressDialog(AddMahasiswaActivity.this);
+        progressDialog.setMessage("Menambahkan Data...");
+        progressDialog.show();
+
         String nim = edtNim.getText().toString().trim();
         String username = edtUsername.getText().toString();
         String nama = edtNama.getText().toString().trim();
-        String no_hp = edtHp.getText().toString().trim();
 
         int selectedId = radioJk.getCheckedRadioButtonId();
         radioSexButton = findViewById(selectedId);
         String jk = radioSexButton.getText().toString().trim();
 
         String fakultas = edtFakultas.getText().toString().trim();
-        String prodi = edtProdi.getText().toString().trim();
+        final String prodi = edtProdi.getText().toString().trim();
         String angkatan = spinAngkatan.getSelectedItem().toString().trim();
         String provinsi = edtProvinsi.getText().toString().trim();
         String nm_kabupaten = spinKabupatenM.getSelectedItem().toString().trim();
@@ -285,17 +288,13 @@ public class AddMahasiswaActivity extends AppCompatActivity {
             edtNama.requestFocus();
             return;
         }
-        if (no_hp.isEmpty()){
-            edtHp.setError("No Hp Harus Diisi");
-            edtHp.requestFocus();
-            return;
-        }
 
-        Call<Value> call = RetrofitClient.getmInstance().getApi().insertMhs(nim, username, nama, no_hp, jk, fakultas, prodi, angkatan, provinsi, nm_kabupaten,
+        Call<Value> call = RetrofitClient.getmInstance().getApi().insertMhs(nim, username, nama, jk, fakultas, prodi, angkatan, provinsi, nm_kabupaten,
                 nm_kecamatan, nm_kelurahan, nm_lat, nm_lng);
         call.enqueue(new Callback<Value>() {
             @Override
             public void onResponse(Call<Value> call, Response<Value> response) {
+                progressDialog.dismiss();
                 String value = response.body().getValue();
                 String message = response.body().getMessage();
                 if (value.equals("1")){
@@ -308,6 +307,7 @@ public class AddMahasiswaActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Value> call, Throwable t) {
+                progressDialog.dismiss();
                 t.printStackTrace();
                 Toast.makeText(AddMahasiswaActivity.this, "Gagal Merespon", Toast.LENGTH_SHORT).show();
             }

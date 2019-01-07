@@ -37,7 +37,6 @@ public class AllMahasiswaAdapter extends RecyclerView.Adapter<AllMahasiswaAdapte
         allMahasiswaViewHolder.txtNimReadAllMhs.setText(mahasiswa.getNim());
         allMahasiswaViewHolder.txtUsernameReasAllMhs.setText(mahasiswa.getUsername());
         allMahasiswaViewHolder.txtNamaReadAllMhs.setText(mahasiswa.getNama());
-        allMahasiswaViewHolder.txtno_hpReadAllMhs.setText(mahasiswa.getNo_hp());
         allMahasiswaViewHolder.txtJkReadAllMhs.setText(mahasiswa.getJk());
         allMahasiswaViewHolder.txtFakultasReadAllMhs.setText(mahasiswa.getFakultas());
         allMahasiswaViewHolder.txtProdiReadAllMhs.setText(mahasiswa.getProdi());
@@ -56,13 +55,12 @@ public class AllMahasiswaAdapter extends RecyclerView.Adapter<AllMahasiswaAdapte
     }
 
     class AllMahasiswaViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView txtNimReadAllMhs, txtUsernameReasAllMhs, txtNamaReadAllMhs, txtno_hpReadAllMhs, txtJkReadAllMhs, txtFakultasReadAllMhs, txtProdiReadAllMhs, txtAngkatanReadAllMhs, txtProvinsiReadAllMhs, txtKabupatenReadAllMhs, txtKecamatanReadAllMhs, txtKelurahanReadAllMhs, txtLatReadAllMhs, txtLNgReadAllMhs;
+        TextView txtNimReadAllMhs, txtUsernameReasAllMhs, txtNamaReadAllMhs, txtJkReadAllMhs, txtFakultasReadAllMhs, txtProdiReadAllMhs, txtAngkatanReadAllMhs, txtProvinsiReadAllMhs, txtKabupatenReadAllMhs, txtKecamatanReadAllMhs, txtKelurahanReadAllMhs, txtLatReadAllMhs, txtLNgReadAllMhs;
         public AllMahasiswaViewHolder(@NonNull View itemView) {
             super(itemView);
             txtNimReadAllMhs = itemView.findViewById(R.id.txtNimReadAllMhs);
             txtUsernameReasAllMhs = itemView.findViewById(R.id.txtUsernameReadAllMhs);
             txtNamaReadAllMhs = itemView.findViewById(R.id.txtNamaReadAllMhs);
-            txtno_hpReadAllMhs = itemView.findViewById(R.id.txtnoHpReadAllMhs);
             txtJkReadAllMhs = itemView.findViewById(R.id.txtjkReadAllMhs);
             txtFakultasReadAllMhs = itemView.findViewById(R.id.txtFakultasReadAllMhs);
             txtProdiReadAllMhs = itemView.findViewById(R.id.txtProdiReadAllMhs);
@@ -81,7 +79,6 @@ public class AllMahasiswaAdapter extends RecyclerView.Adapter<AllMahasiswaAdapte
             String nim = txtNimReadAllMhs.getText().toString();
             String username = txtUsernameReasAllMhs.getText().toString();
             String nama = txtNamaReadAllMhs.getText().toString();
-            String no_hp = txtno_hpReadAllMhs.getText().toString();
             String jk = txtJkReadAllMhs.getText().toString();
             String fakultas = txtFakultasReadAllMhs.getText().toString();
             String prodi = txtProdiReadAllMhs.getText().toString();
@@ -97,7 +94,6 @@ public class AllMahasiswaAdapter extends RecyclerView.Adapter<AllMahasiswaAdapte
             intent.putExtra("nim", nim);
             intent.putExtra("username", username);
             intent.putExtra("nama", nama);
-            intent.putExtra("no_hp", no_hp);
             intent.putExtra("jk", jk);
             intent.putExtra("fakultas", fakultas);
             intent.putExtra("prodi", prodi);

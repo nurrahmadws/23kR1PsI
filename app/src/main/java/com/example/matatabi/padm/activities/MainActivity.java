@@ -7,8 +7,12 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatCheckBox;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText edtTextUsernameLogin, edtTextPasswordLogin;
     private Button btnLogin;
     private TextView txtRegister;
+    private AppCompatCheckBox checkBox;
 
     SharedPreferences sharedPreferences;
     public static final String mypreference = "mypref";
@@ -40,6 +45,18 @@ public class MainActivity extends AppCompatActivity {
         edtTextUsernameLogin = findViewById(R.id.edtTextUsernameLogin);
         edtTextPasswordLogin = findViewById(R.id.edtTextPasswordLogin);
         sharedPreferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+
+        checkBox = findViewById(R.id.checkboxPass);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!isChecked){
+                    edtTextPasswordLogin.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }else {
+                    edtTextPasswordLogin.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+            }
+        });
 
         txtRegister = findViewById(R.id.txtRegister);
         txtRegister.setOnClickListener(new View.OnClickListener() {
@@ -114,17 +131,19 @@ public class MainActivity extends AppCompatActivity {
                                 }
 
                             }else {
+                                progressDialog.dismiss();
                                 Toast.makeText(MainActivity.this, messagee, Toast.LENGTH_LONG).show();
                             }
                         }else {
                             progressDialog.dismiss();
-                            Toast.makeText(MainActivity.this, "Gagal Merespon", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Gagal Terhubung Internet", Toast.LENGTH_LONG).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<LoginResponse> call, Throwable t) {
-
+                        progressDialog.dismiss();
+                        Toast.makeText(MainActivity.this, "Server Gagal Merespon", Toast.LENGTH_LONG).show();
                     }
                 });
             }

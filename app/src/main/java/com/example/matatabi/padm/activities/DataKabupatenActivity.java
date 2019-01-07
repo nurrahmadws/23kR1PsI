@@ -1,5 +1,6 @@
 package com.example.matatabi.padm.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
@@ -39,6 +40,7 @@ public class DataKabupatenActivity extends AppCompatActivity implements SearchVi
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView = findViewById(R.id.rv_kabupatens);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(DataKabupatenActivity.this));
 
         fab = findViewById(R.id.fab_kab);
@@ -57,10 +59,15 @@ public class DataKabupatenActivity extends AppCompatActivity implements SearchVi
     }
 
     private void loadData(){
+        final ProgressDialog progressDialog = new ProgressDialog(DataKabupatenActivity.this);
+        progressDialog.setMessage("Memuat Data...");
+        progressDialog.show();
+
         Call<KabupatenResponse> call = RetrofitClient.getmInstance().getApi().readKabkot();
         call.enqueue(new Callback<KabupatenResponse>() {
             @Override
             public void onResponse(Call<KabupatenResponse> call, Response<KabupatenResponse> response) {
+                progressDialog.dismiss();
                 kabupatenList = response.body().getKabupatenList();
                 kabupatenAdapter = new KabupatenAdapter(DataKabupatenActivity.this, kabupatenList);
                 recyclerView.setAdapter(kabupatenAdapter);
@@ -68,7 +75,7 @@ public class DataKabupatenActivity extends AppCompatActivity implements SearchVi
 
             @Override
             public void onFailure(Call<KabupatenResponse> call, Throwable t) {
-
+                progressDialog.dismiss();
             }
         });
     }

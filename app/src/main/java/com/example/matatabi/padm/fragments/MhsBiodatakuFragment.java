@@ -1,6 +1,7 @@
 package com.example.matatabi.padm.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,9 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.matatabi.padm.R;
 import com.example.matatabi.padm.activities.AddMahasiswaActivity;
+import com.example.matatabi.padm.activities.MainActivity;
 import com.example.matatabi.padm.adapters.MahasiswaAdapter;
 import com.example.matatabi.padm.api.RetrofitClient;
 import com.example.matatabi.padm.model.Mahasiswa;
@@ -71,12 +74,16 @@ public class MhsBiodatakuFragment extends Fragment {
     }
 
     private void loadData(){
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Mengambil Data...");
+        progressDialog.show();
         String username = txtUsernameMhsRead.getText().toString();
         Call<MahasiswaResponse> call = RetrofitClient.getmInstance().getApi().readMhs(username);
         call.enqueue(new Callback<MahasiswaResponse>() {
             @SuppressLint("RestrictedApi")
             @Override
             public void onResponse(Call<MahasiswaResponse> call, Response<MahasiswaResponse> response) {
+                progressDialog.dismiss();
                 mahasiswaList = response.body().getMahasiswaList();
                 mahasiswaAdapter = new MahasiswaAdapter(getActivity(), mahasiswaList);
                 recyclerView.setAdapter(mahasiswaAdapter);
@@ -91,7 +98,8 @@ public class MhsBiodatakuFragment extends Fragment {
 
             @Override
             public void onFailure(Call<MahasiswaResponse> call, Throwable t) {
-
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(), "Tidak Terhubung Internet", Toast.LENGTH_SHORT).show();
             }
         });
     }

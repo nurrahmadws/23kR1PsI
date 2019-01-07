@@ -35,7 +35,6 @@ public class DetailMhsAdapter extends RecyclerView.Adapter<DetailMhsAdapter.Deta
         detailMhsViewHolder.txtNimReadDetailMhs.setText(mahasiswa.getNim());
         detailMhsViewHolder.txtUsernameReadDetailMhs.setText(mahasiswa.getUsername());
         detailMhsViewHolder.txtNamaReadDetailMhs.setText(mahasiswa.getNama());
-        detailMhsViewHolder.txtno_hpReadDetailMhs.setText(mahasiswa.getNo_hp());
         detailMhsViewHolder.txtJkReadDetailMhs.setText(mahasiswa.getJk());
         detailMhsViewHolder.txtFakultasReadDetailMhs.setText(mahasiswa.getFakultas());
         detailMhsViewHolder.txtProdiReadDetailMhs.setText(mahasiswa.getProdi());
@@ -54,13 +53,12 @@ public class DetailMhsAdapter extends RecyclerView.Adapter<DetailMhsAdapter.Deta
     }
 
     class DetailMhsViewHolder extends RecyclerView.ViewHolder{
-        TextView txtNimReadDetailMhs, txtUsernameReadDetailMhs, txtNamaReadDetailMhs, txtno_hpReadDetailMhs, txtJkReadDetailMhs, txtFakultasReadDetailMhs, txtProdiReadDetailMhs, txtAngkatanReadDetailMhs, txtProvinsiReadDetailMhs, txtKabupatenReadDetailMhs, txtKecamatanReadDetailMhs, txtKelurahanReadDetailMhs, txtLatReadDetailMhs, txtLNgReadDetailMhs;
+        TextView txtNimReadDetailMhs, txtUsernameReadDetailMhs, txtNamaReadDetailMhs, txtJkReadDetailMhs, txtFakultasReadDetailMhs, txtProdiReadDetailMhs, txtAngkatanReadDetailMhs, txtProvinsiReadDetailMhs, txtKabupatenReadDetailMhs, txtKecamatanReadDetailMhs, txtKelurahanReadDetailMhs, txtLatReadDetailMhs, txtLNgReadDetailMhs;
         public DetailMhsViewHolder(@NonNull View itemView) {
             super(itemView);
             txtNimReadDetailMhs = itemView.findViewById(R.id.txtNimReadDetailMhs);
             txtUsernameReadDetailMhs = itemView.findViewById(R.id.txtUsernameMhsReadDetailMhs);
             txtNamaReadDetailMhs = itemView.findViewById(R.id.txtNamaReadDetailMhs);
-            txtno_hpReadDetailMhs = itemView.findViewById(R.id.txtHpReadDetailMhs);
             txtJkReadDetailMhs = itemView.findViewById(R.id.txtjkReadDetailMhs);
             txtFakultasReadDetailMhs = itemView.findViewById(R.id.txtFakultasReadDetailMhs);
             txtProdiReadDetailMhs = itemView.findViewById(R.id.txtProdiReadDetailMhs);

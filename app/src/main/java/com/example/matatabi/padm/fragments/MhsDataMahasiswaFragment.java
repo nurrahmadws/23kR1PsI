@@ -1,5 +1,6 @@
 package com.example.matatabi.padm.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.matatabi.padm.R;
 import com.example.matatabi.padm.adapters.AllMahasiswaAdapter;
@@ -52,10 +54,14 @@ public class MhsDataMahasiswaFragment extends Fragment implements SearchView.OnQ
     }
 
     private void loadData(){
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Mengambil Data...");
+        progressDialog.show();
         Call<MahasiswaResponse> call = RetrofitClient.getmInstance().getApi().readAllMhs();
         call.enqueue(new Callback<MahasiswaResponse>() {
             @Override
             public void onResponse(Call<MahasiswaResponse> call, Response<MahasiswaResponse> response) {
+                progressDialog.dismiss();
                 mahasiswaList = response.body().getMahasiswaList();
                 allMahasiswaAdapter = new AllMahasiswaAdapter(getActivity(), mahasiswaList);
                 recyclerView.setAdapter(allMahasiswaAdapter);
@@ -63,7 +69,8 @@ public class MhsDataMahasiswaFragment extends Fragment implements SearchView.OnQ
 
             @Override
             public void onFailure(Call<MahasiswaResponse> call, Throwable t) {
-
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(), "Tidak Terhubung Internet", Toast.LENGTH_SHORT).show();
             }
         });
     }

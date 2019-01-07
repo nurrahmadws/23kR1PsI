@@ -1,5 +1,6 @@
 package com.example.matatabi.padm.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -43,6 +44,7 @@ public class DataKecamatanActivity extends AppCompatActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView = findViewById(R.id.rv_kecamatans);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(DataKecamatanActivity.this));
         spinKabforKec = findViewById(R.id.spinKabforKec);
 
@@ -92,6 +94,10 @@ public class DataKecamatanActivity extends AppCompatActivity{
     }
 
     private void listKecamatan(String kabupatenName){
+        final ProgressDialog progressDialog = new ProgressDialog(DataKecamatanActivity.this);
+        progressDialog.setMessage("Memuat Data...");
+        progressDialog.show();
+
         String nm_kabupaten = spinKabforKec.getSelectedItem().toString();
 
         if (kabupatenName.equals(nm_kabupaten)){
@@ -99,6 +105,7 @@ public class DataKecamatanActivity extends AppCompatActivity{
             call.enqueue(new Callback<KecamatanResponse>() {
                 @Override
                 public void onResponse(Call<KecamatanResponse> call, Response<KecamatanResponse> response) {
+                    progressDialog.dismiss();
                     kecamatanList = response.body().getKecamatanList();
                     kecamatanAdapter = new KecamatanAdapter(DataKecamatanActivity.this, kecamatanList);
                     recyclerView.setAdapter(kecamatanAdapter);
@@ -106,7 +113,7 @@ public class DataKecamatanActivity extends AppCompatActivity{
 
                 @Override
                 public void onFailure(Call<KecamatanResponse> call, Throwable t) {
-
+                    progressDialog.dismiss();
                 }
             });
         }

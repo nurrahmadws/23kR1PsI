@@ -1,5 +1,6 @@
 package com.example.matatabi.padm.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -95,6 +96,10 @@ public class AddLatlngActivity extends AppCompatActivity {
         btn_simpan_Lat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final ProgressDialog progressDialog = new ProgressDialog(AddLatlngActivity.this);
+                progressDialog.setMessage("Menambahkan Data...");
+                progressDialog.show();
+
                 String nm_kabupaten = spinKabAddLat.getSelectedItem().toString();
                 String nm_kecamatan = spinKecAddLat.getSelectedItem().toString();
                 String nm_kelurahan = spinKelAddLat.getSelectedItem().toString();
@@ -115,6 +120,7 @@ public class AddLatlngActivity extends AppCompatActivity {
                 call.enqueue(new Callback<Value>() {
                     @Override
                     public void onResponse(Call<Value> call, Response<Value> response) {
+                        progressDialog.dismiss();
                         String value = response.body().getValue();
                         String message = response.body().getMessage();
                         if (value.equals("1")){
@@ -128,7 +134,7 @@ public class AddLatlngActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<Value> call, Throwable t) {
-
+                        progressDialog.dismiss();
                     }
                 });
             }

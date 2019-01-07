@@ -1,6 +1,7 @@
 package com.example.matatabi.padm.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -71,6 +72,10 @@ public class AdminSettingFragment extends Fragment implements View.OnClickListen
                 .setPositiveButton("Ubah", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                        progressDialog.setMessage("Mengubah Data...");
+                        progressDialog.show();
+
                         String username = editTextUsernamee.getText().toString();
                         String password = editTextPasswordd.getText().toString();
                         String level = editTextLevell.getText().toString();
@@ -97,6 +102,7 @@ public class AdminSettingFragment extends Fragment implements View.OnClickListen
                                 String value = response.body().getValue();
                                 String message = response.body().getMessage();
                                 if (value.equals("1")){
+                                    progressDialog.dismiss();
                                     Toast.makeText(getActivity(), message+ ", SILAHKAN LOGIN KEMBALI", Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent(getActivity(), MainActivity.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -109,6 +115,7 @@ public class AdminSettingFragment extends Fragment implements View.OnClickListen
 
                             @Override
                             public void onFailure(Call<Value> call, Throwable t) {
+                                progressDialog.dismiss();
                                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -137,11 +144,16 @@ public class AdminSettingFragment extends Fragment implements View.OnClickListen
                 .setPositiveButton("Hapus", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                        progressDialog.setMessage("Mengambil Data...");
+                        progressDialog.show();
+
                         String username = editTextUsernamee.getText().toString();
                         Call<Value> valueCall = RetrofitClient.getmInstance().getApi().deleteUserLog(username);
                         valueCall.enqueue(new Callback<Value>() {
                             @Override
                             public void onResponse(Call<Value> call, Response<Value> response) {
+                                progressDialog.dismiss();
                                 String value = response.body().getValue();
                                 String message = response.body().getMessage();
                                 if (value.equals("1")){
@@ -156,6 +168,7 @@ public class AdminSettingFragment extends Fragment implements View.OnClickListen
 
                             @Override
                             public void onFailure(Call<Value> call, Throwable t) {
+                                progressDialog.dismiss();
                                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });

@@ -9,7 +9,7 @@
 
     <item
         android:id="@+id/menu_data_mhs"
-        android:title="Data Mhs"
+        android:title="Data Mahasiswa"
         android:icon="@drawable/dd"
         />
 

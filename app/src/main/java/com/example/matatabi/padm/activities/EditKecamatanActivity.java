@@ -1,5 +1,6 @@
 package com.example.matatabi.padm.activities;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -95,6 +96,10 @@ public class EditKecamatanActivity extends AppCompatActivity {
                         .setPositiveButton("Edit", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                final ProgressDialog progressDialog = new ProgressDialog(EditKecamatanActivity.this);
+                                progressDialog.setMessage("Mengubah Data...");
+                                progressDialog.show();
+
                                 String id_kecamatan = edtTexIdKecamatanEdit.getText().toString();
                                 String nm_kabupaten = spinKabEd.getSelectedItem().toString();
                                 String nm_kecamatan = edtTexKecamatanEdit.getText().toString();
@@ -109,6 +114,7 @@ public class EditKecamatanActivity extends AppCompatActivity {
                                 call.enqueue(new Callback<Value>() {
                                     @Override
                                     public void onResponse(Call<Value> call, Response<Value> response) {
+                                        progressDialog.dismiss();
                                         String value = response.body().getValue();
                                         String message = response.body().getMessage();
                                         if (value.equals("1")){
@@ -122,6 +128,7 @@ public class EditKecamatanActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onFailure(Call<Value> call, Throwable t) {
+                                        progressDialog.dismiss();
                                         t.printStackTrace();
                                         Toast.makeText(EditKecamatanActivity.this, "Gagal Merespon", Toast.LENGTH_SHORT).show();
                                     }
@@ -147,11 +154,15 @@ public class EditKecamatanActivity extends AppCompatActivity {
                         .setPositiveButton("Hapus", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                final ProgressDialog progressDialog = new ProgressDialog(EditKecamatanActivity.this);
+                                progressDialog.setMessage("Menghapus Data...");
+                                progressDialog.show();
                                 String id_kecamatan = edtTexIdKecamatanEdit.getText().toString();
                                 Call<Value> callD = RetrofitClient.getmInstance().getApi().deleteKec(id_kecamatan);
                                 callD.enqueue(new Callback<Value>() {
                                     @Override
                                     public void onResponse(Call<Value> call, Response<Value> response) {
+                                        progressDialog.dismiss();
                                         String value = response.body().getValue();
                                         String message = response.body().getMessage();
                                         if (value.equals("1")){
@@ -165,6 +176,7 @@ public class EditKecamatanActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onFailure(Call<Value> call, Throwable t) {
+                                        progressDialog.dismiss();
                                         t.printStackTrace();
                                         Toast.makeText(EditKecamatanActivity.this, "Gagal Merespon", Toast.LENGTH_SHORT).show();
                                     }
