@@ -46,16 +46,40 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline" />
-            <TextView
-                android:id="@+id/txtLat"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
-            <TextView
-                android:id="@+id/txtLng"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="105dp"
+                    android:layout_height="wrap_content"
+                    android:text="Latitude   :"
+                    android:layout_marginLeft="5dp"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+                <TextView
+                    android:id="@+id/txtLat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="105dp"
+                    android:layout_height="wrap_content"
+                    android:text="Lontitude :"
+                    android:layout_marginLeft="5dp"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+                <TextView
+                    android:id="@+id/txtLng"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+            </LinearLayout>
             <Button
                 android:id="@+id/btn_tampil_Lat"
                 android:layout_marginTop="10dp"

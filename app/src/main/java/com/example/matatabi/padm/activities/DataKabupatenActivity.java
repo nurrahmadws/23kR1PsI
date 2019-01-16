@@ -12,6 +12,7 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.matatabi.padm.R;
 import com.example.matatabi.padm.adapters.KabupatenAdapter;
@@ -76,6 +77,7 @@ public class DataKabupatenActivity extends AppCompatActivity implements SearchVi
             @Override
             public void onFailure(Call<KabupatenResponse> call, Throwable t) {
                 progressDialog.dismiss();
+                Toast.makeText(DataKabupatenActivity.this, "Server Gagal Merespon", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -99,10 +101,14 @@ public class DataKabupatenActivity extends AppCompatActivity implements SearchVi
     @Override
     public boolean onQueryTextChange(String s) {
         recyclerView.setVisibility(View.GONE);
+        final ProgressDialog progressDialog = new ProgressDialog(DataKabupatenActivity.this);
+        progressDialog.setMessage("Memuat Data...");
+        progressDialog.show();
         Call<KabupatenResponse> kabupatenResponseCall = RetrofitClient.getmInstance().getApi().searchKab(s);
         kabupatenResponseCall.enqueue(new Callback<KabupatenResponse>() {
             @Override
             public void onResponse(Call<KabupatenResponse> call, Response<KabupatenResponse> response) {
+                progressDialog.dismiss();
                 String value = response.body().getValue();
                 recyclerView.setVisibility(View.VISIBLE);
                 if (value.equals("1")){
@@ -114,7 +120,8 @@ public class DataKabupatenActivity extends AppCompatActivity implements SearchVi
 
             @Override
             public void onFailure(Call<KabupatenResponse> call, Throwable t) {
-
+                progressDialog.dismiss();
+                Toast.makeText(DataKabupatenActivity.this, "Server Gagal Merespon", Toast.LENGTH_LONG).show();
             }
         });
         return true;

@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="135dp"
             android:layout_height="wrap_content"
             android:text="Pilih Kabupaten"
             android:layout_marginLeft="5dp"

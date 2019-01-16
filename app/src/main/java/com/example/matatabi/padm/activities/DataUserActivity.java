@@ -14,6 +14,7 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.matatabi.padm.R;
 import com.example.matatabi.padm.adapters.UsersAdapter;
@@ -99,6 +100,7 @@ public class DataUserActivity extends AppCompatActivity implements SearchView.On
             @Override
             public void onFailure(Call<UsersResponse> call, Throwable t) {
                 progressDialog.dismiss();
+                Toast.makeText(DataUserActivity.this, "Server Gagal Merespon", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -122,10 +124,16 @@ public class DataUserActivity extends AppCompatActivity implements SearchView.On
     @Override
     public boolean onQueryTextChange(String s) {
         recyclerView.setVisibility(View.GONE);
+        swipe_refresh_users.setRefreshing(false);
+        final ProgressDialog progressDialog = new ProgressDialog(DataUserActivity.this);
+        progressDialog.setMessage("Memuat Data...");
+        progressDialog.show();
+
         Call<UsersResponse> usersResponseCall = RetrofitClient.getmInstance().getApi().searchUs(s);
         usersResponseCall.enqueue(new Callback<UsersResponse>() {
             @Override
             public void onResponse(Call<UsersResponse> call, Response<UsersResponse> response) {
+                progressDialog.dismiss();
                 String value = response.body().getValue();
                 recyclerView.setVisibility(View.VISIBLE);
                 if (value.equals("1")){
@@ -137,7 +145,8 @@ public class DataUserActivity extends AppCompatActivity implements SearchView.On
 
             @Override
             public void onFailure(Call<UsersResponse> call, Throwable t) {
-
+                progressDialog.dismiss();
+                Toast.makeText(DataUserActivity.this, "Server Gagal Merespon", Toast.LENGTH_LONG).show();
             }
         });
         return true;

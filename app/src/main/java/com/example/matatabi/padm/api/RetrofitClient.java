@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 // http://myserverr.com/api/
 // http://192.168.43.207/api/
 public class RetrofitClient {
-    private static final String base_url = "http://myserverr.com/api/";
+    private static final String base_url = "http://192.168.43.207/api/";
     private static RetrofitClient mInstance;
     private Retrofit retrofit = null;
 
