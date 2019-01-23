@@ -107,6 +107,13 @@ public class EditKelurahanActivity extends AppCompatActivity {
                                 String nm_kecamatan = spinKecEdKel.getSelectedItem().toString();
                                 String nm_kelurahan = edtTexKelurahanEd.getText().toString();
 
+                                if (nm_kelurahan.isEmpty()){
+                                    progressDialog.dismiss();
+                                    edtTexKelurahanEd.setError("Kelurahan/Desa Harus Diisi");
+                                    edtTexKelurahanEd.requestFocus();
+                                    return;
+                                }
+
                                 Call<Value> call = RetrofitClient.getmInstance().getApi().editKel(id_kelurahan, nm_kabupaten, nm_kecamatan, nm_kelurahan);
                                 call.enqueue(new Callback<Value>() {
                                     @Override

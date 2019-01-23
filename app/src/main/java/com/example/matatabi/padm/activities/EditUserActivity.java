@@ -6,9 +6,13 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatCheckBox;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -25,6 +29,7 @@ public class EditUserActivity extends AppCompatActivity {
     private EditText editTextidUser, editTextUsername, editTextPassword;
     private Spinner spinLevelL;
     private Button btn_Ubah_user, btn_hapus_user, btn_batal_user;
+    private AppCompatCheckBox checkBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,18 @@ public class EditUserActivity extends AppCompatActivity {
         editTextUsername = findViewById(R.id.editTextUsernaame);
         editTextPassword = findViewById(R.id.editTextPasswordd);
         spinLevelL = findViewById(R.id.spinLevelL);
+
+        checkBox = findViewById(R.id.checkboxPassEdit);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!isChecked){
+                    editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }else {
+                    editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+            }
+        });
 
         Intent intent = getIntent();
         editTextidUser.setText(intent.getStringExtra("id_user"));
@@ -75,16 +92,19 @@ public class EditUserActivity extends AppCompatActivity {
                                 String level = spinLevelL.getSelectedItem().toString();
 
                                 if (username.isEmpty()) {
+                                    progressDialog.dismiss();
                                     editTextUsername.setError("Username Harus Diisi");
                                     editTextUsername.requestFocus();
                                     return;
                                 }
                                 if (password.isEmpty()) {
+                                    progressDialog.dismiss();
                                     editTextPassword.setError("Password Harus Diisi");
                                     editTextPassword.requestFocus();
                                     return;
                                 }
                                 if (password.length() < 6) {
+                                    progressDialog.dismiss();
                                     editTextPassword.setError("Password Harus Lebih 6 Karakter");
                                     editTextPassword.requestFocus();
                                     return;

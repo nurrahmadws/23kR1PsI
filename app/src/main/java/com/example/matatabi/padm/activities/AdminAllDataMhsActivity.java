@@ -44,6 +44,17 @@ public class AdminAllDataMhsActivity extends AppCompatActivity implements Search
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(AdminAllDataMhsActivity.this));
 
+        loadData();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadData();
+    }
+
+    private void loadData(){
         final ProgressDialog progressDialog = new ProgressDialog(AdminAllDataMhsActivity.this);
         progressDialog.setMessage("Memuat Data...");
         progressDialog.show();
@@ -67,22 +78,9 @@ public class AdminAllDataMhsActivity extends AppCompatActivity implements Search
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Intent intent = new Intent(this, AdminActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search, menu);
-        final MenuItem menuItem = menu.findItem(R.id.action_search);
+        getMenuInflater().inflate(R.menu.search_mhs, menu);
+        final MenuItem menuItem = menu.findItem(R.id.action_search_mhs);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         searchView.setQueryHint("Cari NIM Mahasiswa");
         searchView.setIconified(false);
@@ -106,13 +104,10 @@ public class AdminAllDataMhsActivity extends AppCompatActivity implements Search
             @Override
             public void onResponse(Call<MahasiswaResponse> call, Response<MahasiswaResponse> response) {
                 progressDialog.dismiss();
-                String value = response.body().getValue();
                 recyclerView.setVisibility(View.VISIBLE);
-                if (value.equals("1")){
-                    mahasiswaList = response.body().getMahasiswaList();
-                    allMahasiswaAdapter = new AllMahasiswaAdapter(AdminAllDataMhsActivity.this, mahasiswaList);
-                    recyclerView.setAdapter(allMahasiswaAdapter);
-                }
+                mahasiswaList = response.body().getMahasiswaList();
+                allMahasiswaAdapter = new AllMahasiswaAdapter(AdminAllDataMhsActivity.this, mahasiswaList);
+                recyclerView.setAdapter(allMahasiswaAdapter);
             }
 
             @Override
@@ -122,5 +117,18 @@ public class AdminAllDataMhsActivity extends AppCompatActivity implements Search
             }
         });
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(this, AdminActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

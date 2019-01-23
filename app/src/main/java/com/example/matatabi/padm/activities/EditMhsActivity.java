@@ -289,6 +289,7 @@ public class EditMhsActivity extends AppCompatActivity {
                         String nm_lng = spinLngEditMhs.getSelectedItem().toString();
 
                         if (nama.isEmpty()){
+                            progressDialog.dismiss();
                             edtNamaEditMhs.setError("Nama Harus Diisi");
                             edtNamaEditMhs.requestFocus();
                             return;
@@ -312,6 +313,7 @@ public class EditMhsActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(Call<Value> call, Throwable t) {
                                 progressDialog.dismiss();
+                                Toast.makeText(EditMhsActivity.this, "Gagal Merespon", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.matatabi.padm.R;
 import com.example.matatabi.padm.api.RetrofitClient;
@@ -19,6 +20,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +63,7 @@ public class GrafikPadmActivity extends AppCompatActivity {
                     Padm padm = padmList.get(i);
                     String kabupaten = padm.getNm_kabupaten();
                     String total = padm.getTotal_mahasiswa();
-                    yvalues.add(new PieEntry(Float.parseFloat(total), kabupaten));
+                    yvalues.add(new PieEntry(Integer.parseInt(total), kabupaten));
                 }
 
                 Description description = new Description();
@@ -74,7 +76,16 @@ public class GrafikPadmActivity extends AppCompatActivity {
                 PieDataSet pieDataSet = new PieDataSet(yvalues, "Kabupaten/Kota");
                 pieDataSet.setSliceSpace(2f);
                 pieDataSet.setSelectionShift(5f);
-                pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+
+                final int[] MY_COLORS = {Color.rgb(192,0,0), Color.rgb(255,0,0), Color.rgb(255,192,0),
+                        Color.rgb(127,127,127), Color.rgb(146,208,80),
+                        Color.rgb(0,176,80), Color.rgb(79,129,189), Color.rgb(255,0,149),
+                        Color.rgb(230,0,255), Color.rgb(18,0,255), Color.rgb(245,139,9)};
+                ArrayList<Integer> colors = new ArrayList<>();
+
+                for(int c: MY_COLORS) colors.add(c);
+                pieDataSet.setColors(colors);
+                pieDataSet.setValueFormatter(new DecimalRemover(new DecimalFormat("###,###,###")));
 
                 PieData data = new PieData(pieDataSet);
                 data.setValueTextSize(10f);
@@ -86,7 +97,7 @@ public class GrafikPadmActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<PadmResponse> call, Throwable t) {
-
+                Toast.makeText(GrafikPadmActivity.this, "Server Gagal Merespon", Toast.LENGTH_SHORT).show();
             }
         });
     }

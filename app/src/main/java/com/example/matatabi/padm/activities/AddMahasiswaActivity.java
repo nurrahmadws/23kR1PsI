@@ -279,11 +279,13 @@ public class AddMahasiswaActivity extends AppCompatActivity {
         String nm_lng = spinLng.getSelectedItem().toString().trim();
 
         if (nim.isEmpty()){
+            progressDialog.dismiss();
             edtNim.setError("NIM harus Diisi");
             edtNim.requestFocus();
             return;
         }
         if (nama.isEmpty()){
+            progressDialog.dismiss();
             edtNama.setError("Nama Harus Diisi");
             edtNama.requestFocus();
             return;

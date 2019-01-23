@@ -65,6 +65,7 @@ public class EditKabupatenActivity extends AppCompatActivity {
                                 String nm_kabupaten = edtTextKabkotaEdit.getText().toString();
                                 
                                 if (nm_kabupaten.isEmpty()){
+                                    progressDialog.dismiss();
                                     edtTextKabkotaEdit.setError("Kabupaten/Kota Harus Diisi");
                                     edtTextKabkotaEdit.requestFocus();
                                     return;

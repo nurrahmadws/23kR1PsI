@@ -88,6 +88,7 @@ public class AddKelurahanActivity extends AppCompatActivity {
                 String nm_kelurahan = edtTexKelurahanAdd.getText().toString();
 
                 if (nm_kelurahan.isEmpty()){
+                    progressDialog.dismiss();
                     edtTexKelurahanAdd.setError("Kolom Ini Harus Diisi");
                     edtTexKelurahanAdd.requestFocus();
                     return;

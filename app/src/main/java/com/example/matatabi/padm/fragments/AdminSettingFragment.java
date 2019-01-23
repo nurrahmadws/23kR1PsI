@@ -57,6 +57,12 @@ public class AdminSettingFragment extends Fragment implements View.OnClickListen
             editTextPasswordd.setText(sharedPreferences.getString(PASSWORD, ""));
         }
 
+        editTextUsernamee.setKeyListener(editTextUsernamee.getKeyListener());
+        editTextUsernamee.setKeyListener(null);
+
+        editTextPasswordd.setKeyListener(editTextPasswordd.getKeyListener());
+        editTextPasswordd.setKeyListener(null);
+
         editTextLevell.setKeyListener(editTextLevell.getKeyListener());
         editTextLevell.setKeyListener(null);
 

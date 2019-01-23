@@ -105,6 +105,7 @@ public class EditKecamatanActivity extends AppCompatActivity {
                                 String nm_kecamatan = edtTexKecamatanEdit.getText().toString();
 
                                 if (nm_kecamatan.isEmpty()){
+                                    progressDialog.dismiss();
                                     edtTexKecamatanEdit.setError("Kecamatan Harus Diisi");
                                     edtTexKecamatanEdit.requestFocus();
                                     return;

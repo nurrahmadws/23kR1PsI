@@ -5,11 +5,15 @@ import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.Toolbar;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -33,6 +37,7 @@ public class AddUserActivity extends AppCompatActivity {
     private Button btnSimpan, btnBatal;
     private UsersAdapter usersAdapter;
     private List<Users> usersList = new ArrayList<>();
+    private AppCompatCheckBox checkBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,18 @@ public class AddUserActivity extends AppCompatActivity {
 
         edtTextUsername = findViewById(R.id.edtTextUsername);
         edtTextPassword = findViewById(R.id.edtTextPassword);
+
+        checkBox = findViewById(R.id.checkboxPassAdd);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!isChecked){
+                    edtTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }else {
+                    edtTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+            }
+        });
 
         spinLevel = findViewById(R.id.spinLevel);
         btnSimpan = findViewById(R.id.btnRegistrasii);

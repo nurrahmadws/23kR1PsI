@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.matatabi.padm.R;
 import com.example.matatabi.padm.adapters.PadmAdapter;
@@ -63,6 +64,7 @@ public class DataPadmActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<PadmResponse> call, Throwable t) {
                 progressDialog.dismiss();
+                Toast.makeText(DataPadmActivity.this, "Server Gagal Merespon", Toast.LENGTH_SHORT).show();
             }
         });
 

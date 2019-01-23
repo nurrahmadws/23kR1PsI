@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.matatabi.padm.R;
 import com.example.matatabi.padm.adapters.DetailMhsAdapter;
@@ -70,7 +71,8 @@ public class DetailMhsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<MahasiswaResponse> call, Throwable t) {
-
+                progressDialog.dismiss();
+                Toast.makeText(DetailMhsActivity.this, "Server Gagal Merespon", Toast.LENGTH_SHORT).show();
             }
         });
 

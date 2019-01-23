@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.matatabi.padm.R;
 import com.example.matatabi.padm.adapters.KelurahanAdapter;
@@ -144,6 +145,7 @@ public class DataKelurahanActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<KelurahanResponse> call, Throwable t) {
                     progressDialog.dismiss();
+                    Toast.makeText(DataKelurahanActivity.this, "Server Gagal Merespon", Toast.LENGTH_SHORT).show();
                 }
             });
         }

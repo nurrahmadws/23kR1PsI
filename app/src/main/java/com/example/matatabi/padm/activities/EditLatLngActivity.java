@@ -127,11 +127,13 @@ public class EditLatLngActivity extends AppCompatActivity {
                                 String nm_lng = edtTexLngEd.getText().toString();
 
                                 if (nm_lat.isEmpty()){
+                                    progressDialog.dismiss();
                                     edtTexLatEd.setError("Latitude Harus Diisi");
                                     edtTexLatEd.requestFocus();
                                     return;
                                 }
                                 if (nm_lng.isEmpty()){
+                                    progressDialog.dismiss();
                                     edtTexLngEd.setError("Longtitude Harus Diisi");
                                     edtTexLngEd.requestFocus();
                                     return;
@@ -200,6 +202,7 @@ public class EditLatLngActivity extends AppCompatActivity {
                                     @Override
                                     public void onFailure(Call<Value> call, Throwable t) {
                                         progressDialog.dismiss();
+                                        Toast.makeText(EditLatLngActivity.this, "Gagal Merespon", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             }
