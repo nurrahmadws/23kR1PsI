@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.matatabi.padm.R;
+import com.example.matatabi.padm.activities.DataPadmKecActivity;
 import com.example.matatabi.padm.activities.GrafikPadmActivity;
+import com.example.matatabi.padm.activities.GrafikPadmKecamatanActivity;
 import com.example.matatabi.padm.model.Padm;
 import java.util.List;
 
@@ -43,12 +45,22 @@ public class PadmAdapter extends RecyclerView.Adapter<PadmAdapter.PadmViewHolder
         return padmList.size();
     }
 
-    class PadmViewHolder extends RecyclerView.ViewHolder{
+    class PadmViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView txtKabupatenPadm, txtTotalPadm;
         PadmViewHolder(@NonNull View itemView) {
             super(itemView);
             txtKabupatenPadm = itemView.findViewById(R.id.txtKabupatenPadm);
             txtTotalPadm = itemView.findViewById(R.id.txtTotalPadm);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            String nm_kabupaten = txtKabupatenPadm.getText().toString();
+
+            Intent intent = new Intent(mcu, DataPadmKecActivity.class);
+            intent.putExtra("nm_kabupaten", nm_kabupaten);
+            mcu.startActivity(intent);
         }
     }
 }

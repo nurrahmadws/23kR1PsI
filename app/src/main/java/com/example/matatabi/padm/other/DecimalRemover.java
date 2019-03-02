@@ -1,4 +1,4 @@
-package com.example.matatabi.padm.activities;
+package com.example.matatabi.padm.other;
 
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IValueFormatter;
@@ -9,7 +9,7 @@ import java.text.DecimalFormat;
 public class DecimalRemover implements IValueFormatter {
     private DecimalFormat format;
 
-    DecimalRemover(DecimalFormat decimalFormat) {
+    public DecimalRemover(DecimalFormat decimalFormat) {
         this.format = decimalFormat;
     }
 

@@ -25,4 +25,8 @@
     <color name="onBoardingPrimaryDark">#181A24</color>
     <color name="onBoardingWhite">#FFFFFF</color>
     <color name="onBoardingTransparent">#cccccc</color>
+    <color name="tabPane">#03A9F4</color>
+    <color name="tabPaneDark">#0288D1</color>
+    <color name="tabTextColor">#FFF</color>
+    <color name="tabIndicatorColor">#2d2D2D</color>
 </resources>

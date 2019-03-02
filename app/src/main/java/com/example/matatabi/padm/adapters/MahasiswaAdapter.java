@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,18 +52,27 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
     public void onBindViewHolder(@NonNull MahasiswaViewHolder mahasiswaViewHolder, int i) {
         Mahasiswa mahasiswa = mahasiswaList.get(i);
         mahasiswaViewHolder.txtNim.setText(mahasiswa.getNim());
-        mahasiswaViewHolder.txtNama.setText(mahasiswa.getNama());
         mahasiswaViewHolder.txtUsernameMhs.setText(mahasiswa.getUsername());
+        mahasiswaViewHolder.txtNik.setText(mahasiswa.getNik());
+        mahasiswaViewHolder.txtNama.setText(mahasiswa.getNama());
+        mahasiswaViewHolder.txtTempatLahir.setText(mahasiswa.getTempat_lahir());
+        mahasiswaViewHolder.txtTglLahir.setText(mahasiswa.getTgl_lahir());
         mahasiswaViewHolder.txtJk.setText(mahasiswa.getJk());
+        mahasiswaViewHolder.txtNoHp.setText(mahasiswa.getNo_hp());
+        mahasiswaViewHolder.txtEmail.setText(mahasiswa.getEmail());
         mahasiswaViewHolder.txtFakultas.setText(mahasiswa.getFakultas());
         mahasiswaViewHolder.txtProdi.setText(mahasiswa.getProdi());
         mahasiswaViewHolder.txtAngkatan.setText(mahasiswa.getAngkatan());
+        mahasiswaViewHolder.txtKelas.setText(mahasiswa.getKelas());
         mahasiswaViewHolder.txtProvinsi.setText(mahasiswa.getProvinsi());
         mahasiswaViewHolder.txtKabupaten.setText(mahasiswa.getNm_kabupaten());
         mahasiswaViewHolder.txtKecamatan.setText(mahasiswa.getNm_kecamatan());
         mahasiswaViewHolder.txtKelurahan.setText(mahasiswa.getNm_kelurahan());
         mahasiswaViewHolder.txtLat.setText(mahasiswa.getNm_lat());
         mahasiswaViewHolder.txtLNg.setText(mahasiswa.getNm_lng());
+        mahasiswaViewHolder.txtAlamatSekarang.setText(mahasiswa.getAlamat_sekarang());
+        mahasiswaViewHolder.txtLatAlamatSekarang.setText(mahasiswa.getLat_alamat_sekarang());
+        mahasiswaViewHolder.txtLngAlamatSekarang.setText(mahasiswa.getLng_alamat_sekarang());
     }
 
     @Override
@@ -71,27 +81,39 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
     }
 
     class MahasiswaViewHolder extends RecyclerView.ViewHolder {
-        TextView txtNim, txtUsernameMhs, txtNama, txtJk, txtFakultas, txtProdi, txtAngkatan, txtProvinsi, txtKabupaten, txtKecamatan, txtKelurahan, txtLat, txtLNg;
+        TextView txtNim, txtUsernameMhs, txtNik, txtNama, txtJk, txtTempatLahir, txtTglLahir, txtNoHp, txtEmail,
+                txtFakultas, txtProdi, txtAngkatan, txtKelas, txtProvinsi, txtKabupaten, txtKecamatan, txtKelurahan, txtLat, txtLNg,
+                txtAlamatSekarang, txtLatAlamatSekarang, txtLngAlamatSekarang;
         FloatingActionMenu materialDesignFAM;
         FloatingActionButton floatingActionButton2, floatingActionButton3, floatingActionButton4;
         static final String mypreference = "mypref";
         static final String USERNAME = "username";
         SharedPreferences sharedPreferences;
+
         MahasiswaViewHolder(@NonNull View itemView) {
             super(itemView);
             txtNim = itemView.findViewById(R.id.txtNim);
             txtUsernameMhs = itemView.findViewById(R.id.txtUsernameMhs);
+            txtNik = itemView.findViewById(R.id.txtNik);
             txtNama = itemView.findViewById(R.id.txtNama);
             txtJk = itemView.findViewById(R.id.txtjk);
+            txtTempatLahir = itemView.findViewById(R.id.txtTempatLahir);
+            txtTglLahir = itemView.findViewById(R.id.txtTglLahir);
+            txtNoHp = itemView.findViewById(R.id.txtNoHp);
+            txtEmail = itemView.findViewById(R.id.txtEmail);
             txtFakultas = itemView.findViewById(R.id.txtFakultas);
             txtProdi = itemView.findViewById(R.id.txtProdi);
             txtAngkatan = itemView.findViewById(R.id.txtAngkatan);
+            txtKelas = itemView.findViewById(R.id.txtKelas);
             txtProvinsi = itemView.findViewById(R.id.txtProvinsi);
             txtKabupaten = itemView.findViewById(R.id.txtKabupatenMhs);
             txtKecamatan = itemView.findViewById(R.id.txtKecamatanMhs);
             txtKelurahan = itemView.findViewById(R.id.txtKelurahanMhs);
             txtLat = itemView.findViewById(R.id.txtLatitude);
             txtLNg = itemView.findViewById(R.id.txtLongtitude);
+            txtAlamatSekarang = itemView.findViewById(R.id.txtAlamatSekarang);
+            txtLatAlamatSekarang = itemView.findViewById(R.id.txtLatAlamatSekarang);
+            txtLngAlamatSekarang = itemView.findViewById(R.id.txtLngAlamatSekarang);
 
             materialDesignFAM = itemView.findViewById(R.id.material_design_android_floating_action_menu);
             floatingActionButton2 = itemView.findViewById(R.id.fab_show_map_mhs);
@@ -99,7 +121,7 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
             floatingActionButton4 = itemView.findViewById(R.id.fab_delete_mhs);
 
             sharedPreferences = context.getSharedPreferences(mypreference, Context.MODE_PRIVATE);
-            if (sharedPreferences.contains(USERNAME)){
+            if (sharedPreferences.contains(USERNAME)) {
                 txtUsernameMhs.setText(sharedPreferences.getString(USERNAME, ""));
             }
             floatingActionButton2.setOnClickListener(new View.OnClickListener() {
@@ -113,43 +135,61 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
                 public void onClick(View v) {
                     String nim = txtNim.getText().toString();
                     String username = txtUsernameMhs.getText().toString();
+                    String nik = txtNik.getText().toString();
                     String nama = txtNama.getText().toString();
                     String jk = txtJk.getText().toString();
+                    String tempat_lahir = txtTempatLahir.getText().toString();
+                    String tgl_lahir = txtTglLahir.getText().toString();
+                    String no_hp = txtNoHp.getText().toString();
+                    String email = txtEmail.getText().toString();
                     String fakultas = txtFakultas.getText().toString();
                     String prodi = txtProdi.getText().toString();
                     String angkatan = txtAngkatan.getText().toString();
+                    String kelas = txtKelas.getText().toString();
                     String provinsi = txtProvinsi.getText().toString();
                     String nm_kabupaten = txtKabupaten.getText().toString();
                     String nm_kecamatan = txtKecamatan.getText().toString();
                     String nm_kelurahan = txtKelurahan.getText().toString();
                     String nm_lat = txtLat.getText().toString();
                     String nm_lng = txtLNg.getText().toString();
+                    String alamat_sekarang = txtAlamatSekarang.getText().toString();
+                    String lat_alamat_sekarang = txtLatAlamatSekarang.getText().toString();
+                    String lng_alamat_sekaranga = txtLngAlamatSekarang.getText().toString();
 
                     Intent intent = new Intent(context, EditMhsActivity.class);
                     intent.putExtra("nim", nim);
                     intent.putExtra("username", username);
+                    intent.putExtra("nik", nik);
                     intent.putExtra("nama", nama);
                     intent.putExtra("jk", jk);
+                    intent.putExtra("tempat_lahir", tempat_lahir);
+                    intent.putExtra("tgl_lahir", tgl_lahir);
+                    intent.putExtra("no_hp", no_hp);
+                    intent.putExtra("email", email);
                     intent.putExtra("fakultas", fakultas);
                     intent.putExtra("prodi", prodi);
                     intent.putExtra("angkatan", angkatan);
+                    intent.putExtra("kelas", kelas);
                     intent.putExtra("provinsi", provinsi);
                     intent.putExtra("nm_kabupaten", nm_kabupaten);
                     intent.putExtra("nm_kecamatan", nm_kecamatan);
                     intent.putExtra("nm_kelurahan", nm_kelurahan);
                     intent.putExtra("nm_lat", nm_lat);
                     intent.putExtra("nm_lng", nm_lng);
+                    intent.putExtra("alamat_sekarang",alamat_sekarang);
+                    intent.putExtra("lat_alamat_sekarang", lat_alamat_sekarang);
+                    intent.putExtra("lng_alamat_sekarang", lng_alamat_sekaranga);
                     context.startActivity(intent);
                 }
             });
-            if (!mahasiswaList.isEmpty()){
+            if (!mahasiswaList.isEmpty()) {
                 floatingActionButton2.setEnabled(true);
                 floatingActionButton2.setVisibility(View.VISIBLE);
                 floatingActionButton3.setEnabled(true);
                 floatingActionButton3.setVisibility(View.VISIBLE);
                 floatingActionButton4.setEnabled(true);
                 floatingActionButton4.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 floatingActionButton2.setEnabled(false);
                 floatingActionButton2.setVisibility(View.INVISIBLE);
                 floatingActionButton3.setEnabled(false);
@@ -201,4 +241,5 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
             });
         }
     }
+
 }

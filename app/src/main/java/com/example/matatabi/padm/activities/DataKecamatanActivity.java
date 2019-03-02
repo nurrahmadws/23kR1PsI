@@ -2,6 +2,7 @@ package com.example.matatabi.padm.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -105,15 +106,16 @@ public class DataKecamatanActivity extends AppCompatActivity{
             Call<KecamatanResponse> call = RetrofitClient.getmInstance().getApi().readKec(nm_kabupaten);
             call.enqueue(new Callback<KecamatanResponse>() {
                 @Override
-                public void onResponse(Call<KecamatanResponse> call, Response<KecamatanResponse> response) {
+                public void onResponse(@NonNull Call<KecamatanResponse> call, @NonNull Response<KecamatanResponse> response) {
                     progressDialog.dismiss();
+                    assert response.body() != null;
                     kecamatanList = response.body().getKecamatanList();
                     kecamatanAdapter = new KecamatanAdapter(DataKecamatanActivity.this, kecamatanList);
                     recyclerView.setAdapter(kecamatanAdapter);
                 }
 
                 @Override
-                public void onFailure(Call<KecamatanResponse> call, Throwable t) {
+                public void onFailure(@NonNull Call<KecamatanResponse> call, @NonNull Throwable t) {
                     progressDialog.dismiss();
                     Toast.makeText(DataKecamatanActivity.this, "Server Gagal Merespon", Toast.LENGTH_SHORT).show();
                 }

@@ -1,3 +1,4 @@
+
 package com.example.matatabi.padm.activities;
 
 import android.content.Intent;
@@ -5,25 +6,21 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.matatabi.padm.R;
 import com.example.matatabi.padm.api.RetrofitClient;
-import com.example.matatabi.padm.model.Padm;
-import com.example.matatabi.padm.model.PadmResponse;
+import com.example.matatabi.padm.model.PadmKecamatan;
+import com.example.matatabi.padm.model.PadmKecamatanResponse;
 import com.example.matatabi.padm.other.DecimalRemover;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -33,25 +30,27 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GrafikPadmActivity extends AppCompatActivity {
-    private List<Padm> padmList;
+public class GrafikPadmKecamatanActivity extends AppCompatActivity {
+    private List<PadmKecamatan> padmKecamatanList;
     private PieChart pieChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_grafik_padm);
+        setContentView(R.layout.activity_grafik_padm_kecamatan);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        pieChart = findViewById(R.id.chartPadm);
+        pieChart = findViewById(R.id.chartPadmKecamatan);
+        Intent intent = getIntent();
+        String nm_kabupaten = intent.getStringExtra("nm_kabupaten");
 
-        Call<PadmResponse> call = RetrofitClient.getmInstance().getApi().showPadm();
-        call.enqueue(new Callback<PadmResponse>() {
+        Call<PadmKecamatanResponse> call = RetrofitClient.getmInstance().getApi().showPadmKec(nm_kabupaten);
+        call.enqueue(new Callback<PadmKecamatanResponse>() {
             @Override
-            public void onResponse(@NonNull Call<PadmResponse> call, @NonNull Response<PadmResponse> response) {
+            public void onResponse(@NonNull Call<PadmKecamatanResponse> call, @NonNull Response<PadmKecamatanResponse> response) {
                 assert response.body() != null;
-                padmList = response.body().getPadmList();
+                padmKecamatanList = response.body().getPadmKecamatanList();
 
                 pieChart.setUsePercentValues(false);
                 pieChart.getDescription().setEnabled(false);
@@ -63,12 +62,12 @@ public class GrafikPadmActivity extends AppCompatActivity {
                 pieChart.setHoleColor(Color.WHITE);
                 pieChart.setTransparentCircleRadius(40f);
 
-                ArrayList<PieEntry> yvalues = new ArrayList<>();
-                for (int i = 0; i < padmList.size(); i++) {
-                    Padm padm = padmList.get(i);
-                    String kabupaten = padm.getNm_kabupaten();
-                    String total = padm.getTotal_mahasiswa();
-                    yvalues.add(new PieEntry(Integer.parseInt(total), kabupaten));
+                ArrayList<PieEntry> yValues = new ArrayList<>();
+                for (int i = 0; i < padmKecamatanList.size(); i++){
+                    PadmKecamatan padmKecamatan = padmKecamatanList.get(i);
+                    String kecamatan = padmKecamatan.getNm_kecamatan();
+                    String total = padmKecamatan.getTotal_mahasiswa();
+                    yValues.add(new PieEntry(Integer.parseInt(total), kecamatan));
                 }
 
                 Description description = new Description();
@@ -78,7 +77,7 @@ public class GrafikPadmActivity extends AppCompatActivity {
 
                 pieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
 
-                PieDataSet pieDataSet = new PieDataSet(yvalues, "Kabupaten/Kota");
+                PieDataSet pieDataSet = new PieDataSet(yValues, "Kecamatan");
                 pieDataSet.setSliceSpace(2f);
                 pieDataSet.setSelectionShift(5f);
 
@@ -100,11 +99,13 @@ public class GrafikPadmActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<PadmResponse> call, Throwable t) {
-                Toast.makeText(GrafikPadmActivity.this, "Server Gagal Merespon", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<PadmKecamatanResponse> call, Throwable t) {
+
             }
         });
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

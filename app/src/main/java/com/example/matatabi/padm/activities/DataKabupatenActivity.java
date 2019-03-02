@@ -54,9 +54,9 @@ public class DataKabupatenActivity extends AppCompatActivity implements SearchVi
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
         loadData();
+        super.onResume();
     }
 
     private void loadData(){

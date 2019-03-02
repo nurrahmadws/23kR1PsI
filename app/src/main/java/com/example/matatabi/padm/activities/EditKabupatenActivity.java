@@ -147,7 +147,7 @@ public class EditKabupatenActivity extends AppCompatActivity {
                         }).setNegativeButton("Batal", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(EditKabupatenActivity.this, DataKabupatenActivity.class));
+//                        startActivity(new Intent(EditKabupatenActivity.this, DataKabupatenActivity.class));
                     }
                 });
                 AlertDialog dialog = al.create();

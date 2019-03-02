@@ -73,6 +73,12 @@ public class MhsBiodatakuFragment extends Fragment {
         loadData();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
+    }
+
     private void loadData(){
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Mengambil Data...");

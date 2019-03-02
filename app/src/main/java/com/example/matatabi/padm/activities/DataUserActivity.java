@@ -71,8 +71,8 @@ public class DataUserActivity extends AppCompatActivity implements SearchView.On
 
     @Override
     protected void onResume() {
-        super.onResume();
         loadData();
+        super.onResume();
     }
 
     private void loadData(){

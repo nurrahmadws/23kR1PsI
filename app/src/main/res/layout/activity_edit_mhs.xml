@@ -20,7 +20,7 @@
                 android:id="@+id/edtNimEditMhs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Masukkan NIM"
+                android:hint="NIM"
                 android:inputType="number"/>
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
@@ -33,6 +33,16 @@
                 android:hint="Username"
                 android:visibility="visible"
                 android:inputType="text"/>
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/edtNikEditMhs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Masukkan Nomor Induk Kependudukan"
+                android:inputType="number"/>
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -66,6 +76,46 @@
                 android:layout_height="wrap_content"
                 android:text="Perempuan"/>
         </RadioGroup>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/edtTempat_lahirEdtMhs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tempat Lahir"
+                android:visibility="visible"
+                android:inputType="textCapWords"/>
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/edtTglLahirEdtMhs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tanggal Lahir (yyyy/MM/dd)"/>
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/edtNoHpEdtMhs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="No. Handphone"/>
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/edtEmailEdtMhs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="Email"/>
+        </android.support.design.widget.TextInputLayout>
         <TextView
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
@@ -118,6 +168,26 @@
                 android:entries="@array/angkatan"
                 android:layout_marginLeft="8dp"/>
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:text="Kelas "/>
+
+            <Spinner
+                android:id="@+id/spinKelasEdtMhs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/kelas"
+                android:layout_marginLeft="8dp"/>
+        </LinearLayout>
         <TextView
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
@@ -145,7 +215,7 @@
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:text="Kabupaten  : "/>
+                android:text="Kabupaten   "/>
 
             <Spinner
                 android:id="@+id/spinKabupatenMEditMhs"
@@ -164,7 +234,7 @@
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:text="Kecamatan : "
+                android:text="Kecamatan  "
                 />
 
             <Spinner
@@ -184,7 +254,7 @@
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:text="Kelurahan : "/>
+                android:text="Kelurahan  "/>
 
             <Spinner
                 android:id="@+id/spinKelurahanMEditMhs"
@@ -203,7 +273,7 @@
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:text="Latitude : "/>
+                android:text="Latitude  "/>
 
             <Spinner
                 android:id="@+id/spinLatMEditMhs"
@@ -222,7 +292,7 @@
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:text="Longtitude : "/>
+                android:text="Longtitude  "/>
 
             <Spinner
                 android:id="@+id/spinLngMEditMhs"
@@ -230,6 +300,43 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"/>
         </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/edtAlamatSekarangEditMhs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords"
+                android:hint="Alamat Sekarang"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/edtLatAlamatSekarangEditMhs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Latitude Alamat Sekarang"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/edtLngAlamatSekarangEditMhs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Longtitude Alamat Sekarang"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_get_koordinat_alamat_sekarang_mhs_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dapatkan Koordinat Lokasi"/>
 
         <Button
             android:id="@+id/btn_edit_mhs"

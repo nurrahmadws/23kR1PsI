@@ -6,15 +6,20 @@ import com.example.matatabi.padm.model.KelurahanResponse;
 import com.example.matatabi.padm.model.LatlngResponse;
 import com.example.matatabi.padm.model.LoginResponse;
 import com.example.matatabi.padm.model.MahasiswaResponse;
+import com.example.matatabi.padm.model.PadmKecamatanResponse;
 import com.example.matatabi.padm.model.PadmResponse;
 import com.example.matatabi.padm.model.UsersResponse;
 import com.example.matatabi.padm.model.Value;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface ApiRequest {
@@ -163,17 +168,26 @@ public interface ApiRequest {
     @POST("mahasiswa/create.php")
     Call<Value> insertMhs(@Field("nim") String nim,
                           @Field("username") String username,
+                          @Field("nik") String nik,
                           @Field("nama") String nama,
                           @Field("jk") String jk,
+                          @Field("tempat_lahir") String tempat_lahir,
+                          @Field("tgl_lahir") String tgl_lahir,
+                          @Field("no_hp") String no_hp,
+                          @Field("email") String email,
                           @Field("fakultas") String fakultas,
                           @Field("prodi") String prodi,
                           @Field("angkatan") String angkatan,
+                          @Field("kelas") String kelas,
                           @Field("provinsi") String provinsi,
                           @Field("nm_kabupaten") String nm_kabupaten,
                           @Field("nm_kecamatan") String nm_kecamatan,
                           @Field("nm_kelurahan") String nm_kelurahan,
                           @Field("nm_lat") String nm_lat,
-                          @Field("nm_lng") String nm_lng);
+                          @Field("nm_lng") String nm_lng,
+                          @Field("alamat_sekarang") String alamat_sekarang,
+                          @Field("lat_alamat_sekarang") String lat_alamat_sekarang,
+                          @Field("lng_alamat_sekarang") String lng_alamat_sekarang);
 
     @GET("mahasiswa/read.php")
     Call<MahasiswaResponse> readMhs(@Query("username") String username);
@@ -190,18 +204,27 @@ public interface ApiRequest {
     @FormUrlEncoded
     @POST("mahasiswa/edit.php")
     Call<Value> editMhs(@Field("nim") String nim,
-                          @Field("username") String username,
-                          @Field("nama") String nama,
-                          @Field("jk") String jk,
-                          @Field("fakultas") String fakultas,
-                          @Field("prodi") String prodi,
-                          @Field("angkatan") String angkatan,
-                          @Field("provinsi") String provinsi,
-                          @Field("nm_kabupaten") String nm_kabupaten,
-                          @Field("nm_kecamatan") String nm_kecamatan,
-                          @Field("nm_kelurahan") String nm_kelurahan,
-                          @Field("nm_lat") String nm_lat,
-                          @Field("nm_lng") String nm_lng);
+                        @Field("username") String username,
+                        @Field("nik") String nik,
+                        @Field("nama") String nama,
+                        @Field("jk") String jk,
+                        @Field("tempat_lahir") String tempat_lahir,
+                        @Field("tgl_lahir") String tgl_lahir,
+                        @Field("no_hp") String no_hp,
+                        @Field("email") String email,
+                        @Field("fakultas") String fakultas,
+                        @Field("prodi") String prodi,
+                        @Field("angkatan") String angkatan,
+                        @Field("kelas") String kelas,
+                        @Field("provinsi") String provinsi,
+                        @Field("nm_kabupaten") String nm_kabupaten,
+                        @Field("nm_kecamatan") String nm_kecamatan,
+                        @Field("nm_kelurahan") String nm_kelurahan,
+                        @Field("nm_lat") String nm_lat,
+                        @Field("nm_lng") String nm_lng,
+                        @Field("alamat_sekarang") String alamat_sekarang,
+                        @Field("lat_alamat_sekarang") String lat_alamat_sekarang,
+                        @Field("lng_alamat_sekarang") String lng_alamat_sekarang);
 
     @FormUrlEncoded
     @POST("mahasiswa/delete.php")
@@ -213,4 +236,7 @@ public interface ApiRequest {
 //    DATA PADM
     @GET("data_padm/total.php")
     Call<PadmResponse> showPadm();
+
+    @GET("data_padm/total_kecamatan.php")
+    Call<PadmKecamatanResponse> showPadmKec(@Query("nm_kabupaten") String nm_kabupaten);
 }

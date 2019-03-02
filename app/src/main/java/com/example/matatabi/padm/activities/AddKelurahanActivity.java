@@ -89,7 +89,7 @@ public class AddKelurahanActivity extends AppCompatActivity {
 
                 if (nm_kelurahan.isEmpty()){
                     progressDialog.dismiss();
-                    edtTexKelurahanAdd.setError("Kolom Ini Harus Diisi");
+                    edtTexKelurahanAdd.setError("Kelurahan/Desa Harus Diisi");
                     edtTexKelurahanAdd.requestFocus();
                     return;
                 }

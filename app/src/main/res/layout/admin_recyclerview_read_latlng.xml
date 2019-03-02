@@ -53,7 +53,7 @@
                 <TextView
                     android:layout_width="105dp"
                     android:layout_height="wrap_content"
-                    android:text="Latitude   :"
+                    android:text="Latitude     :"
                     android:layout_marginLeft="5dp"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
@@ -70,7 +70,7 @@
                 <TextView
                     android:layout_width="105dp"
                     android:layout_height="wrap_content"
-                    android:text="Lontitude :"
+                    android:text="Longtitude :"
                     android:layout_marginLeft="5dp"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 

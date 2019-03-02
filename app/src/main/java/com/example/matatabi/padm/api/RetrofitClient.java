@@ -3,7 +3,6 @@ package com.example.matatabi.padm.api;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-// http://myserverr.com/api/
 // http://192.168.43.207/api/
 // http://kuramaku.com/api/
 public class RetrofitClient {

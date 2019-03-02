@@ -2,10 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.matatabi.padm">
-
-    <uses-permission android:name="android.permission.INTERNET" />
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality.
+    -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.telephony"
@@ -21,13 +28,39 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="m">
+        <activity android:name=".activities.DataPadmKecActivity"></activity>
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
+        <uses-library android:name="com.google.android.maps" />
 
+        <activity android:name=".activities.GrafikPadmKecamatanActivity" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAxYZcD5r4mLS_0Y2MO1JQF9gqa9BMO2V0" />
+            android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".activities.GetCoordinateManuallyEditActivity"
+            android:label="@string/title_activity_get_coordinate_manually_edit" />
+        <activity
+            android:name=".activities.GetCoordinateManuallyActivity"
+            android:label="@string/title_activity_get_coordinate_manually" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
 
         <activity
             android:name=".activities.MainActivity"
@@ -135,7 +168,7 @@
         <activity
             android:name=".activities.RegistrasiActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.GrafikPadmActivity"></activity>
+        <activity android:name=".activities.GrafikPadmActivity" />
     </application>
 
 </manifest>

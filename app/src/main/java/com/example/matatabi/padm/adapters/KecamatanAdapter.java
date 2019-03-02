@@ -47,7 +47,7 @@ public class KecamatanAdapter extends RecyclerView.Adapter<KecamatanAdapter.Keca
     class KecamatanViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView txtIdkecamatan, txtKabkotKec, txtKecamatan;
 
-        public KecamatanViewHolder(@NonNull View itemView) {
+        KecamatanViewHolder(@NonNull View itemView) {
             super(itemView);
             txtIdkecamatan = itemView.findViewById(R.id.txtIdkecamatan);
             txtKabkotKec = itemView.findViewById(R.id.txtKabkotKec);

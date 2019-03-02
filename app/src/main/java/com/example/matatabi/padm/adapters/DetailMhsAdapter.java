@@ -34,17 +34,26 @@ public class DetailMhsAdapter extends RecyclerView.Adapter<DetailMhsAdapter.Deta
         Mahasiswa mahasiswa = mahasiswaList.get(i);
         detailMhsViewHolder.txtNimReadDetailMhs.setText(mahasiswa.getNim());
         detailMhsViewHolder.txtUsernameReadDetailMhs.setText(mahasiswa.getUsername());
+        detailMhsViewHolder.txtNikReadDetailMhs.setText(mahasiswa.getNik());
         detailMhsViewHolder.txtNamaReadDetailMhs.setText(mahasiswa.getNama());
         detailMhsViewHolder.txtJkReadDetailMhs.setText(mahasiswa.getJk());
+        detailMhsViewHolder.txtTempatLahirReadDetailMhs.setText(mahasiswa.getTempat_lahir());
+        detailMhsViewHolder.txtTglLahirReadDetailMhs.setText(mahasiswa.getTgl_lahir());
+        detailMhsViewHolder.txtNoHpReadDetailMhs.setText(mahasiswa.getNo_hp());
+        detailMhsViewHolder.txtEmailReadDetailMhs.setText(mahasiswa.getEmail());
         detailMhsViewHolder.txtFakultasReadDetailMhs.setText(mahasiswa.getFakultas());
         detailMhsViewHolder.txtProdiReadDetailMhs.setText(mahasiswa.getProdi());
         detailMhsViewHolder.txtAngkatanReadDetailMhs.setText(mahasiswa.getAngkatan());
+        detailMhsViewHolder.txtKelasReadDetailMhs.setText(mahasiswa.getKelas());
         detailMhsViewHolder.txtProvinsiReadDetailMhs.setText(mahasiswa.getProvinsi());
         detailMhsViewHolder.txtKabupatenReadDetailMhs.setText(mahasiswa.getNm_kabupaten());
         detailMhsViewHolder.txtKecamatanReadDetailMhs.setText(mahasiswa.getNm_kecamatan());
         detailMhsViewHolder.txtKelurahanReadDetailMhs.setText(mahasiswa.getNm_kelurahan());
         detailMhsViewHolder.txtLatReadDetailMhs.setText(mahasiswa.getNm_lat());
         detailMhsViewHolder.txtLNgReadDetailMhs.setText(mahasiswa.getNm_lng());
+        detailMhsViewHolder.txtAlamatSekarangReadDetailMhs.setText(mahasiswa.getAlamat_sekarang());
+        detailMhsViewHolder.txtLatAlamatSekarangReadDetailMhs.setText(mahasiswa.getLat_alamat_sekarang());
+        detailMhsViewHolder.txtLngAlamatSekarangReadDetailMhs.setText(mahasiswa.getLng_alamat_sekarang());
     }
 
     @Override
@@ -53,22 +62,35 @@ public class DetailMhsAdapter extends RecyclerView.Adapter<DetailMhsAdapter.Deta
     }
 
     class DetailMhsViewHolder extends RecyclerView.ViewHolder{
-        TextView txtNimReadDetailMhs, txtUsernameReadDetailMhs, txtNamaReadDetailMhs, txtJkReadDetailMhs, txtFakultasReadDetailMhs, txtProdiReadDetailMhs, txtAngkatanReadDetailMhs, txtProvinsiReadDetailMhs, txtKabupatenReadDetailMhs, txtKecamatanReadDetailMhs, txtKelurahanReadDetailMhs, txtLatReadDetailMhs, txtLNgReadDetailMhs;
-        public DetailMhsViewHolder(@NonNull View itemView) {
+        TextView txtNimReadDetailMhs, txtUsernameReadDetailMhs, txtNikReadDetailMhs, txtNamaReadDetailMhs, txtJkReadDetailMhs, txtTempatLahirReadDetailMhs,
+                txtTglLahirReadDetailMhs, txtNoHpReadDetailMhs, txtEmailReadDetailMhs, txtFakultasReadDetailMhs, txtProdiReadDetailMhs, txtAngkatanReadDetailMhs,
+                txtKelasReadDetailMhs, txtProvinsiReadDetailMhs, txtKabupatenReadDetailMhs, txtKecamatanReadDetailMhs, txtKelurahanReadDetailMhs, txtLatReadDetailMhs,
+                txtLNgReadDetailMhs, txtAlamatSekarangReadDetailMhs, txtLatAlamatSekarangReadDetailMhs, txtLngAlamatSekarangReadDetailMhs;
+
+        DetailMhsViewHolder(@NonNull View itemView) {
             super(itemView);
             txtNimReadDetailMhs = itemView.findViewById(R.id.txtNimReadDetailMhs);
             txtUsernameReadDetailMhs = itemView.findViewById(R.id.txtUsernameMhsReadDetailMhs);
+            txtNikReadDetailMhs = itemView.findViewById(R.id.txtNikMhsReadDetailMhs);
             txtNamaReadDetailMhs = itemView.findViewById(R.id.txtNamaReadDetailMhs);
             txtJkReadDetailMhs = itemView.findViewById(R.id.txtjkReadDetailMhs);
+            txtTempatLahirReadDetailMhs = itemView.findViewById(R.id.txtTempatLahirReadDetailMhs);
+            txtTglLahirReadDetailMhs = itemView.findViewById(R.id.txtTglLahirReadDetailMhs);
+            txtNoHpReadDetailMhs = itemView.findViewById(R.id.txtNoHpReadDetailMhs);
+            txtEmailReadDetailMhs = itemView.findViewById(R.id.txtEmailReadDetailMhs);
             txtFakultasReadDetailMhs = itemView.findViewById(R.id.txtFakultasReadDetailMhs);
             txtProdiReadDetailMhs = itemView.findViewById(R.id.txtProdiReadDetailMhs);
             txtAngkatanReadDetailMhs = itemView.findViewById(R.id.txtAngkatanReadDetailMhs);
+            txtKelasReadDetailMhs = itemView.findViewById(R.id.txtKelasReadDetailMhs);
             txtProvinsiReadDetailMhs = itemView.findViewById(R.id.txtProvinsiReadDetailMhs);
             txtKabupatenReadDetailMhs = itemView.findViewById(R.id.txtKabupatenMhsReadDetailMhs);
             txtKecamatanReadDetailMhs = itemView.findViewById(R.id.txtKecamatanMhsReadDetailMhs);
             txtKelurahanReadDetailMhs = itemView.findViewById(R.id.txtKelurahanMhsReadDetailMhs);
             txtLatReadDetailMhs = itemView.findViewById(R.id.txtLatitudeReadDetailMhs);
             txtLNgReadDetailMhs = itemView.findViewById(R.id.txtLongtitudeReadDetailMhs);
+            txtAlamatSekarangReadDetailMhs = itemView.findViewById(R.id.txtAlamatSekarangReadDetailMhs);
+            txtLatAlamatSekarangReadDetailMhs = itemView.findViewById(R.id.txtLatAlamatSekarangReadDetailMhs);
+            txtLngAlamatSekarangReadDetailMhs = itemView.findViewById(R.id.txtLngAlamatSekarangReadDetailMhs);
         }
     }
 }

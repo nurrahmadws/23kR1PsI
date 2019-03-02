@@ -1,7 +1,7 @@
 package com.example.matatabi.padm.model;
 
 public class Padm {
-    String nm_kabupaten, total_mahasiswa;
+    private String nm_kabupaten, total_mahasiswa;
 
     public Padm(String nm_kabupaten, String total_mahasiswa) {
         this.nm_kabupaten = nm_kabupaten;

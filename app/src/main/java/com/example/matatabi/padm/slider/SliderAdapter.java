@@ -34,12 +34,12 @@ public class SliderAdapter extends PagerAdapter {
 
     public String[] slide_desc = {
             "Selamat datang di aplikasi Sistem Informasi Geografis Pemetaan Asal Daerah Mahasiswa (PADM) berbasis android. Aplikasi ini dibuat untuk " +
-                    "memudahkan para mahasiswa jurusan Teknik Informatika Universitas Mulawarman Samarinda dalam mencari informasi mengenai daerah asalnya " +
-                    "serta mencari informasi mengenai daerah asal mahasiswa lain. Informasi yang ditampilkan dapat berupa data daerah asal mahasiswa tersebut, serta " +
+                    "memudahkan para mahasiswa jurusan Teknologi Informasi & Komunikasi Universitas Mulawarman Samarinda dalam melihat informasi mengenai daerah asalnya " +
+                    "serta melihat informasi mengenai daerah asal mahasiswa lain. Informasi yang ditampilkan dapat berupa data daerah asal mahasiswa tersebut, serta " +
                     "dapat berupa peta lokasi.",
             "Tujuan dibuatnya aplikasi ini yaitu untuk memudahkan dalam menyajikan informasi mengenai daerah asal mahasiswa FKTI UNMUL khususnya jurusan" +
-                    "Teknik Informatika. Informasi tersebut dapat berupa peta lokasi serta biodata mahasiswa yang ingin dicari daerah asalnya",
-            "Beberapa fitur yang terdapat di aplikasi ini yaitu dapat mencari daerah asal mahasiswa lain dan menampilkannya dalam bentuk peta lokasi, " +
+                    "Teknologi Informasi & Komunikasi. Informasi tersebut dapat berupa peta lokasi serta biodata mahasiswa yang ingin dilihat daerah asalnya",
+            "Beberapa fitur yang terdapat di aplikasi ini yaitu dapat melihat daerah asal mahasiswa lain dan menampilkannya dalam bentuk peta lokasi, " +
                     "serta dapat melihat daerah asal kita dalam bentuk peta lokasi."
     };
 
