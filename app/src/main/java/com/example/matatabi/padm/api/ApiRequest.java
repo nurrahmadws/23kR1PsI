@@ -6,7 +6,9 @@ import com.example.matatabi.padm.model.KelurahanResponse;
 import com.example.matatabi.padm.model.LatlngResponse;
 import com.example.matatabi.padm.model.LoginResponse;
 import com.example.matatabi.padm.model.MahasiswaResponse;
+import com.example.matatabi.padm.model.MapMhsBsdKecResponse;
 import com.example.matatabi.padm.model.PadmKecamatanResponse;
+import com.example.matatabi.padm.model.PadmKelurahanResponse;
 import com.example.matatabi.padm.model.PadmResponse;
 import com.example.matatabi.padm.model.UsersResponse;
 import com.example.matatabi.padm.model.Value;
@@ -165,7 +167,7 @@ public interface ApiRequest {
     Call<LatlngResponse> detailLatlng(@Query("id_latlng") String id_latlng);
 //    MAHASISWA
     @FormUrlEncoded
-    @POST("mahasiswa/create.php")
+    @POST("mahasiswa/create_with_photo.php")
     Call<Value> insertMhs(@Field("nim") String nim,
                           @Field("username") String username,
                           @Field("nik") String nik,
@@ -187,7 +189,8 @@ public interface ApiRequest {
                           @Field("nm_lng") String nm_lng,
                           @Field("alamat_sekarang") String alamat_sekarang,
                           @Field("lat_alamat_sekarang") String lat_alamat_sekarang,
-                          @Field("lng_alamat_sekarang") String lng_alamat_sekarang);
+                          @Field("lng_alamat_sekarang") String lng_alamat_sekarang,
+                          @Field("image") String image);
 
     @GET("mahasiswa/read.php")
     Call<MahasiswaResponse> readMhs(@Query("username") String username);
@@ -202,8 +205,30 @@ public interface ApiRequest {
     Call<MahasiswaResponse> showMapMhs(@Query("nim") String nim);
 
     @FormUrlEncoded
-    @POST("mahasiswa/edit.php")
-    Call<Value> editMhs(@Field("nim") String nim,
+    @POST("mahasiswa/edit_photo.php")
+    Call<Value> editMhsPhoto(@Field("nim") String nim,
+                        @Field("image") String image);
+
+    @FormUrlEncoded
+    @POST("mahasiswa/edit_alamat_sekarang.php")
+    Call<Value> editMhsAlamatSekaran(@Field("nim") String nim,
+                        @Field("alamat_sekarang") String alamat_sekarang,
+                        @Field("lat_alamat_sekarang") String lat_alamat_sekarang,
+                        @Field("lng_alamat_sekarang") String lng_alamat_sekarang);
+
+    @FormUrlEncoded
+    @POST("mahasiswa/edit_asal_daerah.php")
+    Call<Value> editMhsAsalDaerah(@Field("nim") String nim,
+                        @Field("provinsi") String provinsi,
+                        @Field("nm_kabupaten") String nm_kabupaten,
+                        @Field("nm_kecamatan") String nm_kecamatan,
+                        @Field("nm_kelurahan") String nm_kelurahan,
+                        @Field("nm_lat") String nm_lat,
+                        @Field("nm_lng") String nm_lng);
+
+    @FormUrlEncoded
+    @POST("mahasiswa/edit_pribadi_akademik.php")
+    Call<Value> editMhsPribadiAk(@Field("nim") String nim,
                         @Field("username") String username,
                         @Field("nik") String nik,
                         @Field("nama") String nama,
@@ -215,28 +240,33 @@ public interface ApiRequest {
                         @Field("fakultas") String fakultas,
                         @Field("prodi") String prodi,
                         @Field("angkatan") String angkatan,
-                        @Field("kelas") String kelas,
-                        @Field("provinsi") String provinsi,
-                        @Field("nm_kabupaten") String nm_kabupaten,
-                        @Field("nm_kecamatan") String nm_kecamatan,
-                        @Field("nm_kelurahan") String nm_kelurahan,
-                        @Field("nm_lat") String nm_lat,
-                        @Field("nm_lng") String nm_lng,
-                        @Field("alamat_sekarang") String alamat_sekarang,
-                        @Field("lat_alamat_sekarang") String lat_alamat_sekarang,
-                        @Field("lng_alamat_sekarang") String lng_alamat_sekarang);
+                        @Field("kelas") String kelas);
 
     @FormUrlEncoded
     @POST("mahasiswa/delete.php")
-    Call<Value> deleteMahasiswa(@Field("nim") String nim);
+    Call<Value> deleteMahasiswa(@Field("username") String username);
 
     @FormUrlEncoded
     @POST("mahasiswa/searchMhs.php")
     Call<MahasiswaResponse> searchMhs(@Field("searchMhs") String searchMhs);
+
+    @Multipart
+    @POST("mahasiswa/create_with_photo_not_base64.php")
+    Call<Value> InsertImage(@Part("username") RequestBody username,
+                            @Part MultipartBody.Part image);
 //    DATA PADM
     @GET("data_padm/total.php")
     Call<PadmResponse> showPadm();
 
     @GET("data_padm/total_kecamatan.php")
     Call<PadmKecamatanResponse> showPadmKec(@Query("nm_kabupaten") String nm_kabupaten);
+
+    @GET("data_padm/total_kelurahan.php")
+    Call<PadmKelurahanResponse> showPadmKel(@Query("nm_kecamatan") String nm_kecamatan);
+
+    @GET("mahasiswa/showMapBsdOnKel.php")
+    Call<MapMhsBsdKecResponse> showMapMhsBsdKec(@Query("nm_kecamatan") String nm_kecamatan);
+
+    @GET("mahasiswa/showMapAlamatMhs.php")
+    Call<MapMhsBsdKecResponse> showMapAlamatMhs(@Query("nim") String nim);
 }

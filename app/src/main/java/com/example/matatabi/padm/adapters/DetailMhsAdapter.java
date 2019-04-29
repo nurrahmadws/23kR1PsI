@@ -6,10 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.matatabi.padm.R;
 import com.example.matatabi.padm.model.Mahasiswa;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -54,6 +56,8 @@ public class DetailMhsAdapter extends RecyclerView.Adapter<DetailMhsAdapter.Deta
         detailMhsViewHolder.txtAlamatSekarangReadDetailMhs.setText(mahasiswa.getAlamat_sekarang());
         detailMhsViewHolder.txtLatAlamatSekarangReadDetailMhs.setText(mahasiswa.getLat_alamat_sekarang());
         detailMhsViewHolder.txtLngAlamatSekarangReadDetailMhs.setText(mahasiswa.getLng_alamat_sekarang());
+        Picasso.with(mc).load("http://192.168.43.207/api/mahasiswa/"+mahasiswa.getImage()).resize(354, 472)
+                .centerCrop().skipMemoryCache().into(detailMhsViewHolder.imgView_photo_Show_all_mhs);
     }
 
     @Override
@@ -66,6 +70,7 @@ public class DetailMhsAdapter extends RecyclerView.Adapter<DetailMhsAdapter.Deta
                 txtTglLahirReadDetailMhs, txtNoHpReadDetailMhs, txtEmailReadDetailMhs, txtFakultasReadDetailMhs, txtProdiReadDetailMhs, txtAngkatanReadDetailMhs,
                 txtKelasReadDetailMhs, txtProvinsiReadDetailMhs, txtKabupatenReadDetailMhs, txtKecamatanReadDetailMhs, txtKelurahanReadDetailMhs, txtLatReadDetailMhs,
                 txtLNgReadDetailMhs, txtAlamatSekarangReadDetailMhs, txtLatAlamatSekarangReadDetailMhs, txtLngAlamatSekarangReadDetailMhs;
+        ImageView imgView_photo_Show_all_mhs;
 
         DetailMhsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -91,6 +96,7 @@ public class DetailMhsAdapter extends RecyclerView.Adapter<DetailMhsAdapter.Deta
             txtAlamatSekarangReadDetailMhs = itemView.findViewById(R.id.txtAlamatSekarangReadDetailMhs);
             txtLatAlamatSekarangReadDetailMhs = itemView.findViewById(R.id.txtLatAlamatSekarangReadDetailMhs);
             txtLngAlamatSekarangReadDetailMhs = itemView.findViewById(R.id.txtLngAlamatSekarangReadDetailMhs);
+            imgView_photo_Show_all_mhs = itemView.findViewById(R.id.imgView_photo_Show_all_mhs);
         }
     }
 }

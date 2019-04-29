@@ -70,7 +70,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_place_black_24dp"
-            fab:fab_label="Tampilkan Peta"
+            fab:fab_label="Tampilkan Lokasi Asal Daerah"
+            fab:fab_size="mini" />
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_tampil_peta_mhs_alamat_sekarang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_place_black_24dp"
+            fab:fab_label="Tampilkan Lokasi Alamat"
             fab:fab_size="mini" />
     </com.github.clans.fab.FloatingActionMenu>
 

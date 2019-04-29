@@ -5,19 +5,24 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
-import android.provider.Settings;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +31,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -43,16 +49,16 @@ import com.example.matatabi.padm.model.Latlng;
 import com.example.matatabi.padm.model.LatlngResponse;
 import com.example.matatabi.padm.model.Value;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import androidx.annotation.RequiresApi;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -72,6 +78,15 @@ public class AddMahasiswaActivity extends AppCompatActivity {
     Criteria criteria;
     LocationManager locationManager;
 
+    //    FOR IMAGE
+    private static final int PICK_FROM_GALLERY = 1;
+    private ImageView img;
+    private static final int IMG_REQUEST = 1;
+    private Bitmap bitmap;
+    Button btn_get_photo;
+    Uri path;
+//    END OF IMAGE
+
     @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +94,7 @@ public class AddMahasiswaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_mahasiswa);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         edtNim = findViewById(R.id.edtNim);
         edtUsername = findViewById(R.id.edtUsername);
@@ -97,6 +112,8 @@ public class AddMahasiswaActivity extends AppCompatActivity {
         edtLatAlamatSekarang = findViewById(R.id.edtLatAlamatSekarang);
         edtLngAlamatSekarang = findViewById(R.id.edtLngAlamatSekarang);
 
+        img = findViewById(R.id.img);
+
         radioJk = findViewById(R.id.radioJk);
 
         spinAngkatan = findViewById(R.id.spinAngkatan);
@@ -108,10 +125,10 @@ public class AddMahasiswaActivity extends AppCompatActivity {
         spinLng = findViewById(R.id.spinLngM);
 
         sharedPreferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
-        if (sharedPreferences.contains(USERNAME)){
+        if (sharedPreferences.contains(USERNAME)) {
             edtUsername.setText(sharedPreferences.getString(USERNAME, ""));
         }
-        if (sharedPreferences.contains(USERNAME)){
+        if (sharedPreferences.contains(USERNAME)) {
             edtNim.setText(sharedPreferences.getString(USERNAME, ""));
         }
 
@@ -150,7 +167,7 @@ public class AddMahasiswaActivity extends AppCompatActivity {
             public void onResponse(Call<KabupatenResponse> call, Response<KabupatenResponse> response) {
                 List<Kabupaten> kabupatenList = response.body().getKabupatenList();
                 List<String> listSpinKab = new ArrayList<>();
-                for (int i = 0; i < kabupatenList.size(); i++){
+                for (int i = 0; i < kabupatenList.size(); i++) {
                     listSpinKab.add(kabupatenList.get(i).getNm_kabupaten());
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(AddMahasiswaActivity.this, android.R.layout.simple_spinner_dropdown_item, listSpinKab);
@@ -203,12 +220,14 @@ public class AddMahasiswaActivity extends AppCompatActivity {
         });
 
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        edtTglLahir.setOnClickListener(new View.OnClickListener() {
+        Button btnTgl = findViewById(R.id.btnTgl);
+        btnTgl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDateDialog();
             }
         });
+        edtTglLahir.setEnabled(false);
 
         Button btn_simpan_mhs = findViewById(R.id.btn_simpan_mhs);
         btn_simpan_mhs.setOnClickListener(new View.OnClickListener() {
@@ -219,31 +238,83 @@ public class AddMahasiswaActivity extends AppCompatActivity {
                 simpanMahasiswa();
             }
         });
-        Button btn_batal_mhs = findViewById(R.id.btn_batal_mhs);
-        btn_batal_mhs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
 
         criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_COARSE);
         criteria.setCostAllowed(false);
 
-
-        Button btn_get_koordinat_alamat_sekarang_mhs = findViewById(R.id.btn_get_koordinat_alamat_sekarang_mhs);
-        btn_get_koordinat_alamat_sekarang_mhs.setOnClickListener(new View.OnClickListener() {
+        btn_get_photo = findViewById(R.id.btn_get_photo);
+        btn_get_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AddMahasiswaActivity.this, GetCoordinateManuallyActivity.class));
+                AlertDialog.Builder dialog = new AlertDialog.Builder(AddMahasiswaActivity.this);
+                dialog.setTitle("PEMBERITAHUAN!").setMessage("Pilih Open Gallery Jika Anda Memiliki Foto \nPilih Default Foto Jika Anda belum Memiliki Foto")
+                        .setCancelable(false);
+                dialog.setPositiveButton("Open Gallery", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        selectImage();
+                    }
+                });
+                dialog.setNegativeButton("Default Foto", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        isImageNull();
+                    }
+                });
+                AlertDialog alertDialog = dialog.create();
+                alertDialog.show();
             }
         });
     }
 
+    //    FOR IMAGE
+    private void selectImage() {
+        if (ActivityCompat.checkSelfPermission(AddMahasiswaActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(AddMahasiswaActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
+        } else {
+            Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
+        }
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == IMG_REQUEST && resultCode == RESULT_OK && data != null) {
+            path = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), path);
+                img.setImageBitmap(bitmap);
+                img.setVisibility(View.VISIBLE);
+                btn_get_photo.setEnabled(false);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-    private void showDateDialog(){
+    private void isImageNull() {
+        Uri uri = Uri.parse("android.resource://" + this.getPackageName() + "/drawable/default_photo");
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+            img.setImageBitmap(bitmap);
+            img.setVisibility(View.VISIBLE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String imageToString() {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 40, byteArrayOutputStream);
+        byte[] imgByt = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imgByt, Base64.DEFAULT);
+    }
+    //    END OF IMAGE
+
+    private void showDateDialog() {
         Calendar newCalendar = Calendar.getInstance();
         datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
 
@@ -256,22 +327,22 @@ public class AddMahasiswaActivity extends AppCompatActivity {
                 edtDateResul.setText(simpleDateFormat.format(newDate.getTime()));
             }
 
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
         datePickerDialog.show();
     }
 
-    private void listKecamatan(String kabupatenName){
+    private void listKecamatan(String kabupatenName) {
         String nm_kabupaten = spinKabupatenM.getSelectedItem().toString();
 
-        if (kabupatenName.equals(nm_kabupaten)){
+        if (kabupatenName.equals(nm_kabupaten)) {
             Call<KecamatanResponse> calll = RetrofitClient.getmInstance().getApi().spinKec(nm_kabupaten);
             calll.enqueue(new Callback<KecamatanResponse>() {
                 @Override
                 public void onResponse(Call<KecamatanResponse> call, Response<KecamatanResponse> response) {
                     List<Kecamatan> kecamatanList = response.body().getKecamatanList();
                     List<String> listSpinKec = new ArrayList<>();
-                    for (int i = 0; i < kecamatanList.size(); i++){
+                    for (int i = 0; i < kecamatanList.size(); i++) {
                         listSpinKec.add(kecamatanList.get(i).getNm_kecamatan());
                     }
                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(AddMahasiswaActivity.this, android.R.layout.simple_spinner_dropdown_item, listSpinKec);
@@ -288,17 +359,17 @@ public class AddMahasiswaActivity extends AppCompatActivity {
 
     }
 
-    private void listKelurahan(String kecamatanName){
+    private void listKelurahan(String kecamatanName) {
         String nm_kecamatan = spinKecamatanM.getSelectedItem().toString();
 
-        if (kecamatanName.equals(nm_kecamatan)){
+        if (kecamatanName.equals(nm_kecamatan)) {
             Call<KelurahanResponse> callk = RetrofitClient.getmInstance().getApi().spinKel(nm_kecamatan);
             callk.enqueue(new Callback<KelurahanResponse>() {
                 @Override
                 public void onResponse(Call<KelurahanResponse> call, Response<KelurahanResponse> response) {
                     List<Kelurahan> kelurahanList = response.body().getKelurahanList();
                     List<String> listSpinKel = new ArrayList<>();
-                    for (int i = 0; i < kelurahanList.size(); i++){
+                    for (int i = 0; i < kelurahanList.size(); i++) {
                         listSpinKel.add(kelurahanList.get(i).getNm_kelurahan());
                     }
                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(AddMahasiswaActivity.this, android.R.layout.simple_spinner_dropdown_item, listSpinKel);
@@ -314,24 +385,24 @@ public class AddMahasiswaActivity extends AppCompatActivity {
         }
     }
 
-    private void listLatlng(String kelurahanName){
+    private void listLatlng(String kelurahanName) {
         String nm_kelurahan = spinKelurahanM.getSelectedItem().toString();
 
-        if (kelurahanName.equals(nm_kelurahan)){
+        if (kelurahanName.equals(nm_kelurahan)) {
             Call<LatlngResponse> latlngResponseCall = RetrofitClient.getmInstance().getApi().spinLatlng(nm_kelurahan);
             latlngResponseCall.enqueue(new Callback<LatlngResponse>() {
                 @Override
                 public void onResponse(Call<LatlngResponse> call, Response<LatlngResponse> response) {
                     List<Latlng> latlngList = response.body().getLatlngList();
                     List<String> listSpinLat = new ArrayList<>();
-                    for (int i = 0; i < latlngList.size(); i++){
+                    for (int i = 0; i < latlngList.size(); i++) {
                         listSpinLat.add(latlngList.get(i).getNm_lat());
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(AddMahasiswaActivity.this, android.R.layout.simple_spinner_dropdown_item, listSpinLat);
                     spinLat.setAdapter(adapter);
 
                     List<String> listSpinLng = new ArrayList<>();
-                    for (int i = 0; i < latlngList.size(); i++){
+                    for (int i = 0; i < latlngList.size(); i++) {
                         listSpinLng.add(latlngList.get(i).getNm_lng());
                     }
                     ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(AddMahasiswaActivity.this, android.R.layout.simple_spinner_dropdown_item, listSpinLng);
@@ -346,19 +417,20 @@ public class AddMahasiswaActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isEmailValid(CharSequence email){
+    private boolean isEmailValid(CharSequence email) {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void simpanMahasiswa(){
+    private void simpanMahasiswa() {
         final ProgressDialog progressDialog = new ProgressDialog(AddMahasiswaActivity.this);
         progressDialog.setMessage("Menambahkan Data...");
         progressDialog.show();
 
         int selectedId = radioJk.getCheckedRadioButtonId();
 
-        if (radioJk.getCheckedRadioButtonId() == -1){
+        if (radioJk.getCheckedRadioButtonId() == -1) {
             progressDialog.dismiss();
             Toast.makeText(this, "Jenis Kelamin Belum Dipilih", Toast.LENGTH_LONG).show();
             return;
@@ -367,7 +439,7 @@ public class AddMahasiswaActivity extends AppCompatActivity {
 
         String nim = edtNim.getText().toString().trim();
         String username = edtUsername.getText().toString();
-        String nik = edtNik.getText().toString();
+        String nik = edtNik.getText().toString().trim();
         String nama = edtNama.getText().toString().trim();
         String jk = radioSexButton.getText().toString().trim();
         String tempat_lahir = edtTempatLahir.getText().toString();
@@ -387,82 +459,85 @@ public class AddMahasiswaActivity extends AppCompatActivity {
         String alamat_sekarang = edtAlamatSekarang.getText().toString();
         String lat_alamat_sekarang = edtLatAlamatSekarang.getText().toString();
         String lng_alamat_sekarang = edtLngAlamatSekarang.getText().toString();
+        String image = imageToString();
 
-        if (nim.isEmpty()){
+        if (nim.isEmpty()) {
             progressDialog.dismiss();
             edtNim.setError("NIM harus Diisi");
             edtNim.requestFocus();
             return;
         }
-        if (nik.isEmpty()){
-            progressDialog.dismiss();
-            edtNik.setError("NIK Harus Diisi");
-            edtNik.requestFocus();
-            return;
+        if (nik != null && !nik.isEmpty() && !nik.equals("null")) {
+            edtNik.setText(nik);
         }
-        if (nama.isEmpty()){
+        if (nama.isEmpty()) {
             progressDialog.dismiss();
             edtNama.setError("Nama Harus Diisi");
             edtNama.requestFocus();
             return;
         }
-        if (tempat_lahir.isEmpty()){
+        if (tempat_lahir.isEmpty()) {
             progressDialog.dismiss();
             edtTempatLahir.setError("Tempat Lahir Harus Diisi");
             edtTempatLahir.requestFocus();
             return;
         }
-        if (tgl_lahir.isEmpty()){
+        if (tgl_lahir.isEmpty()) {
             progressDialog.dismiss();
             edtTglLahir.setError("Tanggal Lahir Harus Diisi");
             edtTglLahir.requestFocus();
             return;
-        }else {
+        } else {
             try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     LocalDate.parse(tgl_lahir);
                     progressDialog.dismiss();
-                }else {
+                } else {
                     Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
                 }
-            }catch (DateTimeParseException d){
+            } catch (DateTimeParseException d) {
                 progressDialog.dismiss();
                 edtTglLahir.setError("Format Tanggal Lahir Salah");
                 edtTglLahir.requestFocus();
                 return;
             }
         }
-        if (no_hp.isEmpty()){
+        if (no_hp.isEmpty()) {
             progressDialog.dismiss();
             edtNoHp.setError("No Hanphone Harus Diiisi");
             edtNoHp.requestFocus();
             return;
         }
-        if (email.isEmpty()){
+        if (email.isEmpty()) {
             progressDialog.dismiss();
             edtEmail.setError("Email Harus Diisi");
             edtEmail.requestFocus();
             return;
         }
-        if (!isEmailValid(email)){
+        if (!isEmailValid(email)) {
             progressDialog.dismiss();
             edtEmail.setError("The Format Must Be Email");
             edtEmail.requestFocus();
             return;
         }
-        if (alamat_sekarang.isEmpty()){
+        if (alamat_sekarang.isEmpty()) {
             progressDialog.dismiss();
             edtAlamatSekarang.setError("Alamat Harus Diisi");
             edtAlamatSekarang.requestFocus();
             return;
         }
+        if (image.isEmpty()) {
+            progressDialog.dismiss();
+            Toast.makeText(this, "Photo Tidak Boleh Kosong!!!", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         Call<Value> call = RetrofitClient.getmInstance().getApi().insertMhs(nim, username, nik, nama, jk, tempat_lahir, tgl_lahir, no_hp,
                 email, fakultas, prodi, angkatan, kelas, provinsi, nm_kabupaten, nm_kecamatan, nm_kelurahan, nm_lat, nm_lng, alamat_sekarang,
-                lat_alamat_sekarang, lng_alamat_sekarang);
+                lat_alamat_sekarang, lng_alamat_sekarang, image);
         call.enqueue(new Callback<Value>() {
             @Override
-            public void onResponse(Call<Value> call, Response<Value> response) {
+            public void onResponse(@NonNull Call<Value> call, @NonNull Response<Value> response) {
                 progressDialog.dismiss();
                 String value = response.body().getValue();
                 String message = response.body().getMessage();
@@ -479,6 +554,9 @@ public class AddMahasiswaActivity extends AppCompatActivity {
                         Toast.makeText(AddMahasiswaActivity.this, message, Toast.LENGTH_SHORT).show();
                         break;
                     case "3":
+                        Toast.makeText(AddMahasiswaActivity.this, message, Toast.LENGTH_SHORT).show();
+                        break;
+                    case "4":
                         Toast.makeText(AddMahasiswaActivity.this, message, Toast.LENGTH_SHORT).show();
                         break;
                 }

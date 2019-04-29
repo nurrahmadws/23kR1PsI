@@ -1,13 +1,17 @@
 package com.example.matatabi.padm.activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -16,6 +20,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +36,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
 
 import java.io.IOException;
 import java.util.List;
@@ -42,6 +48,7 @@ public class GetCoordinateManuallyEditActivity extends FragmentActivity implemen
     private GoogleMap.OnCameraIdleListener onCameraIdleListener;
     private View mMarkerParentView;
     private ImageView mMarkerImageView;
+    private EditText edtNimEditMhs;
 
     static final int REQUEST_LOCATION=1;
 
@@ -54,20 +61,40 @@ public class GetCoordinateManuallyEditActivity extends FragmentActivity implemen
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final float DEFAULT_ZOOM = 15f;
 
+    Criteria criteria;
+    LocationManager locationManager;
+
     //vars
     private Boolean mLocationPermissionsGranted = false;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
+    @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_coordinate_manually_edit);
 
+        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+
+        criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+        criteria.setCostAllowed(false);
+
+        // Initialize Places.
+        if (!Places.isInitialized()){
+            Places.initialize(getApplicationContext(), "AIzaSyCX120e-jUfRhC4JWbA7MAPLSOSjjsoazI");
+        }
         mLocation = findViewById(R.id.location_text_view_alamat_sekarang);
         mLocationLat = findViewById(R.id.location_text_view_lat_asek);
         mLocationLng = findViewById(R.id.location_text_view_lng_asek);
         mMarkerParentView = findViewById(R.id.marker_view_include_edit);
         mMarkerImageView = findViewById(R.id.marker_icon_view);
+
+        edtNimEditMhs = findViewById(R.id.edtNimEditMhss);
+
+        final Intent intent = getIntent();
+        final String nim = intent.getStringExtra("nim");
+        edtNimEditMhs.setText(nim);
 
         getLocationPermission();
         configureCameraIdle();
@@ -80,7 +107,8 @@ public class GetCoordinateManuallyEditActivity extends FragmentActivity implemen
                 String lat_alamat_sekarang = mLocationLat.getText().toString();
                 String lng_alamat_sekarang = mLocationLng.getText().toString();
 
-                Intent intent = new Intent(GetCoordinateManuallyEditActivity.this, EditMhsActivity.class);
+                Intent intent = new Intent(GetCoordinateManuallyEditActivity.this, EditMhsAlamatSekarangActivity.class);
+                intent.putExtra("nim", nim);
                 intent.putExtra("alamat_sekarang", alamat_sekarang);
                 intent.putExtra("lat_alamat_sekarang", lat_alamat_sekarang);
                 intent.putExtra("lng_alamat_sekarang", lng_alamat_sekarang);
@@ -112,6 +140,8 @@ public class GetCoordinateManuallyEditActivity extends FragmentActivity implemen
 
                         String latitude = String.valueOf(addressList.get(0).getLatitude());
                         String longtitude = String.valueOf(addressList.get(0).getLongitude());
+                        latitude = latitude.substring(0,latitude.indexOf(".")+6);
+                        longtitude = longtitude.substring(0,longtitude.indexOf(".")+6);
 
                         if (!latitude.isEmpty() && !longtitude.isEmpty())
                             mLocationLat.setText(latitude);
@@ -137,7 +167,7 @@ public class GetCoordinateManuallyEditActivity extends FragmentActivity implemen
                 return;
             }
             mMap.setMyLocationEnabled(true);
-            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+            mMap.getUiSettings().setMyLocationButtonEnabled(true);
             mMap.getUiSettings().setZoomControlsEnabled(true);
 
         }

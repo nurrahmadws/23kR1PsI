@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.matatabi.padm.R;
 import com.example.matatabi.padm.api.RetrofitClient;
@@ -52,7 +53,7 @@ public class GrafikPadmKecamatanActivity extends AppCompatActivity {
                 assert response.body() != null;
                 padmKecamatanList = response.body().getPadmKecamatanList();
 
-                pieChart.setUsePercentValues(false);
+                pieChart.setUsePercentValues(true);
                 pieChart.getDescription().setEnabled(false);
                 pieChart.setExtraOffsets(5, 10, 5, 5);
 
@@ -71,20 +72,21 @@ public class GrafikPadmKecamatanActivity extends AppCompatActivity {
                 }
 
                 Description description = new Description();
-                description.setText("Total Data Persebaran Mahasiswa FKTI UNMUL PRODI TI");
-                description.setTextSize(10);
+                description.setText("Total Data Persebaran Mahasiswa FKTI UNMUL PRODI TI Berdasarkan Kecamatan");
+                description.setTextSize(7);
                 pieChart.setDescription(description);
 
                 pieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
 
-                PieDataSet pieDataSet = new PieDataSet(yValues, "Kecamatan");
+                PieDataSet pieDataSet = new PieDataSet(yValues, "(Kecamatan)");
                 pieDataSet.setSliceSpace(2f);
                 pieDataSet.setSelectionShift(5f);
 
                 final int[] MY_COLORS = {Color.rgb(192,0,0), Color.rgb(255,0,0), Color.rgb(255,192,0),
-                        Color.rgb(127,127,127), Color.rgb(146,208,80),
-                        Color.rgb(0,176,80), Color.rgb(79,129,189), Color.rgb(255,0,149),
-                        Color.rgb(230,0,255), Color.rgb(18,0,255), Color.rgb(245,139,9)};
+                        Color.rgb(127,127,127), Color.rgb(146,208,80), Color.rgb(0,176,80), Color.rgb(79,129,189),
+                        Color.rgb(255,0,149), Color.rgb(230,0,255), Color.rgb(18,0,255), Color.rgb(245,139,9),
+                        Color.rgb(46,0,255), Color.rgb(203,21,239), Color.rgb(132,0,0), Color.rgb(255,222,7),
+                        Color.rgb(4,237,155), Color.rgb(6,153,91)};
                 ArrayList<Integer> colors = new ArrayList<>();
 
                 for(int c: MY_COLORS) colors.add(c);
@@ -92,20 +94,19 @@ public class GrafikPadmKecamatanActivity extends AppCompatActivity {
                 pieDataSet.setValueFormatter(new DecimalRemover(new DecimalFormat("###,###,###")));
 
                 PieData data = new PieData(pieDataSet);
-                data.setValueTextSize(10f);
+                data.setValueTextSize(13f);
                 data.setValueTextColor(Color.BLACK);
+                pieChart.getLegend().setWordWrapEnabled(true);
 
                 pieChart.setData(data);
             }
 
             @Override
-            public void onFailure(Call<PadmKecamatanResponse> call, Throwable t) {
-
+            public void onFailure(@NonNull Call<PadmKecamatanResponse> call, @NonNull Throwable t) {
+                Toast.makeText(GrafikPadmKecamatanActivity.this, "Gagal Mengambil Data", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

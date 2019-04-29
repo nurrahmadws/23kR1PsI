@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/tbl_total_mhs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <TableRow
+            android:background="#ECEFF1"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/txtKelurahanPadm"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Kelurahan"
+                android:background="@drawable/cell"/>
+
+            <TextView
+                android:id="@+id/txtKelurahanPadmKec"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Kecamatan"
+                android:visibility="gone"
+                android:background="@drawable/cell"/>
+
+            <TextView
+                android:id="@+id/txtTotalPadm_Kel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="20"
+                android:background="@drawable/cell"
+                android:textAlignment="center" />
+        </TableRow>
+    </TableLayout>
+
+</RelativeLayout>

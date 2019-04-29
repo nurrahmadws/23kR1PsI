@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="130dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="113dp"
         android:layout_marginTop="55dp"
         app:srcCompat="@drawable/onboarscreenmhs2"
         tools:ignore="VectorDrawableCompat" />

@@ -31,7 +31,7 @@ public class DetailMhsActivity extends AppCompatActivity {
     private DetailMhsAdapter detailMhsAdapter;
     private List<Mahasiswa> mahasiswaList;
     FloatingActionMenu materialDesignFAM;
-    FloatingActionButton floatingActionButton1;
+    FloatingActionButton floatingActionButton1, fab_tampil_peta_mhs_alamat_sekarang;
 
 
     @Override
@@ -42,7 +42,7 @@ public class DetailMhsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         editNimm = findViewById(R.id.editNimm);
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         editNimm.setText(intent.getStringExtra("nim"));
         editNimm.setKeyListener(editNimm.getKeyListener());
         editNimm.setKeyListener(null);
@@ -53,6 +53,7 @@ public class DetailMhsActivity extends AppCompatActivity {
 
         materialDesignFAM = findViewById(R.id.FabdetailMhs);
         floatingActionButton1 = findViewById(R.id.fab_tampil_peta_mhs);
+        fab_tampil_peta_mhs_alamat_sekarang = findViewById(R.id.fab_tampil_peta_mhs_alamat_sekarang);
 
         final ProgressDialog progressDialog = new ProgressDialog(DetailMhsActivity.this);
         progressDialog.setMessage("Memuat Data...");
@@ -82,6 +83,15 @@ public class DetailMhsActivity extends AppCompatActivity {
                 Intent intent1 = new Intent(DetailMhsActivity.this, ShowMapsAllMhsActivity.class);
                 intent1.putExtra("nim", nim);
                 startActivity(intent1);
+            }
+        });
+
+        fab_tampil_peta_mhs_alamat_sekarang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent2 = new Intent(DetailMhsActivity.this, ShowMarkerMhsAlamatActivity.class);
+                intent2.putExtra("nim", nim);
+                startActivity(intent2);
             }
         });
     }

@@ -16,6 +16,6 @@ public class DecimalRemover implements IValueFormatter {
     @Override
     public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
         if(value < 0) return "";
-        return format.format(value) + " Mahasiswa";
+        return format.format(value) + " %";
     }
 }

@@ -43,8 +43,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -74,8 +77,6 @@ public class GetCoordinateManuallyActivity extends FragmentActivity implements O
     private Boolean mLocationPermissionsGranted = false;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
-    Marker marker;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,34 +86,6 @@ public class GetCoordinateManuallyActivity extends FragmentActivity implements O
         if (!Places.isInitialized()){
             Places.initialize(getApplicationContext(), "AIzaSyCX120e-jUfRhC4JWbA7MAPLSOSjjsoazI");
         }
-
-// Create a new Places client instance.
-        PlacesClient placesClient = Places.createClient(this);
-
-        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)getSupportFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-        assert autocompleteFragment != null;
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
-        autocompleteFragment.setCountry("ID");
-
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(@NonNull Place place) {
-//                final LatLng latLng = place.getLatLng();
-
-                if (marker!=null){
-                    marker.remove();
-                }
-                marker = mMap.addMarker(new MarkerOptions().position(Objects.requireNonNull(place.getLatLng())).title(place.getName()));
-                mMap.animateCamera(CameraUpdateFactory.zoomTo(12), 2000, null);
-                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
-
-            }
-
-            @Override
-            public void onError(@NonNull Status status) {
-
-            }
-        });
 
         mLocation = findViewById(R.id.location_text_view_alamat_sekarang);
         mLocationLat = findViewById(R.id.location_text_view_lat_asek);
@@ -156,6 +129,8 @@ public class GetCoordinateManuallyActivity extends FragmentActivity implements O
 
                         String latitude = String.valueOf(addressList.get(0).getLatitude());
                         String longtitude = String.valueOf(addressList.get(0).getLongitude());
+                        latitude = latitude.substring(0,latitude.indexOf(".")+6);
+                        longtitude = longtitude.substring(0,longtitude.indexOf(".")+6);
 
                         if (!latitude.isEmpty() && !longtitude.isEmpty())
                             mLocationLat.setText(latitude);
@@ -180,7 +155,7 @@ public class GetCoordinateManuallyActivity extends FragmentActivity implements O
                 return;
             }
             mMap.setMyLocationEnabled(true);
-            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+            mMap.getUiSettings().setMyLocationButtonEnabled(true);
             mMap.getUiSettings().setZoomControlsEnabled(true);
 
         }
@@ -260,33 +235,6 @@ public class GetCoordinateManuallyActivity extends FragmentActivity implements O
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
         mapFragment.getMapAsync(GetCoordinateManuallyActivity.this);
-    }
-
-    public void checkLocationPermission(){
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-        && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-        {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            && ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION))
-            {
-                new AlertDialog.Builder(this)
-                        .setTitle("Membutuhkan Izin")
-                        .setMessage("Fitur Ini Membutuhkan Izin Lokasi")
-                        .setPositiveButton("Izinkan", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                ActivityCompat.requestPermissions(GetCoordinateManuallyActivity.this,
-                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
-                            }
-                        })
-                        .create()
-                        .show();
-            }else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
-                mLocationPermissionsGranted = true;
-                initMap();
-            }
-        }
     }
 
     private void getLocationPermission(){

@@ -10,10 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.matatabi.padm.R;
-import com.example.matatabi.padm.activities.GrafikPadmKecamatanActivity;
+import com.example.matatabi.padm.activities.DataPadmKelActivity;
 import com.example.matatabi.padm.model.PadmKecamatan;
-import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
 
 import java.util.List;
 
@@ -59,7 +57,11 @@ public class PadmKecAdapter extends RecyclerView.Adapter<PadmKecAdapter.PadmKecV
 
         @Override
         public void onClick(View v) {
+            String nm_kecamatan = txtKecamatanPadm.getText().toString();
 
+            Intent intent = new Intent(context, DataPadmKelActivity.class);
+            intent.putExtra("nm_kecamatan", nm_kecamatan);
+            context.startActivity(intent);
         }
     }
 }

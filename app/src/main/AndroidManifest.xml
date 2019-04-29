@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.matatabi.padm">
+
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -28,14 +29,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="m">
-        <activity android:name=".activities.DataPadmKecActivity"></activity>
 
-        <uses-library
-            android:name="org.apache.http.legacy"
-            android:required="false" />
-        <uses-library android:name="com.google.android.maps" />
-
-        <activity android:name=".activities.GrafikPadmKecamatanActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -47,6 +41,30 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".activities.ShowMarkerMhsAlamatActivity"
+            android:label="@string/title_activity_show_marker_mhs_alamat"></activity>
+        <activity android:name=".activities.EditMhsPhotoActivity" />
+        <activity android:name=".activities.EditMhsAlamatSekarangActivity" />
+        <activity android:name=".activities.EditMhsAsalDaerahActivity" />
+        <activity android:name=".activities.EditMhsDataPribadiActivity" />
+        <activity android:name=".activities.AddMenuDataMhsActivity" />
+        <activity android:name=".activities.AddImageMhsActivity" />
+        <activity
+            android:name=".activities.MarkerAllMahasiswaBsdKelActivity"
+            android:label="@string/title_activity_marker_all_mahasiswa_bsd_kel" />
+        <activity android:name=".activities.GrafikPadmKelurahanActivity" />
+        <activity android:name=".activities.DataPadmKelActivity" />
+        <activity android:name=".activities.DataPadmKecActivity" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+        <uses-library android:name="com.google.android.maps" />
+
+        <activity android:name=".activities.GrafikPadmKecamatanActivity" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

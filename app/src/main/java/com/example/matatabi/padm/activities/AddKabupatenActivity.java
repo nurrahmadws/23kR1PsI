@@ -8,12 +8,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.matatabi.padm.R;
 import com.example.matatabi.padm.api.RetrofitClient;
-import com.example.matatabi.padm.model.Kabupaten;
 import com.example.matatabi.padm.model.Value;
 
 import retrofit2.Call;

@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -29,6 +30,11 @@ import com.example.matatabi.padm.R;
 import com.example.matatabi.padm.api.RetrofitClient;
 import com.example.matatabi.padm.model.LoginResponse;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String mypreference = "mypref";
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
+    private static final int PERMISSIONS_REQUEST_CODE = 1240;
+    String[] appPermissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET,
+                               Manifest.permission.SEND_SMS, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,30 +169,84 @@ public class MainActivity extends AppCompatActivity {
         gpsCheck();
     }
 
-    private void checkSelfPermission(){
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+    private boolean checkSelfPermission(){
+        List<String> listPermissionNeeded = new ArrayList<>();
+        for (String perm : appPermissions)
         {
-//            Jika Izin Tidak Diberikan
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION))
+            if (ContextCompat.checkSelfPermission(this, perm) != PackageManager.PERMISSION_GRANTED)
             {
-                new AlertDialog.Builder(this)
-                        .setTitle("Membutuhkan Izin")
-                        .setMessage("Fitur Ini Membutuhkan Izin Lokasi")
-                        .setPositiveButton("Izinkan", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                ActivityCompat.requestPermissions(MainActivity.this,
-                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-                            }
-                        })
-                        .create()
-                        .show();
-            }else{
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+                listPermissionNeeded.add(perm);
             }
-        }else {
-//            Izin Telah DIberikan
-            Toast.makeText(this, "Izin Lokasi Telah Diberikan", Toast.LENGTH_LONG).show();
+        }
+        if (!listPermissionNeeded.isEmpty())
+        {
+            ActivityCompat.requestPermissions(this, listPermissionNeeded.toArray(new String[listPermissionNeeded.size()]), PERMISSIONS_REQUEST_CODE);
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PERMISSIONS_REQUEST_CODE)
+        {
+            HashMap<String, Integer> permissionResults = new HashMap<>();
+            int deniedCount = 0;
+            for (int i = 0; i < grantResults.length; i++)
+            {
+                if (grantResults[i] == PackageManager.PERMISSION_DENIED)
+                {
+                    permissionResults.put(permissions[i], grantResults[i]);
+                    deniedCount++;
+                }
+            }
+            if (deniedCount == 0)
+            {
+                onResume();
+            }else {
+                for (Map.Entry<String, Integer> entry : permissionResults.entrySet())
+                {
+                    String permName = entry.getKey();
+                    int permResult = entry.getValue();
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(this, permName))
+                    {
+                        showDialog("", "Aplikasi Ini Membutuhkan Beberapa Izin Supaya Berjalan Dengan Lancar.",
+                                "Izinkan", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        checkSelfPermission();
+                                    }
+                                }, "Tidak", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        finish();
+                                    }
+                                }, false);
+                    }else {
+                        showDialog("", "Anda Telah Menolak Beberapa Izin Untuk Aplikasi Ini, Silahkan Pergi Ke Pengaturan/Settings",
+                                "Go To Settings", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                                Uri.fromParts("package", getPackageName(), null));
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                }, "Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        finish();
+                                    }
+                                }, false);
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -192,6 +255,21 @@ public class MainActivity extends AppCompatActivity {
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
             alertDialog();
         }
+    }
+
+    private AlertDialog showDialog(String title, String msg, String positiveLabel, DialogInterface.OnClickListener positiveOnClick,
+                                   String negativeLabel, DialogInterface.OnClickListener negativeOnClick, boolean isCancleAble)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setCancelable(isCancleAble);
+        builder.setMessage(msg);
+        builder.setPositiveButton(positiveLabel, positiveOnClick);
+        builder.setNegativeButton(negativeLabel, negativeOnClick);
+
+        AlertDialog alert = builder.create();
+        alert.show();
+        return alert;
     }
 
     private void alertDialog(){

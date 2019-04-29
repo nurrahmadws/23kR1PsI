@@ -2,6 +2,7 @@ package com.example.matatabi.padm.activities;
 
 import android.app.ProgressDialog;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -35,22 +36,11 @@ public class DetailLatLngActivity extends FragmentActivity implements OnMapReady
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_lat_lng);
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -67,14 +57,14 @@ public class DetailLatLngActivity extends FragmentActivity implements OnMapReady
         Call<LatlngResponse> call = RetrofitClient.getmInstance().getApi().detailLatlng(id_latlng);
         call.enqueue(new Callback<LatlngResponse>() {
             @Override
-            public void onResponse(Call<LatlngResponse> call, Response<LatlngResponse> response) {
+            public void onResponse(@NonNull Call<LatlngResponse> call, @NonNull Response<LatlngResponse> response) {
                 progressDialog.dismiss();
                 latLngList = response.body().getLatlngList();
                 initLocation(latLngList);
             }
 
             @Override
-            public void onFailure(Call<LatlngResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<LatlngResponse> call, @NonNull Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(DetailLatLngActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }

@@ -15,16 +15,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.matatabi.padm.R;
-import com.example.matatabi.padm.activities.AddMahasiswaActivity;
 import com.example.matatabi.padm.activities.EditMhsActivity;
-import com.example.matatabi.padm.activities.OnBoardingScreenMhs;
+import com.example.matatabi.padm.activities.MahasiswaActivity;
 import com.example.matatabi.padm.activities.ShowMapMhsActivity;
+import com.example.matatabi.padm.activities.ShowMarkerMhsAlamatActivity;
 import com.example.matatabi.padm.api.RetrofitClient;
-import com.example.matatabi.padm.fragments.MhsBiodatakuFragment;
+import com.example.matatabi.padm.display_image.ImageLoader;
 import com.example.matatabi.padm.model.Value;
 import com.github.clans.fab.FloatingActionMenu;
 import com.github.clans.fab.FloatingActionButton;
 import com.example.matatabi.padm.model.Mahasiswa;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -73,6 +74,13 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
         mahasiswaViewHolder.txtAlamatSekarang.setText(mahasiswa.getAlamat_sekarang());
         mahasiswaViewHolder.txtLatAlamatSekarang.setText(mahasiswa.getLat_alamat_sekarang());
         mahasiswaViewHolder.txtLngAlamatSekarang.setText(mahasiswa.getLng_alamat_sekarang());
+        Picasso.with(context).load("http://192.168.43.207/api/mahasiswa/"+mahasiswa.getImage()).resize(354, 472)
+                .centerCrop().skipMemoryCache().into(mahasiswaViewHolder.imgView_photo_Show);
+
+//            int loader = R.drawable.ic_developer;
+//        String image_url = "http://192.168.43.207/api/mahasiswa/"+mahasiswa.getImage();
+//        ImageLoader imageLoader = new ImageLoader(context.getApplicationContext());
+//        imageLoader.DisplayImage(image_url, loader, mahasiswaViewHolder.imgView_photo_Show);
     }
 
     @Override
@@ -84,11 +92,13 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
         TextView txtNim, txtUsernameMhs, txtNik, txtNama, txtJk, txtTempatLahir, txtTglLahir, txtNoHp, txtEmail,
                 txtFakultas, txtProdi, txtAngkatan, txtKelas, txtProvinsi, txtKabupaten, txtKecamatan, txtKelurahan, txtLat, txtLNg,
                 txtAlamatSekarang, txtLatAlamatSekarang, txtLngAlamatSekarang;
+        ImageView imgView_photo_Show;
         FloatingActionMenu materialDesignFAM;
-        FloatingActionButton floatingActionButton2, floatingActionButton3, floatingActionButton4;
+        FloatingActionButton floatingActionButton2, floatingActionButton3, floatingActionButton4, floatingActionButton5;
         static final String mypreference = "mypref";
         static final String USERNAME = "username";
         SharedPreferences sharedPreferences;
+
 
         MahasiswaViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -114,16 +124,30 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
             txtAlamatSekarang = itemView.findViewById(R.id.txtAlamatSekarang);
             txtLatAlamatSekarang = itemView.findViewById(R.id.txtLatAlamatSekarang);
             txtLngAlamatSekarang = itemView.findViewById(R.id.txtLngAlamatSekarang);
+            imgView_photo_Show = itemView.findViewById(R.id.imgView_photo_Show);
+
 
             materialDesignFAM = itemView.findViewById(R.id.material_design_android_floating_action_menu);
             floatingActionButton2 = itemView.findViewById(R.id.fab_show_map_mhs);
             floatingActionButton3 = itemView.findViewById(R.id.fab_edit_mhs);
             floatingActionButton4 = itemView.findViewById(R.id.fab_delete_mhs);
+            floatingActionButton5 = itemView.findViewById(R.id.fab_show_map_mhs_alamat_sekarang);
 
             sharedPreferences = context.getSharedPreferences(mypreference, Context.MODE_PRIVATE);
             if (sharedPreferences.contains(USERNAME)) {
                 txtUsernameMhs.setText(sharedPreferences.getString(USERNAME, ""));
             }
+
+            floatingActionButton5.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ShowMarkerMhsAlamatActivity.class);
+                    String nim = txtNim.getText().toString();
+                    intent.putExtra("nim", nim);
+                    context.startActivity(intent);
+                }
+            });
+
             floatingActionButton2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -207,23 +231,23 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.Maha
                     al.setPositiveButton("Hapus", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            String nim = txtNim.getText().toString();
-                            Call<Value> call = RetrofitClient.getmInstance().getApi().deleteMahasiswa(nim);
+                            String username = txtUsernameMhs.getText().toString();
+                            Call<Value> call = RetrofitClient.getmInstance().getApi().deleteMahasiswa(username);
                             call.enqueue(new Callback<Value>() {
                                 @Override
-                                public void onResponse(Call<Value> call, Response<Value> response) {
+                                public void onResponse(@NonNull Call<Value> call, @NonNull Response<Value> response) {
                                     String value = response.body().getValue();
                                     String message = response.body().getMessage();
                                     if (value.equals("1")) {
                                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                                        context.startActivity(new Intent(context, OnBoardingScreenMhs.class));
+                                        context.startActivity(new Intent(context, MahasiswaActivity.class));
                                     } else {
                                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                                     }
                                 }
 
                                 @Override
-                                public void onFailure(Call<Value> call, Throwable t) {
+                                public void onFailure(@NonNull Call<Value> call, @NonNull Throwable t) {
 
                                 }
                             });

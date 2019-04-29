@@ -23,6 +23,17 @@
                 android:layout_margin="10dp"
                 android:orientation="vertical"
                 android:padding="5dp">
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginBottom="10dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:maxWidth="35dp"
+                    android:maxHeight="47dp"
+                    android:id="@+id/imgView_photo_Show"
+                    android:src="@drawable/ic_location_on_black_24dp"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -475,7 +486,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginBottom="11dp"
                 android:layout_marginLeft="11dp"
                 android:layout_marginRight="11dp"
@@ -515,7 +526,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_place_black_24dp"
-                    fab:fab_label="Tampilkan Peta"
+                    fab:fab_label="Tampilkan Asal Daerah"
+                    fab:fab_size="mini" />
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fab_show_map_mhs_alamat_sekarang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_place_black_24dp"
+                    fab:fab_label="Tampilkan Lokasi Alamat"
                     fab:fab_size="mini" />
 
                 <com.github.clans.fab.FloatingActionButton

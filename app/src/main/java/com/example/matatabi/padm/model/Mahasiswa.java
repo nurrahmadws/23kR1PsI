@@ -1,5 +1,8 @@
 package com.example.matatabi.padm.model;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
+
 public class Mahasiswa {
     private String nim;
     private String username;
@@ -23,8 +26,9 @@ public class Mahasiswa {
     private String alamat_sekarang;
     private String lat_alamat_sekarang;
     private String lng_alamat_sekarang;
+    private String image;
 
-    public Mahasiswa(String nim, String username, String nik, String nama, String jk, String tempat_lahir, String tgl_lahir, String no_hp, String email, String fakultas, String prodi, String angkatan, String kelas, String provinsi, String nm_kabupaten, String nm_kecamatan, String nm_kelurahan, String nm_lat, String nm_lng, String alamat_sekarang, String lat_alamat_sekarang, String lng_alamat_sekarang) {
+    public Mahasiswa(String nim, String username, String nik, String nama, String jk, String tempat_lahir, String tgl_lahir, String no_hp, String email, String fakultas, String prodi, String angkatan, String kelas, String provinsi, String nm_kabupaten, String nm_kecamatan, String nm_kelurahan, String nm_lat, String nm_lng, String alamat_sekarang, String lat_alamat_sekarang, String lng_alamat_sekarang, String image) {
         this.nim = nim;
         this.username = username;
         this.nik = nik;
@@ -47,6 +51,7 @@ public class Mahasiswa {
         this.alamat_sekarang = alamat_sekarang;
         this.lat_alamat_sekarang = lat_alamat_sekarang;
         this.lng_alamat_sekarang = lng_alamat_sekarang;
+        this.image = image;
     }
 
     public String getNim() {
@@ -135,5 +140,9 @@ public class Mahasiswa {
 
     public String getLng_alamat_sekarang() {
         return lng_alamat_sekarang;
+    }
+
+    public String getImage() {
+        return image;
     }
 }

@@ -22,6 +22,13 @@
         android:layout_margin="10dp"
         android:orientation="vertical"
         android:padding="5dp">
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/imgView_photo_Show_all_mhs"
+            android:src="@drawable/ic_location_on_black_24dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

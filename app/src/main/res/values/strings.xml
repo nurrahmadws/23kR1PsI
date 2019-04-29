@@ -25,4 +25,6 @@
     <string name="title_activity_show_maps_all_mhs">Map</string>
     <string name="title_activity_get_coordinate_manually">Map</string>
     <string name="title_activity_get_coordinate_manually_edit">Map</string>
+    <string name="title_activity_marker_all_mahasiswa_bsd_kel">Map</string>
+    <string name="title_activity_show_marker_mhs_alamat">Map</string>
 </resources>

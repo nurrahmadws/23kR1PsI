@@ -31,7 +31,6 @@ public class DataPadmKecActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private PadmKecAdapter padmKecAdapter;
     private List<PadmKecamatan> padmKecamatanList;
-    private TextView txtKabPadmKec;
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton floatingActionButton;
 

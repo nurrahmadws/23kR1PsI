@@ -46,7 +46,7 @@
     <TextView
         android:id="@+id/location_text_view_lat_asek"
         android:layout_width="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="100dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/text_view_latitude_asek"
         android:layout_centerHorizontal="false"
@@ -58,7 +58,7 @@
     <TextView
         android:id="@+id/location_text_view_lng_asek"
         android:layout_width="wrap_content"
-        android:layout_marginLeft="206dp"
+        android:layout_marginLeft="195dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/text_view_latitude_asek"
         android:layout_centerHorizontal="false"

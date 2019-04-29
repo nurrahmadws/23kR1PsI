@@ -3,6 +3,7 @@ package com.example.matatabi.padm.fragments;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,7 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.matatabi.padm.R;
+import com.example.matatabi.padm.activities.AddImageMhsActivity;
 import com.example.matatabi.padm.activities.AddMahasiswaActivity;
+import com.example.matatabi.padm.activities.GetCoordinateManuallyActivity;
 import com.example.matatabi.padm.activities.MainActivity;
 import com.example.matatabi.padm.adapters.MahasiswaAdapter;
 import com.example.matatabi.padm.api.RetrofitClient;
@@ -27,6 +31,7 @@ import com.example.matatabi.padm.model.Mahasiswa;
 import com.example.matatabi.padm.model.MahasiswaResponse;
 
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,7 +67,24 @@ public class MhsBiodatakuFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AddMahasiswaActivity.class));
+                AlertDialog.Builder ad = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+                ad.setTitle("Pemberitahuan!");
+                ad.setMessage("Untuk melanjutkan proses pengisian data, \nAnda harus mengisi terlebih dahulu alamat tempat tinggal anda yang sekarang");
+                ad.setCancelable(false);
+                ad.setPositiveButton("Saya Mengerti", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(getActivity(), GetCoordinateManuallyActivity.class));
+                    }
+                });
+                ad.setNegativeButton("Kembali", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                AlertDialog alertDialog = ad.create();
+                alertDialog.show();
             }
         });
     }
@@ -88,11 +110,12 @@ public class MhsBiodatakuFragment extends Fragment {
         call.enqueue(new Callback<MahasiswaResponse>() {
             @SuppressLint("RestrictedApi")
             @Override
-            public void onResponse(Call<MahasiswaResponse> call, Response<MahasiswaResponse> response) {
+            public void onResponse(@NonNull Call<MahasiswaResponse> call, @NonNull Response<MahasiswaResponse> response) {
                 progressDialog.dismiss();
                 mahasiswaList = response.body().getMahasiswaList();
                 mahasiswaAdapter = new MahasiswaAdapter(getActivity(), mahasiswaList);
                 recyclerView.setAdapter(mahasiswaAdapter);
+                mahasiswaAdapter.notifyDataSetChanged();
                 if (mahasiswaList.isEmpty()){
                     fab.setEnabled(true);
                     fab.setVisibility(View.VISIBLE);
@@ -103,8 +126,9 @@ public class MhsBiodatakuFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<MahasiswaResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<MahasiswaResponse> call, @NonNull Throwable t) {
                 progressDialog.dismiss();
+                t.printStackTrace();
                 Toast.makeText(getActivity(), "Tidak Terhubung Internet", Toast.LENGTH_SHORT).show();
             }
         });
